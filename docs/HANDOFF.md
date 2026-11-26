@@ -13,7 +13,8 @@ gates are in place and green.
 2. Pin the stack's image digest and dependencies; wire mutation (TODO 0.2); every `STAMP` marker in the tree is a line to fill (`grep -rn STAMP .`).
 3. Write the roadmap's §1 to §6 and Phase 1's items in `TODO.md` (TODO 0.3).
 4. Write the first invariants of the contract and set `docs/modules.json` (TODO 0.4).
-5. Write the founding decisions in `theGhost.md`, a decision for each core decision this project refuses among them (TODO 0.5): agents cannot author them.
+5. Confirm P-002's wording (comments say what, never why), and say whether a check should hold it: one that reads comments in `src/` for reasons, with a planted break, once the stack is wired.
+6. Write the founding decisions in `theGhost.md`, a decision for each core decision this project refuses among them (TODO 0.5): agents cannot author them.
 
 ## Trials: questions settled by a run, not an argument
 

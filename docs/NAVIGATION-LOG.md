@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-26 · P-002, the comment rule · Fable
+
+- **Task**: record Ghost's rule that comments say what and never why.
+- **Opened**: `theGhost.md` (header, C-009, P-001), `docs/journal/J-000-099.md`, `CLAUDE.md`, `stacks/typescript/README.md`, `docs/HANDOFF.md`.
+- **Complaints**: `scripts/next_id.py` reads `main`, which holds no stamped tree until the first ship, so the next id was read from the file.
+- **Suggestions**: none.

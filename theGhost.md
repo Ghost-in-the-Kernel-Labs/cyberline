@@ -485,3 +485,12 @@ The core decisions above are inherited (Core C-001 to C-041); this project's beg
 - **Status:** in force
 - **See also:** Core C-008
 - **subject:** founding
+
+### P-002: A comment says what a function does, never why
+- **Decision:** A comment or docstring in code says what the function does: its inputs, its result, an example. It never says why. A reason belongs in a decision in this file, and code reaches it only through the decision line Core C-009 gives (`// Decision: P-nnn`). A comment is not a requirement: an agent builds from the decisions its brief names, and a reason it meets in a comment with no decision behind it is reported, not built on.
+- **Why:** Ghost, 2026-11-26, from Suite Builder: one agent left a why note in a comment; a second agent, pointed by its coordinator only at the decisions it was to work on, read the note as important and built to it. Requirements no decision of Ghost's held were invented, and the work drifted. Not harmful, but slop that had to be trimmed and removed.
+- **Held by:** `CLAUDE.md` ("Before calling work done"), `stacks/typescript/README.md` (the Readability row). No check holds it yet; one is proposed in `docs/HANDOFF.md`.
+- **Source:** Ghost, 2026-11-26, in chat; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-009, Core C-008
+- **subject:** comments

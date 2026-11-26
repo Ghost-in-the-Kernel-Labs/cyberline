@@ -46,3 +46,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | C-040 | Saving is separate from landing; three checkpoints; the count is main's; Ghost's word in chat is Ghost's word | in force | commits |
 | C-041 | The supply-chain rules are read on their trigger; CLAUDE.md keeps the triggers, SUPPLY-CHAIN.md the text | in force | supply chain |
 | P-001 | Psiberline is stamped from Ghost-Core, on the typescript stack | in force | founding |
+| P-002 | A comment says what a function does, never why | in force | comments |
