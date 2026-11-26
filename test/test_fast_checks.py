@@ -86,14 +86,14 @@ class TheCountOnMain(unittest.TestCase):
     commit.sh and by the gate's verdict alike."""
 
     def test_saves_on_a_branch_are_not_counted_by_commit_sh(self) -> None:
-        root = repo_with(7)
+        root = repo_with(24)
         subprocess.run(["git", "-C", str(root), "checkout", "-q", "-b", "claude/session"], check=True)
         for n in range(3):
             subprocess.run(["git", "-C", str(root), "commit", "-q", "--allow-empty", "-m", f"save {n}"], check=True)
         subprocess.run(["git", "-C", str(root), "checkout", "-q", "main"], check=True)
-        result = attempt(root, "the eighth landing")
+        result = attempt(root, "the twenty-fifth landing")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("commit: 7 of 8 commits since the last tune-up", result.stdout)
+        self.assertIn("commit: 24 of 25 commits since the last tune-up", result.stdout)
 
     def test_the_gate_s_verdict_counts_main_from_a_branch(self) -> None:
         root = gated_repo()

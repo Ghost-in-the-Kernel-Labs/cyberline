@@ -6,7 +6,7 @@
 #   3. the commit check (C-039): a staged change to an auto-execution surface (scripts/*.sh, a stack's gate.sh, an agent
 #      file, a workflow: docs/SUPPLY-CHAIN.md's inventory) is refused unless the message names a decision id, so every
 #      change to the gate is a recorded one; nothing is pinned to a hash
-#   4. the tune-up rule (C-024): refused while a tune-up is due, eight or more commits on `main`'s first-parent line after
+#   4. the tune-up rule (C-024, C-048): refused while a tune-up is due, twenty-five or more commits on `main`'s first-parent line after
 #      the last `tune-up:` one or, when newer, a stamped project's founding commit (its subject starts "stamped from"),
 #      counted from and not toward (C-040: a session branch's saves are not landings and are never counted); a
 #      `tune-up:` subject always passes. A line `Tune-up deferred through <sha>` in docs/HANDOFF.md, written only on Ghost's
@@ -24,7 +24,7 @@
 # never installs one (C-034), and nothing checks a commit after it exists (C-037).
 set -uo pipefail
 cd "$(dirname "$0")/.."
-TUNE_UP_EVERY=${TUNE_UP_EVERY:-8}
+TUNE_UP_EVERY=${TUNE_UP_EVERY:-25}
 AUTHOR_NAME=Ghost
 AUTHOR_EMAIL=118085043+ghost-in-the-kernel@users.noreply.github.com
 COMMITTER_NAME=Claude

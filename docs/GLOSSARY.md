@@ -7,7 +7,7 @@ use in the repository: "model" is both a Claude model and a project's model of i
 test cannot tell the uses apart. Add a term before using a new word for a concept (C-011).
 
 Not governed: `docs/LESSONS.md`, `docs/LINEAGE.md`, `docs/REVIEWED-VERSIONS.md`.
-They quote the parents in the parents' words.
+They quote the parents in the parents' words; the record of reviewed versions holds other people's package names.
 
 A project stamped from this template keeps every row here and adds its own below them; a row it
 removes is a decision in its own log.

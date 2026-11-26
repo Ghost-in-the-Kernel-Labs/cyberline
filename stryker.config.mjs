@@ -9,7 +9,7 @@ export default {
   testRunner: 'command',
   commandRunner: { command: `mkdir -p .tmp && TMPDIR=$PWD/.tmp node node_modules/vitest/vitest.mjs run --project unit --bail=1 --maxWorkers=1 ${process.env.MUTATE_TESTS ?? ''}` },
   coverageAnalysis: 'off',
-  // Names a file that does not exist, so Stryker reads no tsconfig (C-018).
+  // Names a file that does not exist, so Stryker reads no tsconfig (C-018; stacks/typescript/README.md, the Mutation row).
   tsconfigFile: 'no-tsconfig-for-stryker.json',
   mutate: ['src/**/*.ts', '!src/**/*.gen.ts'],
   ignorePatterns: ['/dist', '/reports', '/.stryker-tmp', '/.tmp'],

@@ -22,55 +22,55 @@ MOVES_HEAD = "#!/usr/bin/env bash\ngit update-ref refs/heads/main \"$(git commit
 
 
 class TheTuneUpRule(unittest.TestCase):
-    def test_a_plain_commit_passes_below_eight(self) -> None:
-        result = attempt(repo_with(7), "plain 7")
+    def test_a_plain_commit_passes_below_the_count(self) -> None:
+        result = attempt(repo_with(24), "plain 24")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("7 of 8 commits since the last tune-up", result.stdout)
+        self.assertIn("24 of 25 commits since the last tune-up", result.stdout)
 
-    def test_a_plain_commit_is_refused_at_eight(self) -> None:
-        root = repo_with(8)
-        result = attempt(root, "plain 8")
+    def test_a_plain_commit_is_refused_at_the_count(self) -> None:
+        root = repo_with(25)
+        result = attempt(root, "plain 25")
         self.assertEqual(result.returncode, 1)
-        self.assertEqual(result.stdout.splitlines()[-1], "commit: refused at the tune-up rule (a tune-up is due: 8 commits since the last, every 8: docs/when/tune-up.md)")
-        self.assertEqual(git_out(root, ["log", "-1", "--format=%s"]), "plain 7")
+        self.assertEqual(result.stdout.splitlines()[-1], "commit: refused at the tune-up rule (a tune-up is due: 25 commits since the last, every 25: docs/when/tune-up.md)")
+        self.assertEqual(git_out(root, ["log", "-1", "--format=%s"]), "plain 24")
 
     def test_a_tune_up_commit_is_accepted_at_any_count(self) -> None:
-        root = repo_with(13)
+        root = repo_with(30)
         result = attempt(root, "tune-up: routing rows")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("tune-up accepted (13 commits since the last)", result.stdout)
+        self.assertIn("tune-up accepted (30 commits since the last)", result.stdout)
         after = attempt(root, "plain again")
         self.assertEqual(after.returncode, 0, after.stdout)
-        self.assertIn("0 of 8", after.stdout)
+        self.assertIn("0 of 25", after.stdout)
 
     def test_the_deferral_line_in_handoff_moves_the_count_to_after_its_commit(self) -> None:
-        root = repo_with(9)
+        root = repo_with(26)
         fifth = git_out(root, ["rev-list", "--reverse", "HEAD"]).split()[4]
         (root / "docs" / "HANDOFF.md").write_text(f"- Tune-up deferred through {fifth[:10]} (Ghost)\n")
-        result = attempt(root, "plain 9")
+        result = attempt(root, "plain 26")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn(f"4 of 8 commits since the last tune-up (counted after the deferral through {fifth[:10]})", result.stdout)
+        self.assertIn(f"21 of 25 commits since the last tune-up (counted after the deferral through {fifth[:10]})", result.stdout)
 
     def test_a_deferral_line_naming_no_commit_on_head_is_not_honoured(self) -> None:
-        root = repo_with(8)
+        root = repo_with(25)
         (root / "docs" / "HANDOFF.md").write_text("Tune-up deferred through 0123456789abcdef\n")
-        result = attempt(root, "plain 8")
+        result = attempt(root, "plain 25")
         self.assertEqual(result.returncode, 1)
         self.assertIn("names 0123456789abcdef, not a commit on main's history; not honoured", result.stdout)
         self.assertIn("refused at the tune-up rule", result.stdout)
 
     def test_a_stamped_project_s_founding_commit_is_counted_from_not_toward(self) -> None:
-        """4.2: nine plain commits, then "stamped from Ghost-Core", then two: the count is two, where nine alone refuse;
+        """4.2: twenty-six plain commits, then "stamped from Ghost-Core", then two: the count is two, where twenty-six alone refuse;
         a subject that only mentions the stamp later in its text does not move the start."""
-        root = repo_with(9)
+        root = repo_with(26)
         empty = lambda subject: subprocess.run(["git", "-C", str(root), "commit", "-q", "--allow-empty", "-m", subject], check=True)  # noqa: E731
         for subject in ("stamped from Ghost-Core\n\nThe template's documents.", "one", "two"):
             empty(subject)
         result = attempt(root, "three")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("commit: 2 of 8 commits since the last tune-up", result.stdout)
+        self.assertIn("commit: 2 of 25 commits since the last tune-up", result.stdout)
         empty("a note on what was stamped from Ghost-Core")
-        self.assertIn("commit: 4 of 8 commits since the last tune-up", attempt(root, "four").stdout)
+        self.assertIn("commit: 4 of 25 commits since the last tune-up", attempt(root, "four").stdout)
 
     def test_a_red_fast_loop_refuses_the_commit(self) -> None:
         root = repo_with(1)

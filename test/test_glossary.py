@@ -23,6 +23,10 @@ class TheRepository(unittest.TestCase):
     def test_the_real_glossary_enforces_something(self) -> None:
         self.assertNotEqual(glossary.enforced_aliases((ROOT / "docs" / "GLOSSARY.md").read_text()), [])
 
+    def test_the_record_of_package_names_is_not_governed(self) -> None:
+        text = (ROOT / "docs" / "GLOSSARY.md").read_text()
+        self.assertIn("docs/REVIEWED-VERSIONS.md", next(line for line in text.splitlines() if line.startswith("Not governed:")))
+
     def test_the_planted_break_is_caught(self) -> None:
         self.assertEqual(glossary.problems(BROKEN / "glossary"), ["ROADMAP.md uses 'timeframe' 1 times"])
 

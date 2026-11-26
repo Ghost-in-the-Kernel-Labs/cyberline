@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-26 · the core update to 69bc390 · Fable
+
+- **Task**: take Ghost-Core's changes since this project's stamp, C-048 among them.
+- **Opened**: `docs/when/core-update.md`, `theGhost.md`, `docs/LINEAGE.md`, a fresh stamp of the core beside the old one.
+- **Complaints**: `docs/when/core-update.md` says to read the core's log; comparing a fresh stamp with the old one names the files to take in one step, and the file does not say so.
+- **Suggestions**: none.

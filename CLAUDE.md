@@ -44,6 +44,7 @@ Each line is the situation, then the file to read then and not before.
 - You update a dependency, or the cooldown or `npm outdated` names a newer version:
   `docs/when/dependency-update.md`.
 - `scripts/commit.sh` says a tune-up is due, or your task is a tune-up pass: `docs/when/tune-up.md`.
+- You write or change the plan (a roadmap's phases, `TODO.md`'s items, an item that waits): `docs/when/plan.md`.
 - A hook asks for a commit or a push: `docs/when/coordinate.md`, "Commits and hooks" (push; never a raw commit).
 - A result surprises you by being good, or a check cannot fail: `docs/GHOST-IN-THE-KERNEL.md`.
 - A contract is not precise enough to build from: make the document precise before the code.

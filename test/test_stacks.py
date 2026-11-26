@@ -71,8 +71,37 @@ def typescript_file(relative: str) -> Path:
     return template if template.exists() else ROOT / relative
 
 
+def tsconfig_problems(config: dict) -> list[str]:
+    """What is wrong with a tsconfig that the type check would trip on: {"include": ["src", "test"]} gives
+    ["tsconfig.json includes test and does not exclude test/fixtures"], and with "exclude": ["test/fixtures"] gives []."""
+    if "test" in config.get("include", []) and "test/fixtures" not in config.get("exclude", []):
+        return ["tsconfig.json includes test and does not exclude test/fixtures"]
+    return []
+
+
+def knip_problems(config: dict) -> list[str]:
+    """What is wrong with a knip.json that knip would trip on in a stamp: {} gives
+    ["knip.json leaves knip's Stryker plugin on", "knip.json does not ignore test/fixtures/**"], and
+    {"stryker": false, "ignore": ["test/fixtures/**"]} gives []."""
+    found = []
+    if config.get("stryker") is not False:
+        found.append("knip.json leaves knip's Stryker plugin on")
+    if "test/fixtures/**" not in config.get("ignore", []):
+        found.append("knip.json does not ignore test/fixtures/**")
+    return found
+
+
 @unittest.skipUnless((STACKS / "typescript").is_dir(), "no TypeScript stack in this tree")
 class TheTypeScriptStarter(unittest.TestCase):
+    def test_knip_is_set_for_a_stamp(self) -> None:
+        self.assertEqual(knip_problems(json.loads(typescript_file("knip.json").read_text())), [])
+        self.assertEqual(knip_problems({"ignore": ["test/fixtures/**"]}), ["knip.json leaves knip's Stryker plugin on"])
+        self.assertEqual(knip_problems({"stryker": False, "ignore": ["test/golden/**"]}), ["knip.json does not ignore test/fixtures/**"])
+
+    def test_the_type_check_leaves_the_fixtures_out(self) -> None:
+        self.assertEqual(tsconfig_problems(json.loads(typescript_file("tsconfig.json").read_text())), [])
+        self.assertEqual(tsconfig_problems({"include": ["src", "test", "scripts"]}), ["tsconfig.json includes test and does not exclude test/fixtures"])
+
     def test_no_file_names_the_nonexistent_command_runner_package(self) -> None:
         for name in ("package.json", "knip.json"):
             with self.subTest(file=name):
@@ -97,6 +126,9 @@ class TheTypeScriptStarter(unittest.TestCase):
         self.assertIn("/reports/", ignore.read_text().splitlines())
         self.assertIn("## Survivors", typescript_file("docs/MUTATION.md").read_text())
 
+    def test_stryker_reads_no_tsconfig(self) -> None:
+        self.assertIn("tsconfigFile: 'no-tsconfig-for-stryker.json',", typescript_file("stryker.config.mjs").read_text())
+
     def test_vitest_is_started_by_node_not_npx(self) -> None:
         text = typescript_file("stryker.config.mjs").read_text()
         self.assertIn("node node_modules/vitest/vitest.mjs run", text)
@@ -104,7 +136,9 @@ class TheTypeScriptStarter(unittest.TestCase):
 
     def test_the_readme_states_the_stack_facts(self) -> None:
         text = (STACKS / "typescript" / "README.md").read_text()
-        for fact in ("`Bundler` when it is bundled for a browser", "has no Docker daemon", "unit tests import no `node:` module"):
+        for fact in ("`Bundler` when it is bundled for a browser", "has no Docker daemon", "unit tests import no `node:` module",
+                     "the highest version of the same major older than seven days", "`npm install -g npm@11`",
+                     "scope the key to the line it holds back"):
             with self.subTest(fact=fact):
                 self.assertIn(fact, text)
 
@@ -120,6 +154,16 @@ class TheTypeScriptStarter(unittest.TestCase):
         """cooldown.mjs run with node in an empty directory, so there is no package-lock.json."""
         empty = Path(tempfile.mkdtemp(prefix="ghost-core-cooldown-"))
         return subprocess.run(["node", str(typescript_file("scripts/cooldown.mjs")), *flags], cwd=empty, capture_output=True, text=True)
+
+    @unittest.skipUnless(shutil.which("node") and shutil.which("git"), "node or git is absent")
+    def test_cooldown_on_a_founding_lockfile_prints_nothing_of_git_s(self) -> None:
+        root = Path(tempfile.mkdtemp(prefix="ghost-core-cooldown-"))
+        identity = ["-c", "user.name=Ghost", "-c", "user.email=g@example.invalid"]
+        for args in (["init", "-q", "-b", "main"], [*identity, "commit", "-q", "--allow-empty", "-m", "first"], ["update-ref", "refs/remotes/origin/main", "HEAD"]):
+            subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True)
+        (root / "package-lock.json").write_text('{"packages": {}}')
+        run = subprocess.run(["node", str(typescript_file("scripts/cooldown.mjs")), "--strict"], cwd=root, capture_output=True, text=True)
+        self.assertEqual((run.returncode, run.stdout + run.stderr), (0, ""))
 
     @unittest.skipUnless(shutil.which("node"), "node is absent: the script's text is asserted instead")
     def test_cooldown_with_no_lockfile_says_so_and_fails_only_under_strict(self) -> None:

@@ -18,6 +18,7 @@ CONFLICTS = re.compile(r"^- \*\*conflicts-with:\*\* (.*)$", re.MULTILINE)
 PARENT_TAG = r"\b(?:SB|KT|EE|NR):|\bIn the parents:"
 TAG = re.compile(r"(\bCore:|" + PARENT_TAG + ")")
 BACKTICKED = re.compile(r"`([^`\s]+)`")
+STACK_PATH = re.compile(r"^stacks/[a-z0-9_-]+/")
 FENCED = re.compile(r"^```.*?^```", re.MULTILINE | re.DOTALL)
 
 
@@ -159,7 +160,9 @@ def tracked_paths(root: Path) -> set[str]:
 
 # Decision: C-008 (every file a Held by names exists, or an open TODO item promises it)
 def held_by_problems(entries: dict[str, str], root: Path) -> list[str]:
-    """Each path an in-force entry's Held by names that is neither under root nor promised by an open TODO item."""
+    """Each path an in-force entry's Held by names that is neither under root nor promised by an open TODO item, and each
+    under the folder of a stack that is not this tree's own (no PRESENT file in it):
+    "C-003 is held by stacks/python/starter/x.toml, one stack's path, ..."."""
     todo = (root / "TODO.md").read_text() if (root / "TODO.md").is_file() else ""
     allowed = pointers.promised(todo)
     present = tracked_paths(root)
@@ -169,7 +172,9 @@ def held_by_problems(entries: dict[str, str], root: Path) -> list[str]:
         if fields.get("Status") != "in force":
             continue
         for path in held_paths(fields.get("Held by", "")):
-            if path.rstrip("/") not in present and path not in allowed:
+            if STACK_PATH.match(path) and not (root / "stacks" / path.split("/")[1] / "PRESENT").is_file():
+                found.append(f"{rid} is held by {path}, one stack's path, which a stamp of another stack does not hold; name the file in words")
+            elif path.rstrip("/") not in present and path not in allowed:
                 found.append(f"{rid} is held by {path}, which does not exist and no open TODO item promises")
     return found
 

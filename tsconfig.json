@@ -6,18 +6,8 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "paths": {
-      "#p/*": [
-        "./src/*"
-      ]
-    }
+    "paths": { "#p/*": ["./src/*"] }
   },
-  "include": [
-    "src",
-    "test",
-    "scripts"
-  ],
-  "exclude": [
-    "test/fixtures"
-  ]
+  "include": ["src", "test", "scripts"],
+  "exclude": ["test/fixtures"]
 }

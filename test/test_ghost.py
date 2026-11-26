@@ -113,7 +113,17 @@ class HeldBy(unittest.TestCase):
         self.assertEqual(found, [
             "C-001 is held by docs/missing.md, which does not exist and no open TODO item promises",
             "C-002 is held by test/test_missing.py, which does not exist and no open TODO item promises",
+            "C-003 is held by stacks/python/starter/pyproject.toml, one stack's path, which a stamp of another stack does not hold; name the file in words",
         ])
+
+    def test_a_path_under_the_tree_s_own_stack_holds(self) -> None:
+        root = scratch()
+        (root / "stacks" / "python").mkdir(parents=True)
+        (root / "stacks" / "python" / "gate.sh").write_text("x\n")
+        text = self.held("`stacks/python/gate.sh`")
+        self.assertEqual(len(ghost.held_by_problems(ghost.split_entries(text), root)), 1)
+        (root / "stacks" / "python" / "PRESENT").write_text("stamped\n")
+        self.assertEqual(ghost.held_by_problems(ghost.split_entries(text), root), [])
 
     def test_an_existing_path_holds(self) -> None:
         root = scratch()

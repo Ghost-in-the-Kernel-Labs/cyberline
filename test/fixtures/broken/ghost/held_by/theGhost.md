@@ -15,3 +15,12 @@
 - **Status:** in force
 - **See also:** C-001
 - **subject:** method
+
+### C-003: a decision held by a starter's file
+- **Decision:** d
+- **Why:** w
+- **Held by:** `stacks/python/starter/pyproject.toml`
+- **Source:** s
+- **Status:** in force
+- **See also:** C-001
+- **subject:** method

@@ -119,7 +119,7 @@ The same principle, pointed inward, and held by tests rather than hoped for:
   planted break, so a check that stops catching anything is caught itself.
 - **The environment of the agent working here is part of the product.** Mandatory context under
   its ceiling, a fast loop under its ceiling, no file over 400 lines, the metrics in
-  `docs/AGENT.md` ratcheted, one commit in eight spent on nothing else (the tune-up, C-024).
+  `docs/AGENT.md` ratcheted, one commit in twenty-five spent on nothing else, and a pass at the end of every phase (the tune-up, C-024, C-048).
   Ghost's finding in Suite Builder was that delivery speed rose once this was treated as work
   worth doing.
 - **Nothing requires the maintainer's own machine.** A clean clone builds, tests and gates in the

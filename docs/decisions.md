@@ -51,5 +51,7 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | C-045 | Where output is compared byte for byte, every text file is LF on every machine | in force | stacks |
 | C-046 | A tool a gate step runs keeps its temporary files in its own sandbox | in force | stacks |
 | C-047 | A gate step starts its tool directly, never through a launcher | in force | stacks |
+| C-048 | A tune-up commit falls due every twenty-fifth commit | in force | tune-up cadence |
 | P-001 | Psiberline is stamped from Ghost-Core, on the typescript stack | in force | founding |
 | P-002 | The founding dependencies are the stack's four, pinned exactly; nothing at run time | in force | dependencies |
+| P-003 | Core C-048 adopted: a tune-up commit falls due every twenty-fifth commit | in force | tune-up cadence |

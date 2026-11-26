@@ -109,3 +109,20 @@ class TheOnlyPush(unittest.TestCase):
         self.assertIn("git push -q -u origin HEAD", code)
         self.assertNotIn("refs/heads/main", code)
         self.assertNotIn("--force", code)
+
+
+def not_executable(listing: str) -> list[str]:
+    """The paths of a `git ls-files -s` listing whose mode is not 100755:
+    "100644 abc 0\tscripts/ship.sh\n100755 def 0\tscripts/gate.sh" gives ["scripts/ship.sh"]."""
+    return [line.split("\t", 1)[1] for line in listing.splitlines() if line and not line.startswith("100755 ")]
+
+
+class TheScriptsAreExecutable(unittest.TestCase):
+    @unittest.skipUnless((ROOT / ".git").exists(), "git's index says the mode; a tree outside git has none")
+    def test_every_script_and_every_stack_gate_is_executable_in_the_index(self) -> None:
+        listing = git(ROOT, ["ls-files", "-s", "scripts/*.sh", "stacks/*/gate.sh"])
+        self.assertIn("scripts/ship.sh", listing)
+        self.assertEqual(not_executable(listing), [])
+
+    def test_a_script_that_is_not_executable_is_named(self) -> None:
+        self.assertEqual(not_executable("100644 abc 0\tscripts/ship.sh\n100755 def 0\tscripts/gate.sh\n"), ["scripts/ship.sh"])

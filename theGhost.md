@@ -287,7 +287,7 @@ how work is done, then how the repository is kept.
 ### C-024: The tune-up: a tithe and a navigation review in one move, a numbered roadmap item, held by a commit gate
 - **Decision:** A *tune-up* is one commit (or one pass at a phase boundary) that changes no result and no golden and improves the agent's environment: first the navigation review (read every debrief in `docs/NAVIGATION-LOG.md` for what agents converge on, give each item a verdict, wipe the entries), then the fixes it found (routing rows, stale pointers, names to the glossary word, a file over 400 lines split, a slow test moved, a missing cross-reference), then the metrics re-measured. It is one thing, not two: the tithe *is* the navigation review plus what it found. Its cadence is one counter, "commits since the last tune-up", with one due every eighth commit. It is held by a commit gate, not a warning: `scripts/commit.sh` always accepts a commit whose message starts `tune-up:`, and refuses any other commit while a tune-up is due. Every phase of `docs/ROADMAP.md` ends with a numbered item "Tune-up pass N" carrying its own `Check:`, so the chain stops on it; a tune-up that is not a numbered item does not happen. The tune-up's definition is the tightest in the repository: `docs/when/tune-up.md` lists what it may change, what it may not (any result, any assertion, any contract, `theGhost.md`, the roadmap, a metric's target), and ends with the hand-back; "a tune-up that builds has overshot." As a project matures, the navigation half matters more than the code-shape half: by then the files are already small and what rots is the routing.
 - **Why:** Ghost's finding in Suite Builder: delivery speed rose once the agent's ability to find, read and change code with little context was treated as work worth about a tenth of effort (Katana R-008, EE E-015, NR R-012). Three failures since. The cadence was only advised: Katana's metrics tool said "a tithe is due" seventy-three times and stopped nothing, "a cadence that only warns is kept while there is slack and dropped exactly when it is needed" (Katana J-154); EE's slipped twice while habit held it (E-015). Katana gated the *push* at sixteen commits, so commits piled up locally and the gate fired on a batch; refusing at the commit catches the agent while it still has the context to do the work. The tithe and the navigation review ran on separate counters (8 and 10 commits, two gates) and were done as two moves or not at all. A loosely defined tithe is punished harder than any other loose definition: NR's tithe agent "fixed" grep noise by deleting the mutation cache (NR J-033). Ghost, 2026-10-23: "Tithes tend to be skipped, unless they are put in concrete numbered items on the roadmap... Tithe and navigation tune ups need to be done in the same move. In fact the navigation tune ups is probably more important than tithe once the project matures." And: "The tithe gate should always accept a tithe, but should refuse to commit if a tithe is due."
-- **Held by:** `scripts/commit.sh` (the gate; a test proves it refuses a non-tune-up commit at eight and accepts a `tune-up:` one at any count), `docs/when/tune-up.md` (the definition), `docs/ROADMAP.md` (a "Tune-up pass N" item closes every phase; the TODO check refuses a phase without one), `docs/AGENT.md` (the metrics re-measured each pass), `docs/NAVIGATION-LOG.md` (its "Last review" line is set by the tune-up). In the parents: KT `scripts/TitheGate.java` and `NavigationGate.java` (two gates, push-time), EE `scripts/TitheGate.java`, NR `docs/rules/tithe.md` and `docs/NAVIGATION-LOG.md`.
+- **Held by:** `scripts/commit.sh` (the gate; a test proves it refuses a non-tune-up commit when one is due (at twenty-five, C-048) and accepts a `tune-up:` one at any count), `docs/when/tune-up.md` (the definition), `docs/ROADMAP.md` (a "Tune-up pass N" item closes every phase; the TODO check refuses a phase without one), `docs/AGENT.md` (the metrics re-measured each pass), `docs/NAVIGATION-LOG.md` (its "Last review" line is set by the tune-up). In the parents: KT `scripts/TitheGate.java` and `NavigationGate.java` (two gates, push-time), EE `scripts/TitheGate.java`, NR `docs/rules/tithe.md` and `docs/NAVIGATION-LOG.md`.
 - **Source:** Ghost, 2026-10-23, in the Ghost-Core survey session; the practice inherited from Suite Builder (no decision id; Ghost's standing rule), Katana R-008, R-079 and ROADMAP P-14, EE E-015 and E-068, NR R-012, R-019 and R-023. Supersedes the parents' two-counter form in the core only; each parent keeps its own until its next tune-up adopts this one.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
@@ -504,7 +504,7 @@ how work is done, then how the repository is kept.
 ### C-045: Where output is compared byte for byte, every text file is LF on every machine
 - **Decision:** A project whose tests compare output byte for byte fixes its line endings in the repository: every text file is LF on every machine, set by the repository's own attributes file and never left to a contributor's settings.
 - **Why:** Goldens compared byte for byte failed on Windows with CRLF and passed everywhere else (SB G-086): the difference was the checkout, not the code, and it cost a search to learn that. Until now the rule stood in a comment of the TypeScript starter and one row of its stack's document (J-085).
-- **Held by:** the TypeScript and Java starters' attributes files (stacks/<stack>/starter/.gitattributes in the core, the root's `.gitattributes` in a stamp), `stacks/typescript/README.md` (the Toolchain row). No test holds it; the Python and C++ starters carry no attributes file.
+- **Held by:** the TypeScript and Java starters' attributes files (stacks/<stack>/starter/.gitattributes in the core, the root's in a stamp of either), the TypeScript stack's document (its Toolchain row). No test holds it; the Python and C++ starters carry no attributes file.
 - **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
@@ -514,7 +514,7 @@ how work is done, then how the repository is kept.
 ### C-046: A tool a gate step runs keeps its temporary files in its own sandbox
 - **Decision:** A tool run by a step of the gate writes its temporary files inside its own working folder in the project, which is ignored by git and removed with the run. It does not write them to the machine's shared temporary folder.
 - **Why:** A mutation run once left 8,000 temporary files in /tmp and filled it: the next step failed for a reason that had nothing to do with the code, on a machine the project does not own. Until now the fact stood in a comment of the TypeScript starter's mutation config (J-085).
-- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp: the command sets its temporary folder inside the project), `stacks/typescript/README.md` (the Mutation row). No test holds it.
+- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp: the command sets its temporary folder inside the project), the TypeScript stack's document (its Mutation row). No test holds it.
 - **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
@@ -524,12 +524,23 @@ how work is done, then how the repository is kept.
 ### C-047: A gate step starts its tool directly, never through a launcher
 - **Decision:** A step of the gate that starts a tool many times starts it by its own file, not through a launcher that resolves the tool on every start.
 - **Why:** A mutation run starts its test runner once per mutant; started through the package manager's launcher, the launcher's own start-up was a third of each mutant's second, and the gate's time is a metric with a ceiling (C-023). Until now the fact stood in a comment of the TypeScript starter's mutation config (J-085).
-- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp), `test/test_stacks.py` (`test_vitest_is_started_by_node_not_npx`), `stacks/typescript/README.md` (the Mutation row).
+- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp), `test/test_stacks.py` (`test_vitest_is_started_by_node_not_npx`), the TypeScript stack's document (its Mutation row).
 - **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
 - **See also:** C-018, C-023, C-046
 - **subject:** stacks
+
+### C-048: A tune-up commit falls due every twenty-fifth commit
+- **Decision:** The tune-up's one counter (C-024), commits on `main` since the last tune-up, falls due at twenty-five, not eight. The rest of C-024 stands: the commit gate accepts a commit whose message starts `tune-up:` at any count and refuses any other while one is due, and every phase still ends with its numbered tune-up pass.
+- **Why:** Ghost, 2026-11-26: "set tuneups on both to one per 25 commits", with no reason given. What the day had shown: Phase 5's fourteen items, most of them one file and its test, crossed the count of eight twice in one session; the commit that fell due mid-phase had four debriefs and nothing to act on (J-095), while the pass at the phase's end is what found the two faults that mattered (J-105). The commit gate's share of the work falls from one commit in eight to one in twenty-five; the passes are unchanged.
+- **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py` (the rule at twenty-four and at twenty-five), `docs/when/tune-up.md`.
+- **Source:** Ghost, 2026-11-26, in chat.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-024, C-025, C-037
+- **Supersedes:** C-024, in part: its "with one due every eighth commit" (every twenty-fifth). The rest of C-024 stands.
+- **subject:** tune-up cadence
 
 ---
 
@@ -554,3 +565,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** Core C-018, Core C-034, Core C-035
 - **subject:** dependencies
+
+### P-003: Core C-048 adopted: a tune-up commit falls due every twenty-fifth commit
+- **Decision:** Psiberline takes Core C-048: the tune-up's counter falls due at twenty-five commits on `main` since the last tune-up, and every phase still ends with its tune-up pass.
+- **Why:** Ghost, 2026-11-26: "set tuneups on both to one per 25 commits." The core's reasons are in Core C-048; a stamped project adopts or refuses each decision the core gains after its stamp (`docs/when/core-update.md`).
+- **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py`, `docs/when/tune-up.md`.
+- **Source:** Ghost, 2026-11-26, in chat.
+- **Status:** in force
+- **See also:** Core C-048, Core C-024
+- **subject:** tune-up cadence

@@ -1,7 +1,7 @@
 # Tune-up: improving the agent's environment, changing no result (C-024)
 
 Read this when your task is a tune-up: a **tune-up commit** (`scripts/commit.sh` says one is due:
-every eighth commit) or a **tune-up pass** (the last item of a phase, `TODO.md`'s "Tune-up pass N").
+every twenty-fifth commit, C-048) or a **tune-up pass** (the last item of a phase, `TODO.md`'s "Tune-up pass N").
 A commit is steps 1, 4, 5 and 6. A pass is every step, by one agent in one session.
 
 **You may change:** routing rows and when lines; documents under `docs/` other than those listed

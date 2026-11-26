@@ -317,3 +317,15 @@ J-nnn", the tithe procedure, the escalation rule made checkable, the navigation 
 tests are the audit" readability rules for a language the maintainer cannot audit by eye, the
 golden index with hashes and `changed_by`, the trials file, and the sharpest statement of the
 philosophy for agents ("On enlightenment").
+
+## 5. Watched: a lesson two projects hold, waiting on a further witness
+
+Core takes a lesson that four projects hold, or two to three when it is cheap to take. One that is neither stands
+here, so the next project that wants it knows it is the next witness and says so in Core.
+
+- **Three kinds of gate, and a sweep.** A fast kind for a landing (the fast loop, the key scan, unit tests, the type
+  check, the unused-code check, the cooldown, advisories), a medium kind for a ship when code changed (the integration
+  tests), the full gate for a release and a tune-up, and a cold full gate run nightly by a scheduled task, never a
+  commit gate. Witnesses: Suite Builder (G-648) and Ghostreach (GR-010). Not cheap: the gate, every stack's gate, the
+  gated commit, the ship, their tests and C-040's text would change. Core has two kinds (C-040). The account is Part 3
+  of the Ghostreach lessons file, which Core keeps and a stamp does not carry.

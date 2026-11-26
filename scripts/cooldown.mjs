@@ -55,7 +55,7 @@ if (isDirectRun(import.meta.url, process.argv[1])) {
     process.exit(strict ? 1 : 0);
   }
   let base = null;
-  try { base = execFileSync('git', ['show', 'origin/main:package-lock.json'], { encoding: 'utf8' }); } catch { base = null; }
+  try { base = execFileSync('git', ['show', 'origin/main:package-lock.json'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch { base = null; }
   const young = [], unverified = [];
   for (const v of newVersions(readFileSync('package-lock.json', 'utf8'), base)) {
     const at = await publishTime(v);
