@@ -11,3 +11,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-005 | Core taken up to 6d13f63: C-048 adopted, the core's fixes to its own stamp copied in | decision | `J-000-099.md` |
 | J-006 | Tune-up commit at Ghost's word, the first here | measurement | `J-000-099.md` |
 | J-007 | P-003 takes Ghost's reason for the count of twenty-five | decision | `J-000-099.md` |
+| J-008 | Core taken up to 56cb5ed: C-049 adopted, the landing made from a session branch | decision | `J-000-099.md` |

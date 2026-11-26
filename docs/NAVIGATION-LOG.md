@@ -21,3 +21,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: the files it opened, in order.
 - **Complaints**: what slowed or misled it.
 - **Suggestions**: what it would change.
+
+### 2026-11-26 · the core update to 56cb5ed · Fable
+
+- **Task**: take Core C-049, the landing from a session branch.
+- **Opened**: `docs/when/core-update.md`, `theGhost.md`, `CLAUDE.md`, a fresh stamp of the core beside the last one.
+- **Complaints**: none
+- **Suggestions**: none

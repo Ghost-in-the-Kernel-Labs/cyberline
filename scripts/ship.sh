@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-# The ship (C-037, C-031): the only push, and the only one any document names. It fetches main, refuses uncommitted
+# The ship (C-037, C-031, C-049): the only push to main, and the only one any document names. It ships the local `main`,
+# from whatever branch it is run on (HEAD's commit in a clone with no main). It fetches main, refuses uncommitted
 # changes, refuses a HEAD whose tree is not the tree scripts/gate.sh passed on (.git/ghost/tree), refuses a push that is
-# not a fast-forward of origin/main, pushes HEAD to main (never forced, never another branch) and prints one line,
+# not a fast-forward of origin/main, pushes that commit to main (never forced, never another branch) and prints one line,
 # `ship: <short> → origin/main`, or `ship: refused at <step> (<why>)`. A remote with no main yet takes the first ship.
 # Usage: scripts/ship.sh
 set -uo pipefail
 cd "$(dirname "$0")/.."
 refuse() { echo "ship: refused at $1"; exit 1; }
 
-head=$(git rev-parse --verify -q 'HEAD^{commit}') || refuse "HEAD (no commit to ship)"
+head=$(git rev-parse --verify -q 'refs/heads/main^{commit}' || git rev-parse --verify -q 'HEAD^{commit}') || refuse "HEAD (no commit to ship)"
 git ls-remote --exit-code --heads origin main >/dev/null 2>&1
 case $? in
   0) git fetch -q origin +refs/heads/main:refs/remotes/origin/main || refuse "the fetch (git fetch origin main failed)"; first="";;

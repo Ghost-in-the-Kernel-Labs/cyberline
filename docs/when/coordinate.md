@@ -41,9 +41,8 @@ step on his hardware.
 Workers that change files at the same time each get their own files and their own branch or
 worktree, with objectives that cannot collide (C-029). Each saves its work on its own branch
 (`scripts/save.sh`, `agent/<name>`: scanned, committed as Ghost, pushed; never gated, never `main`), so a worker's
-turn ends with nothing dirty and nothing unpushed; the coordinator lands it: brings the branch's change into `main`'s
-working tree (`git merge --squash agent/<name>`, or the files themselves), runs the fast checks
-(`scripts/gate.sh --fast`) on the combined code, commits through `scripts/commit.sh` and ships (`scripts/ship.sh`),
+turn ends with nothing dirty and nothing unpushed; the coordinator lands it from that branch (C-049): checks the branch out, merges `main` into it when `main` has moved, runs the fast checks
+(`scripts/gate.sh --fast`) on the combined code, and commits and ships in one step (`scripts/commit.sh -a -F <message> --ship`),
 each worker's change as its own commit (C-031, C-040: what lands on `main` passed the fast checks; the full gate
 runs at the tune-up).
 
@@ -57,7 +56,7 @@ hook is outside what any agent may change (CLAUDE.md, the supply-chain rules).
 Four habits keep a hook silent (Suite Builder G-646, G-363; `docs/LESSONS.md` §3): save freely and gate only
 `main` — a worker's branch is committed and pushed as the work is done, not at the end; when a hook does fire, pushing
 is the answer (`scripts/save.sh` on a branch, `scripts/ship.sh` on `main`), never a raw commit; a landing is
-`scripts/commit.sh` and `scripts/ship.sh` in the same turn, so `main` is never ahead of origin while anything runs;
+made from the session branch with `scripts/commit.sh --ship`, the commit and the ship in one step, so the tree a gate runs on is saved and pushed before the gate starts and `main` is never ahead of origin (C-049);
 and while a long check runs in the background into a file nothing touches the tree, so workers' commits are held
 until the run finishes (`docs/when/long-run.md`).
 
