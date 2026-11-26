@@ -1,396 +1,245 @@
 # Psiberline: Vision and Product Thesis
 
-**Status:** Founding vision; aspirational, not a statement of implemented capability  
-**Implementation language under consideration:** TypeScript  
+**Status:** Revised vision (draft for Ghost's approval); aspirational, not a statement of implemented capability
+**Supersedes:** the founding vision of 2026-11-25
+**Implementation language:** TypeScript
 **Repository:** https://github.com/Ghost-in-the-Kernel-Labs/psiberline
 
 ---
 
-## 1. The ambition
+## 1. What changed from the founding vision
 
-Psiberline's ambition is to automate the journey from a body of human-authored requirements to working, verified software.
+The founding vision described a general compiler from any requirements corpus to any software target. This revision narrows it on purpose.
 
-The long-term target is deliberately aggressive: **take a workflow that ordinarily spans requirements analysis, design, implementation, testing, and revision, and compress it toward a single hour of elapsed time wherever the scope and evidence make that possible.**
+- **One domain.** Psiberline targets utility-scale solar software. Other domains are a non-goal until the solar pipeline works end to end.
+- **One entry point.** Requirements arrive through quality-assurance (QA) ticket triage, not as a finished corpus.
+- **Tests before product code.** The first thing compiled is a test for an existing application. Compiling the application itself comes last.
+- **Composition, not free generation.** Output is assembled from fixtures that have already been verified. A model does not write new product code inside the compiler.
+- **A verification ladder.** Formal proof is the top rung, used where the cheaper rungs cannot reach.
+- **No AI in the chain.** The goal is a fully deterministic chain of work, from a requirements document to its output. A model may help build the chain; it is not a stage in it.
 
-The one-hour target is a product ambition, not a promise that any arbitrary application can be safely generated in sixty minutes. A small, well-bounded change with clear requirements is a more appropriate early target than an entire enterprise system. The system must measure elapsed time, human intervention, unresolved ambiguity, generated scope, and verification results. It must never make a deadline by silently lowering correctness.
+## 2. Purpose
 
-Psiberline should make software creation feel less like translating documents into tickets and then tickets into code, and more like expressing an intent in a language that a disciplined compiler can understand, challenge, formalize, and turn into verified software.
+The immediate purpose is to raise the rate at which QA tickets are closed, without lowering what "closed" means.
 
-The intended user may be a business analyst (BA), domain expert, product owner, or engineer. A person should be able to describe what a system must do in ordinary or domain-specific language. Psiberline should progressively turn that description into an executable, testable specification and then into software modules.
+The long-term purpose is unchanged: treat a well-specified body of requirements as a source language, and compile it into software whose behaviour is supported by evidence.
 
-The thesis is:
+> Every ticket that passes through triage should leave behind a formal, reviewed statement of what the system must do. Enough of those statements make a language. A language can be compiled.
 
-> A sufficiently well-specified body of requirements can be treated as a source language. If its meaning can be classified, constrained, represented, and verified, it can be compiled into software.
+Each phase below has to be worth running if the phases after it never arrive.
 
-Psiberline is intended to make that process repeatable, inspectable, modular, and increasingly automated.
+## 3. What Psiberline is and is not
 
-## 2. What Psiberline is
+Psiberline is a pipeline that turns solar requirements into a typed, checked representation, and then into tests and, later, application modules.
 
-Psiberline is envisioned as a **compiler for requirements and other structured or semi-structured human language**.
+It is not:
 
-It should not be a prompt that asks an AI model to read a document and write an application in one leap. That approach makes it difficult to establish what was understood, which rules were applied, where a decision came from, or whether the generated result actually satisfies the source.
+- A prompt that reads a ticket and writes an application in one leap, or a pipeline with a model as one of its stages.
+- A general-purpose requirements compiler.
+- A replacement for human review of what a requirement means.
+- A way to restructure an existing product without its developers' agreement.
 
-Instead, Psiberline should establish a chain of explicit transformations:
+## 4. The pipeline
 
-1. Ingest a corpus of source material.
-2. Interpret it according to a selected language specification.
-3. Classify statements and identify their meaning, role, and relationships.
-4. Evaluate them against a selected set of rules and invariants.
-5. Resolve or expose ambiguity, contradiction, omission, and uncertainty.
-6. Build a structured intermediate representation (IR).
-7. Plan the software changes or modules implied by that representation.
-8. Generate code through one or more output backends.
-9. Generate or derive tests and other verification evidence.
-10. Run the available checks, compare results against the requirements, and report what is and is not established.
+| Phase | What happens | What it delivers by itself |
+| --- | --- | --- |
+| 0. Triage | A rule set classifies each ticket (section 7) and rewrites the sentences it recognises into controlled English. A proofreader flags every sentence that does not conform, and says why. A person rewrites the flagged sentences until none remain. | Faster, more consistent triage; requirements that are clear before development |
+| 1. Catalogue | Reviewed records are stored with their source, status and history, and linked to the code change that closed the ticket. | A searchable requirements history |
+| 2. Ontology | The nouns, measurements and operations of conforming requirements enter the domain ontology. A word the ontology does not know is a proofreader flag. | A shared, checked vocabulary |
+| 3. Parser and checks | Controlled English is parsed into a typed syntax tree and checked for units, asset identity, ranges and contradiction. | Inconsistent requirements caught mechanically |
+| 4. Generated tests | Acceptance criteria compile into tests that run against the existing application. | Falling QA effort per ticket |
+| 5. Fixtures and kernel | Application modules are composed from verified fixtures on a common kernel. | The compiler in full |
 
-Each stage should have explicit inputs, outputs, contracts, and failure states. The result should be traceable from generated code back through the IR to the source statements that justify it.
+Each phase has explicit inputs, outputs and failure states. Any phase may stop with a precise question instead of an answer.
 
-Psiberline should be capable of stopping. If the source is contradictory, incomplete, unsafe, or outside the supported language, the right result may be a precise question or a blocked compilation—not invented certainty.
+## 5. The catalogue
 
-## 3. The source language must be replaceable
+Requirements and acceptance criteria are separate entities. One requirement may have many acceptance criteria, and one criterion may give evidence for many requirements.
 
-The meaning of a corpus depends on the conventions used to write it. A set of solar project requirements, a financial-services specification, a healthcare workflow, and a general software requirements document may use similar words while assigning them different meanings.
+| Entity | Purpose |
+| --- | --- |
+| Requirement | Canonical statement of system intent |
+| Acceptance criterion | Observable condition for acceptance |
+| Criterion link | Joins a criterion to a requirement, and says what it evidences |
+| Source artifact | The original ticket, document or specification |
+| Decision | A human-approved interpretation or design decision |
+| Constraint | A mandatory limit on implementation |
+| Dependency | A relationship between requirements |
+| Evidence | A test result, measurement, document or approval |
+| Revision | A historical version of any entity |
 
-Psiberline must therefore avoid assuming that one fixed natural-language interpretation applies to every project.
+Every requirement carries a status (proposed, accepted, superseded, withdrawn) and may name the requirement it supersedes. Old tickets contradict new ones; without supersession, history would block compilation.
 
-A **language specification** should define how a particular class of source material is recognized and interpreted. Depending on the domain, it may describe:
+Every record keeps its provenance: which source passage it came from, which rule or person produced it, and who approved it.
 
-- Document and section structures.
-- Recognized statement types.
-- Domain vocabulary and terminology.
-- Required fields and expected forms.
-- Relationship and reference conventions.
-- Rules for interpreting quantities, units, dates, conditions, and exceptions.
-- How to distinguish requirements from rationale, examples, assumptions, and commentary.
-- How unsupported or ambiguous constructions are reported.
+The catalogue is stored as JSON files under version control, so its history is the repository's history and nothing needs hosting.
 
-Language specifications should be independently selectable and replaceable. A project should be able to adopt a different specification without rewriting the entire compiler.
+## 6. The language
 
-The initial motivating use case is customer requirements for solar software. That is a starting domain, not a permanent restriction. The architecture should make it possible to add or replace a domain language without embedding its assumptions throughout the compiler.
+### 6.1 Surface: controlled English
 
-## 4. Rules and invariants must be modular
+Requirements are written in EARS (Easy Approach to Requirements Syntax), a small set of sentence templates such as "When *trigger*, the *system* shall *response*." EARS fixes the shape of a sentence. It does not fix the meaning; the ontology and the typed tree do that.
 
-The language specification identifies how to interpret the corpus. Rule sets and invariants determine what must be true of the interpreted material and of the software that follows from it.
+### 6.2 Ontology and symbol tables
 
-These concerns should be separable.
+The ontology defines what the words mean in this domain.
 
-A rule set may encode domain policies, business constraints, calculations, validation requirements, or organizational conventions. An invariant expresses a condition that must remain true. Some invariants may be universal to the compiler; others belong to a particular domain, project, module, or output target.
+- **Assets:** solar plant, site, pad, panel, inverter, tracker, and how they contain one another. For example: every panel has a pad, every pad has a site and a voltage, every site has a parent plant.
+- **Measurements:** voltage, current, energy, each with units and valid ranges.
+- **Operations:** what reading a measurement means, what calculating performance means.
+- **Constraints:** unit compatibility, asset identity, measurement range, access control.
 
-The system should support:
+Symbol tables hold these relationships so the parser can resolve a word against them.
 
-- Independently defined and versioned rule sets.
-- Reusable rule libraries.
-- Project-specific rule configuration.
-- Explicit rule precedence and conflict handling.
-- Rule provenance: which rule was applied, to what facts, and with what result.
-- Tests and examples for each rule.
-- Clear handling of missing, conflicting, or inapplicable rules.
+### 6.3 Typed syntax tree
 
-A rule should not silently change meaning because an unrelated part of the system changed. Rule changes should be reviewable and testable.
+A parsed requirement becomes a typed tree of actors, events, conditions, states, operations and constraints. The tree is the intermediate representation: independent of the ticket's wording and of any target language.
 
-The architecture must distinguish a fact extracted from the corpus, an interpretation inferred from that fact, a policy imposed by a rule, and a decision made by a human. These are different kinds of information and should not be collapsed into one opaque model-generated answer.
+### 6.4 The rule set and the proofreader
 
-## 5. The intermediate representation is the center of the compiler
+Two deterministic tools stand at the front of the chain.
 
-The IR is the most important architectural boundary in Psiberline.
+- **The rule set** takes a requirements document and rewrites the sentences it recognises into EARS. Each rule is a pattern and a rewrite, versioned and tested, and each rewrite records the rule that made it. A sentence no rule matches is left unchanged and flagged.
+- **The proofreader** works like a spelling checker for requirements. It marks any sentence that does not meet EARS, any word the ontology does not know, and any unit or reference that does not resolve, and it says which rule was broken.
 
-It is the normalized, structured account of what the source corpus means for the purpose of software construction. It should be independent of both the original document format and the eventual programming language.
+No rule set can turn all free English into EARS, because much of what a ticket leaves out is not on the page to be rewritten. The chain does not depend on that. What the rules cannot convert, a person rewrites with the proofreader's guidance, and nothing moves downstream until the proofreader passes. The rule set grows from the sentences people had to rewrite by hand.
 
-The IR may ultimately need to represent:
+The same input, rule version and ontology version always give the same output.
 
-- Requirements and acceptance criteria.
-- Actors, roles, and permissions.
-- Entities, attributes, and relationships.
-- Workflows, states, transitions, and events.
-- Business rules, calculations, and constraints.
-- Inputs, outputs, and external interfaces.
-- Error conditions and exceptional paths.
-- Security, privacy, audit, and operational requirements.
-- Dependencies between requirements and software components.
-- Open questions, assumptions, conflicts, and confidence/evidence status.
-- Links to source passages and the transformations that produced each IR element.
+### 6.5 Order of construction
 
-The IR should be typed and validated. It should not be merely a bag of extracted text or a transcript of an AI conversation.
+Ontology first, then the proofreader, then the rewrite rules, then tokenizer and parser, then semantic analysis. The grammar is built from reviewed requirements. Code that passed QA is linked to its requirement as an example of one implementation. It is evidence, not specification, because it may contain defects QA did not find.
 
-Every important element should preserve provenance: where it came from, how it was interpreted, which rules affected it, and whether a human confirmed it. A reviewer should be able to navigate from a generated behavior to the requirement and source passage that justify it.
+## 7. Story classification
 
-A stable IR also creates leverage. Multiple source languages can compile into the same IR, and multiple target backends can compile from it. This is how Psiberline can become a general compiler rather than a collection of one-off document-to-code scripts.
+| Story classification | Compiler response |
+| --- | --- |
+| New capability | Select a module, or report that a fixture must be written |
+| Existing capability | Reuse an existing module |
+| Configuration change | Modify module configuration |
+| Domain extension | Extend the ontology |
+| Constraint change | Re-evaluate dependent checks and proofs |
+| Integration change | Select or modify an adapter |
+| Defect correction | Identify the affected capability and its verification obligations |
+| Documentation | Update generated documentation |
+| Research or investigation | No automatic implementation |
 
-## 6. Output backends must be replaceable
+Epics route to a module; stories live within it. Classification is by rule, from the ticket's fields and wording; a ticket no rule classifies goes to a person.
 
-Psiberline should not be tied to a single implementation language, framework, runtime, or deployment environment.
+## 8. Fixtures and the kernel
 
-The compiler itself is initially expected to be written in TypeScript. That does **not** mean its generated output must be TypeScript.
+A fixture is a verified unit that satisfies a canonical requirement within a module. Two stories asking to read 50 panels of type A and 10 of type B resolve to two reading fixtures in one module, with addressable inputs for 50 and 10.
 
-An output backend is responsible for translating validated IR into a particular software target. Different backends may generate different languages, frameworks, services, applications, configuration, schemas, or other artifacts.
+**Test side first.** The first fixtures are test fixtures: verified pieces from which acceptance tests are composed. They need no change to the application under test.
 
-The backend boundary should make it possible to:
+**Product side later.** Product fixtures are written against a kernel that provides common services: type and schema enforcement, dependency injection, capability registration, event dispatch, transaction management, error handling, logging and telemetry, authorization, configuration, and version compatibility. A kernel service is built when the first fixture needs it, not before.
 
-- Add a new target without changing source-language interpretation.
-- Generate multiple targets from the same IR when appropriate.
-- Validate that a backend supports the constructs it is asked to compile.
-- Report unsupported constructs rather than silently dropping them.
-- Keep target-specific decisions out of the common IR.
-- Test generated output against backend-specific contracts and golden examples.
+**Writing a new fixture is ordinary development.** It is written, reviewed and verified before the compiler may select it. The compiler composes; it does not improvise.
 
-A backend should declare its capabilities and limitations. Compilation should fail clearly when the IR requires something the selected backend cannot express safely.
+**Composition is checked.** Two verified fixtures can still interact badly. The kernel checks contracts between fixtures at assembly time.
 
-## 7. The end-to-end workflow
+A defect fixed in the compiler, the kernel or a fixture is fixed for every application built from them. A defect in a requirement is not; that is what phases 0 to 3 are for.
 
-The intended workflow is a controlled pipeline, not a single generation call.
+## 9. Verification ladder
 
-### 7.1 Ingest
+Each claim is checked on the lowest rung that can establish it.
 
-Accept a corpus of requirements and supporting materials. Preserve original source content and stable references to documents, sections, and passages. Normalize formats only as needed; do not discard the original evidence.
+1. **Type and semantic checks** on the typed tree: units, asset identity, ranges, references.
+2. **Constraint solving** for conditions of the form "A equals B when C."
+3. **Property-based tests** for behaviour over many generated inputs.
+4. **Generated acceptance tests**, traced to their criteria.
+5. **Machine-checked proof (Lean)** for the calculation core, such as performance mathematics.
 
-### 7.2 Interpret and classify
+Tests derived from the typed tree show that code matches the interpretation. Only human approval of the tree, or independent evidence such as customer-supplied examples, shows that the interpretation matches the intent.
 
-Apply the selected language specification to identify meaningful statements and classify them. Distinguish requirements from context, examples, rationale, assumptions, constraints, and unresolved questions.
+Generated, compiled, tested, verified and accepted are different words and are not used as synonyms.
 
-### 7.3 Establish facts and constraints
+## 10. A deterministic chain, and where AI stands
 
-Extract candidate facts and relationships. Normalize units and terminology where the language specification permits it. Apply the selected rules and invariants. Record the evidence and result for each operation.
+The chain from requirements document to output contains no model. Every stage is a rule set, a parser, a checker or a composer, and every stage gives the same output for the same input, byte for byte.
 
-### 7.4 Detect problems before coding
+AI stands outside the chain, in two places.
 
-Find contradictions, duplicates, gaps, impossible combinations, underspecified behavior, and references that cannot be resolved. Present questions in a form a domain expert can answer. Do not bury unresolved issues inside generated code.
+- **Building it.** A model may help write rewrite rules, ontology entries, fixtures and proofs. What it writes is reviewed, tested and committed like any other code, and from then on it is an ordinary deterministic part.
+- **Assisting a person.** A model may suggest how to rewrite a flagged sentence. The person decides, and the proofreader judges the result. Removing the model changes the speed of the work, not its outcome.
 
-### 7.5 Construct and validate the IR
+The chain must run to completion with no model available.
 
-Build a typed representation of the intended behavior. Check internal consistency, required relationships, and rule satisfaction. Make the IR reviewable before it becomes a basis for implementation.
+Tickets and documents are data. Text inside them cannot change Psiberline's rules, permissions or policy.
 
-### 7.6 Plan the implementation
+## 11. The data boundary
 
-Translate the IR into a dependency-aware plan of software modules and changes. Identify interfaces, data structures, workflows, integrations, and verification obligations. Keep the plan small enough to reason about and traceable to the requirements.
+This repository holds the engine and synthetic material only.
 
-### 7.7 Generate software
+- Nothing an employer or customer gave enters this repository: no tickets, no requirements, no code, nothing derived from them.
+- Development here uses a synthetic solar corpus written for the purpose.
+- Work on real requirements happens only inside the adopting organisation's own environment, with that organisation's approved tools.
+- The engine is transferred into that environment. Ontology entries, grammar and fixtures learned from real tickets are created there and stay there.
 
-Use the selected backend to create or update code. Prefer bounded, composable modules over a monolithic output. Generation should be reproducible where possible: the same source, specifications, rules, IR, backend version, and configuration should produce the same output, or clearly explain why not.
+Who owns what after the transfer is an open decision (section 16) and is settled before the transfer.
 
-### 7.8 Verify
+## 12. Measurement
 
-Generate or derive tests from requirements and acceptance criteria, then run the applicable checks. Verification should include more than whether the generated code compiles. It should establish behavior against the requirements, check invariants, and report untested or unprovable claims.
+The one-hour target of the founding vision remains an aspiration, for stories that resolve to existing fixtures. For every run, measure:
 
-### 7.9 Report and iterate
-
-Produce a useful account of what was generated, what passed, what failed, what remains uncertain, and which source requirements are covered. If a correction is needed, trace it to the relevant source, rule, IR element, or backend behavior and recompile the affected scope.
-
-## 8. Verification is part of compilation, not an optional afterthought
-
-Psiberline's output is not complete merely because code was generated.
-
-The product goal is not to maximize the volume or speed of code production. It is to shorten the time required to produce **working software whose behavior is supported by evidence**.
-
-Verification should be designed into the compiler from the beginning:
-
-- Requirements should carry acceptance conditions where possible.
-- IR elements should map to verification obligations.
-- Generated modules should have explicit contracts.
-- Tests should be traceable to requirements and invariants.
-- The system should report coverage gaps and unverified behavior.
-- Failed checks should block claims of successful completion.
-- Human review should be required where evidence is insufficient or the consequence of an error warrants it.
-
-The system must distinguish among generated, compiled, tested, verified, and accepted. Those words must not be treated as synonyms.
-
-## 9. AI's role: useful reasoning inside a deterministic system
-
-AI may be valuable for interpreting natural language, proposing classifications, identifying possible relationships, drafting questions, suggesting IR structures, and assisting with code generation.
-
-But model output should be treated as a proposal or input to a controlled process—not as authority.
-
-The compiler should establish explicit boundaries between probabilistic interpretation and deterministic validation. Where a model proposes a fact or structure, the system should preserve its source evidence and subject it to the relevant schema, rules, invariants, and checks.
-
-The product should not depend on a model being correct merely because it sounds confident. It should be able to reject malformed output, detect contradictions, demand confirmation, and reproduce downstream compilation from an accepted IR.
-
-Source documents are data. Instructions embedded in customer documents must not be allowed to override Psiberline's system rules, tool permissions, or compilation policy. The system must treat external text as untrusted input and isolate it from privileged instructions and execution.
-
-The long-term objective is not to remove engineering judgment from the process. It is to encode repeatable engineering knowledge into explicit rules, contracts, tests, and compiler stages so human judgment can focus on the decisions that genuinely require it.
-
-## 10. The one-hour objective
-
-The one-hour ambition should become a measurable engineering target, not a slogan.
-
-A useful early benchmark is a bounded change with:
-
-- A source corpus of known size and format.
-- A defined language specification and rule set.
-- A limited, explicit software scope.
-- A supported output backend.
-- A known set of acceptance criteria.
-- A reproducible verification environment.
-
-For each run, measure at least:
-
-- Elapsed time from accepted input to verified output.
+- Ticket cycle time, from triage to accepted.
 - Human active time and number of interventions.
-- Time spent interpreting, resolving ambiguity, planning, generating, and verifying.
-- Number and severity of unresolved questions.
-- Requirements represented in the IR.
-- Requirements linked to generated changes.
-- Acceptance criteria passed, failed, or not tested.
+- **Conversion rate:** the share of sentences the rule set rewrites into EARS without a person.
+- **Coverage rate:** the share of stories that resolve to existing fixtures without new development.
+- Open questions raised, and how many were real.
+- Acceptance criteria passed, failed or not tested.
 - Rework after verification.
 - Reproducibility across repeated runs.
 
-The one-hour goal should be approached in stages:
+A fast result that hides an ambiguity is a failure. A slower one that exposes it before development is a success.
 
-1. **Assist:** reduce the time required to turn documents into structured requirements.
-2. **Specify:** produce a validated IR with traceable evidence and explicit open questions.
-3. **Generate bounded modules:** create small software components from approved IR.
-4. **Verify generated changes:** automatically test those components against their requirements.
-5. **Automate a complete bounded workflow:** take a well-scoped request from source corpus to verified, reviewable change with minimal human intervention.
-6. **Expand scope carefully:** increase the complexity and breadth of work only when measurements show that quality remains stable.
+## 13. Reuse and governance
 
-A one-hour result that produces unreviewable or incorrect code is a failure. A result that takes longer but exposes a critical ambiguity before implementation may be the better outcome.
+Psiberline is a sibling of Suite Builder, which compiles website evidence into test suites. Phase 4 has the same shape, and Suite Builder's pipeline organisation, typed intermediate structures, byte-for-byte goldens and mutation testing are candidates for reuse. Each is inspected first and reused only where the abstraction is real. Crawling, HTML interpretation and page models are left behind.
 
-## 11. Relationship to Suite Builder and Ghost-Core
+TypeScript is the implementation language because Suite Builder is written in it. That constrains the compiler, not its output.
 
-Psiberline is conceived as a sibling compiler to Suite Builder.
+Governance comes from Ghost-Core by its stamping process, after this vision is approved.
 
-Suite Builder takes structured website evidence—particularly HTML and related application behavior—and produces QA automation suites. Psiberline is intended to take human-authored requirements and compile them into software modules and their verification evidence.
+## 14. Principles
 
-The projects have different source languages and different products, but they share a deeper engineering problem: transform source material through explicit, testable stages into deterministic, useful output.
+1. **Each phase pays for itself.**
+2. **The typed tree is the contract** between interpretation and everything downstream.
+3. **Compose from verified parts.** New parts are verified before they can be selected.
+4. **Preserve provenance** from source passage to generated test or module.
+5. **Fail visibly.** Ambiguity, contradiction and unsupported constructs stop the pipeline.
+6. **No model in the chain.** What a model helps write is reviewed and committed before it runs.
+7. **Deterministic end to end.**
+8. **Check on the lowest rung that works.**
+9. **No abstraction before its second use.** One domain, one target, until a second exists.
+10. **Keep the data boundary.**
 
-Suite Builder is therefore an important source of reusable implementation and engineering knowledge. Reuse should be evaluated deliberately, not assumed.
+## 15. Risks
 
-Potentially reusable areas include:
+- **Natural language is not a specification.** Tickets omit edge cases and lean on unwritten knowledge. The pipeline must ask, not guess.
+- **The rules may convert less English than hoped.** If most sentences need a person, phase 0 is a proofreader with a small helper. That is still useful, and conversion rate is the number that says which it is.
+- **The typed tree may be costly to review.** If approving it takes as long as testing by hand, phases 2 and 3 do not pay. Review time is measured from the first slice.
+- **Tickets may not trace to code.** Phase 1 depends on commits that name their ticket. Where they do not, linking is manual.
+- **A synthetic corpus is cleaner than a real one.** What works here may not survive real tickets. The first weeks on real requirements are a test of the design, not a rollout.
+- **Coverage may grow slowly.** If most stories need a new fixture, the compiler adds little. Coverage rate is the number that says so.
+- **Product fixtures need the developers.** Phase 5 cannot be done to a team, only with one.
 
-- Compiler and pipeline organization.
-- Typed intermediate data structures and validation patterns.
-- Deterministic generation and byte-for-byte output checks.
-- Rule and invariant enforcement patterns.
-- Test architecture, fixtures, golden files, and mutation testing.
-- Traceability and reporting conventions.
-- Module boundaries and dependency discipline.
-- Quality gates, regression protection, and documentation practices.
-- AI-assisted workflows in which model output is constrained and verified.
+## 16. This sprint, and decisions
 
-Domain-specific website crawling, HTML interpretation, browser automation, and page models should not be imported simply because they exist. Psiberline should reuse abstractions that have demonstrated value and leave Suite Builder's domain assumptions behind.
+**Scope of the first slice.** One requirement, "read 50 panels of type A," taken through the whole chain in miniature: a catalogue record, one EARS sentence, an ontology of four assets (plant, site, pad, panel), the proofreader, one rewrite rule, a parser, a unit check, and one generated test from one test fixture. A second requirement, "read 10 more of type B," then proves reuse. No Lean in the first slice.
 
-Ghost-Core is the proposed source of project governance and development discipline. The intention is to inherit its useful practices through the proper stamping process later, rather than to imitate the stamp manually or claim that Psiberline has already been stamped.
+**Settled by Ghost (2026-11-26).**
 
-### Why TypeScript is the initial implementation choice
+1. EARS is the controlled English.
+2. The synthetic corpus is drawn from Solarpunk, a solar project Ghost owns.
+3. The catalogue is JSON files under version control.
+4. The stack is TypeScript.
+5. The chain is deterministic end to end, with no AI in it.
 
-TypeScript is the preferred initial language because Suite Builder is written in TypeScript and meaningful code reuse is an explicit goal.
+**Open.**
 
-Using TypeScript should make it easier to share or adapt existing libraries, types, tests, tooling, and generation infrastructure. It also keeps the initial compiler ecosystem coherent.
+1. Ownership of the engine after transfer into the adopting organisation.
 
-This is a choice about the language used to implement Psiberline, not a restriction on generated software. Output backends must remain independently replaceable and may target other languages and platforms.
+---
 
-Python, C++, or C should not be introduced merely because they have compiler-related libraries or performance characteristics. A different implementation language should be considered only when a measured requirement justifies the added boundary and maintenance cost.
-
-## 12. Founding architectural principles
-
-These are proposed principles for the project to test, refine, and eventually formalize as governed decisions.
-
-1. **Separate interpretation from generation.** Source-language understanding must not be entangled with target-language code generation.
-2. **Make the IR central.** The IR is the contract between interpretation and compilation.
-3. **Make language specifications replaceable.** Domain-specific interpretation belongs in explicit, versioned specifications.
-4. **Make rules modular.** Rule sets and invariants should be composable, testable, and traceable.
-5. **Make backends replaceable.** Target-specific code generation must not define the source language or common IR.
-6. **Preserve provenance.** Generated behavior must be traceable to source evidence and the transformations that produced it.
-7. **Fail visibly.** Ambiguity, contradiction, unsupported constructs, and failed checks must not be silently papered over.
-8. **Treat model output as untrusted until validated.** Confidence and fluency are not proof.
-9. **Prefer deterministic downstream processing.** Once interpretation is accepted, validation and compilation should be reproducible.
-10. **Verification is a product feature.** Generated code without evidence is an incomplete result.
-11. **Optimize for verified elapsed time.** Speed matters only when quality and traceability remain intact.
-12. **Reuse proven infrastructure without importing irrelevant domain assumptions.** Suite Builder is a source of leverage, not a mandate to copy its entire design.
-
-## 13. Risks and questions the project must confront
-
-The vision is ambitious and contains unresolved design questions. These should become explicit research and implementation work rather than hidden assumptions.
-
-### Natural language is not a formal specification
-
-Requirements often omit edge cases, conflict with one another, or rely on tacit organizational knowledge. Psiberline needs a disciplined ambiguity model and a way to ask targeted questions. It must not pretend every document can be compiled without clarification.
-
-### The IR could become too generic or too domain-specific
-
-A generic IR may lose important domain meaning. A domain-specific IR may prevent reuse across languages and backends. The project must discover the right shared core and allow typed extensions without turning every project into a bespoke compiler.
-
-### Rules can conflict or drift
-
-Rule sets need versioning, precedence, provenance, and regression tests. A rule update can change generated behavior even when source documents have not changed; that change must be visible.
-
-### Generated code can be plausible but wrong
-
-Compilation success and superficial tests do not establish that the software satisfies the requirements. Verification must be mapped to requirements and must report its limits.
-
-### Scope can overwhelm the one-hour target
-
-An entire production system may involve integrations, deployment environments, security reviews, data migrations, and operational constraints that cannot be compressed into one hour. The target must be scoped and measured honestly.
-
-### AI can introduce nondeterminism and unsafe assumptions
-
-The project needs controlled model boundaries, structured outputs, validation, provenance, and a secure execution model. Customer documents and generated code must not be allowed to grant themselves privileges.
-
-### Reuse can create accidental coupling
-
-Suite Builder's existing code should be inspected for stable, domain-independent contracts before reuse. Shared code should be extracted only when the abstraction is real and tested—not merely because two projects have similarly named folders or functions.
-
-## 14. A sensible development progression
-
-This is a directional sequence, not a detailed committed roadmap.
-
-### Foundation: prove the compiler boundary
-
-- Inspect Suite Builder and identify reusable, domain-independent components.
-- Define a minimal source-language specification contract.
-- Define the first version of the IR and its validation rules.
-- Define interfaces for rule sets and output backends.
-- Establish deterministic fixtures and tests for each stage.
-- Demonstrate source-to-IR transformation with provenance.
-
-### First vertical slice: requirements to a bounded module
-
-- Choose a narrow, representative requirements corpus.
-- Implement classification and invariant checks.
-- Detect ambiguity and contradiction.
-- Compile accepted IR into one small software module.
-- Derive acceptance tests and run them.
-- Produce a traceability report from source to generated code and test evidence.
-
-### Repeatability: make the result trustworthy
-
-- Add regression corpora and golden outputs.
-- Test rule changes and backend changes independently.
-- Measure reproducibility and failure modes.
-- Add explicit human approval points.
-- Demonstrate that a change to one domain pack does not break unrelated language or backend packs.
-
-### Workflow automation: reduce elapsed time
-
-- Automate the transition between stages where contracts are satisfied.
-- Parallelize independent work only where dependencies permit it.
-- Make questions and approvals concise and actionable.
-- Measure time, rework, and verification quality.
-- Optimize the slowest proven bottlenecks rather than guessing.
-
-### Expansion: multiple languages and targets
-
-- Add additional language specifications.
-- Add additional rule packs and domain invariants.
-- Add additional output backends.
-- Demonstrate that a new source language or target can be added without rewriting the compiler core.
-
-## 15. What success looks like
-
-Psiberline succeeds when a domain expert can provide a body of requirements and receive a software change whose meaning is explicit, whose implementation is traceable, and whose behavior has been checked against the original intent.
-
-A mature Psiberline should be able to answer, for any generated module:
-
-- Which source requirements caused this module to exist?
-- How were those requirements interpreted?
-- Which language specification and rule versions were used?
-- Which invariants were checked?
-- Which assumptions or human decisions were made?
-- Which backend generated the code?
-- Which tests and verification results support the claim that it works?
-- What remains unimplemented, untested, or uncertain?
-- Can the same accepted inputs reproduce the same result?
-
-The ultimate experience should be simple for the person expressing the need: describe the desired behavior, answer the questions that genuinely matter, review the resulting change, and receive verified software.
-
-The complexity should live in the compiler's explicit machinery—not in an opaque chain of guesses.
-
-**Psiberline's goal is to make the path from intent to verified software dramatically shorter, with one hour as the aspirational target for increasingly broad classes of bounded work.**
+**Psiberline's goal is to make every triaged ticket leave behind a checked statement of intent, and to compile those statements into tests first and software after, by a chain that needs no AI to run.**
