@@ -4,8 +4,22 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 ## Where the project stands (2026-11-26)
 
-Stamped from Ghost-Core today. Nothing of Psiberline's own is built; the template's documents, checks and
-gates are in place and green.
+Founded in one session, whose container no longer exists: everything it made is in this repository and
+Ghost-Core's. Done (`docs/DONE.md`): 0.1 this project's ghost, 0.2 the stack wired and the first ship, 0.3 the
+roadmap and Phase 1's chain. `VISION.md` is the approved long form; `docs/ROADMAP.md` is the plan. The full gate
+passes in about half a minute, mutation included. The core is taken up to Ghost-Core 56cb5ed, with one later fix to the
+gated commit copied in (J-009).
+
+Next in the chain: 0.4 the contract and the leaf module; 0.5 the founding decisions, which are Ghost's to write
+(an agent drafts the questions); 0.6 Tune-up pass 0; then Phase 1, the first slice.
+
+## Starting a session cold
+
+Clone; `git config user.name Ghost` and the email in `CLAUDE.md`; a session branch before the first edit
+(`git checkout -b claude/<session>`), since `scripts/commit.sh` refuses on `main` (P-004). `scripts/fast.sh` needs
+nothing installed. The stack's gate needs npm 11 or newer and a session's container ships npm 10:
+`npm install -g npm@11 --ignore-scripts`, then `npm ci --ignore-scripts`. A landing is `scripts/save.sh`,
+`scripts/gate.sh --fast`, then `scripts/commit.sh -a -F <message> --ship`.
 
 ## For Ghost: waiting on you
 
@@ -34,6 +48,7 @@ since the lockfile also holds 8.0.10 of each.
 
 - Mutation reports one mutant for `src/leaf/status.ts`: Stryker reads no tsconfig (the starter's setting), and the file is four lines. The score says little until there is more code.
 - `docs/AGENT.md`'s Fast loop and Gate cells are Ghost-Core's numbers until Tune-up pass 0 re-measures them here.
+- `test/test_landing.py` adds about four seconds to the fast loop, which the core measured at 26.76 s against a ceiling of 30: the next pass may find the armed metric past it, here and in the core.
 
 ## Advisories under the gate's threshold
 

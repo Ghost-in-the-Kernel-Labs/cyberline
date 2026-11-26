@@ -28,3 +28,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/when/core-update.md`, `theGhost.md`, `CLAUDE.md`, a fresh stamp of the core beside the last one.
 - **Complaints**: none
 - **Suggestions**: none
+
+### 2026-11-26 · the handoff for a cold start · Fable
+
+- **Task**: leave the repository so a session with no memory of this one can begin.
+- **Opened**: `docs/HANDOFF.md`, `TODO.md`, `docs/DONE.md`.
+- **Complaints**: none
+- **Suggestions**: none

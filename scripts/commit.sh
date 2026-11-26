@@ -67,6 +67,7 @@ done
 [ -n "$all" ] || [ "${#paths[@]}" -gt 0 ] || refuse "the arguments (name the paths to stage, or -a for all; $USAGE)"
 [ -z "$all" ] || [ "${#paths[@]}" -eq 0 ] || refuse "the arguments (-a and paths together; $USAGE)"
 [ "${GHOST_GATE:-}" != "skip" ] || docs_only=1
+[ -z "$ship" ] || [ -z "$docs_only" ] || refuse "the arguments (--ship needs the gate's record and --docs-only makes none: run scripts/gate.sh --fast and land without --docs-only)"
 git stripspace < "$scratch/message" > "$scratch/clean" && mv "$scratch/clean" "$scratch/message"
 subject=$(head -1 "$scratch/message")
 [ -n "$subject" ] || refuse "the arguments (the message is empty)"
