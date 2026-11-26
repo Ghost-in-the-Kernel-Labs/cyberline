@@ -17,3 +17,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-011 | Lean struck from the vision and the roadmap: P-020 | decision | `J-000-099.md` |
 | J-012 | Psiberline is the compiler: the vision replaced, the ghost renamed, P-021 | direction | `J-000-099.md` |
 | J-013 | The roadmap and the chain re-cut to the compiler | direction | `J-000-099.md` |
+| J-014 | The language project exists: Psiberline Language, founded in its own repository | direction | `J-000-099.md` |
