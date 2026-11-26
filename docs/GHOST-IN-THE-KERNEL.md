@@ -74,26 +74,32 @@ evidence when the implementation no longer agrees with its foundations.
 
 ## This project's ghost
 
-<!-- STAMP: replace this section. Name the loss this project is built against, in a paragraph,
-and the mechanisms by which the kernel remembers it, as a list that cites the contract and the
-decisions. The parents' sections are the examples; each is the philosophy pointed at a different
-loss. -->
+The loss Psiberline is built against is the requirement behind the ticket. A ticket is written
+once, by someone who knew what the system had to do. The code that closes it survives; the test may
+survive; the statement of what was wanted is left in a tracker nobody reads again. Months later
+nobody can say whether the code is right, only that it passed. Where a model is asked to fill that
+gap there is a second loss: an answer nobody can reproduce, so nobody can say where it came from.
 
-Every project built this way has a loss of its own, and this section names it. The parents:
+So the kernel remembers by these means, each cited to `VISION.md` until the contract (TODO 0.4)
+numbers it as an invariant:
 
-- **Suite Builder**: a test suite written by a tool whose reasons for each test would be gone by
-  the time the suite failed; so every generated test says where it came from, and the Suite IR
-  holds every decision a suite needs as plain data read back from the output.
-- **Katana**: a COBOL program whose authors have been gone for decades; so what the code does and
-  what it means are two artifacts (the Semantic IR and the Intent IR), and a proof ledger links
-  them, hash-chained, so a person's confirmation survives a rebuild.
-- **Employee Evaluator**: turnover, the ordinary loss, in a product that measures the philosophy
-  in other people's code; so every score is traced to a fact with evidence and a confidence.
-- **Neon Rain**: the forgotten search, a loss that happens in weeks to the person who caused it:
-  how many configurations were tried before this one looked good; so the trials file is
-  append-only and its count deflates every reported number.
+- **Every requirement keeps its source.** A record in the catalogue names the passage it came
+  from, the rule or the person that produced it, and who approved it (`VISION.md` section 5).
+- **A requirement is written in a language a parser accepts.** Controlled English, checked by the
+  proofreader against the ontology, so a sentence is formal by its form and not by a reader's
+  goodwill (`VISION.md` section 6).
+- **No model is in the chain.** From an accepted requirement on, the same input gives the same
+  bytes; a model may help build a part, never be one (`VISION.md` section 10; `docs/modules.json`,
+  MOD-03).
+- **A generated test names the criterion it came from**, and the criterion its requirement, back
+  to the source passage (`VISION.md` section 9).
+- **Nothing an employer or a customer gave enters this repository** (C-033; `VISION.md` section 11).
 
-A project whose section is still this list has not yet said what it is for.
+The lie to expect here has two shapes. The first is a requirement that reads as formal and means
+nothing: a sentence that passes the proofreader because its shape is right while a word in it is
+defined nowhere. The second is a test that agrees with the code because both were made from the
+same wrong reading: tests made from the typed tree show that the code matches the reading, never
+that the reading matches what was wanted.
 
 ## What it asks of a project's own code
 
