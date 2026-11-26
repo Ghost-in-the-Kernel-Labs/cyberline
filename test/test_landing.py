@@ -103,6 +103,15 @@ class TheLanding(unittest.TestCase):
         self.assertEqual(git_out(remote, ["rev-parse", "main"]), git_out(root, ["rev-parse", "main"]))
         self.assertEqual(git_out(remote, ["rev-parse", BRANCH]), git_out(root, ["rev-parse", "HEAD"]))
 
+    def test_docs_only_with_ship_is_refused_before_anything_lands(self) -> None:
+        root, _ = session()
+        saved(root, "a")
+        before = git_out(root, ["rev-parse", "main"])
+        result = run_commit(root, ["-a", "-m", "both", "--docs-only", "--ship"])
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("refused at the arguments (--ship needs the gate's record and --docs-only makes none", result.stdout)
+        self.assertEqual(git_out(root, ["rev-parse", "main"]), before)
+
     def test_a_docs_only_landing_from_the_branch_needs_no_record(self) -> None:
         root, _ = session()
         (root / "docs" / "note.md").write_text("a note\n")
