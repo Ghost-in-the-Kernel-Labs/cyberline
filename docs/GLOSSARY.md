@@ -62,7 +62,7 @@ removes is a decision in its own log.
 | **patch reviewer** | the agent that reads one dependency update's diff with Read, Grep and Glob and nothing else: read-only by construction (C-035) | security reviewer, approver (its SAFE approves nothing alone), auditor |
 | **reviewed version** | the last version of a package the project read in full, in `docs/REVIEWED-VERSIONS.md`; the next review's old side | last installed version (the diff is read from the reviewed one, not the installed one) |
 | **routine update** | a patch or minor of a package the project already has that passes every layer; taken without asking Ghost (C-035) | minor bump, auto-update |
-| **chain** | the product: every stage from a requirements document to its output, each a rule set, a parser, a checker or a composer, with no model in it (`VISION.md` section 10) | pipeline (the vision's six phases are the pipeline; the chain is what runs), engine |
+| **chain** | every stage from a requirements document to its output, each a rule set, a parser, a checker or a composer, with no model in it; the language project is its first half and Psiberline, the compiler, its second (P-021) | pipeline, engine |
 | **proofreader** | the tool that marks a sentence that is not EARS, a word the ontology lacks and a unit that does not resolve, naming the rule broken | `linter` (a stack's tool), spell checker, validator |
 | **rewrite rule** | one pattern of plain English and the EARS it becomes, with an id, a version and tests; the rule set is all of them | transform, heuristic |
 | **catalogue** | the requirements and what belongs to them (criteria, sources, decisions, constraints, dependencies, evidence, revisions) as JSON files under version control | database, backlog, requirements store |
@@ -73,3 +73,7 @@ removes is a decision in its own log.
 | **corpus** | the synthetic requirements this repository is built and proven on, under `corpus/`; never an employer's or a customer's (C-033) | dataset, samples |
 | **conversion rate** | the share of a corpus's sentences the rule set rewrites to EARS with no person | hit rate, automation rate |
 | **coverage rate** | the share of requirements that compile from fixtures that already exist | reuse rate; test coverage (a test's lines) |
+| **tree format** | what a handed-over requirement holds and how, with a version: the contract between the language project and the compiler (P-021) | schema, interface, API |
+| **test plan** | the compiler's output for an acceptance criterion: the fixture selected, its inputs, what is asserted and the trace, as JSON (P-011) | generated test, script, spec |
+| **gap** | a criterion no fixture can prove, or an input the tree does not supply: a named result of a compile | miss, failure, TODO |
+| **runner** | the program that executes a test plan against an application | harness, executor |

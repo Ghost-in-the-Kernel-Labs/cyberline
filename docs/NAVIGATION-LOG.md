@@ -56,3 +56,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `VISION.md`, `docs/GHOST-IN-THE-KERNEL.md`, `theGhost.md`, `CLAUDE.md`, `README.md`, `docs/LINEAGE.md`, `docs/HANDOFF.md`.
 - **Complaints**: none
 - **Suggestions**: none
+
+### 2026-11-26 · the roadmap re-cut to the compiler · Fable
+
+- **Task**: rewrite the roadmap and Phase 1's chain for the compiler.
+- **Opened**: `docs/when/plan.md`, `docs/ROADMAP.md`, `TODO.md`, `VISION.md`, `docs/GLOSSARY.md`.
+- **Complaints**: none
+- **Suggestions**: none

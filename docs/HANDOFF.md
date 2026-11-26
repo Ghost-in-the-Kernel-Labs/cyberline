@@ -6,7 +6,7 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 Founded in one session, whose container no longer exists: everything it made is in this repository and
 Ghost-Core's. Done (`docs/DONE.md`): 0.1 this project's ghost, 0.2 the stack wired and the first ship, 0.3 the
-roadmap and Phase 1's chain. `VISION.md` is the approved long form; `docs/ROADMAP.md` is the plan. The full gate
+roadmap and Phase 1's chain. On the same day the work was split in two (P-021): Psiberline is the compiler, and the language is a second project whose repository does not exist yet. `VISION.md` is the compiler's approved long form; `docs/ROADMAP.md` is its plan. The full gate
 passes in about half a minute, mutation included. The core is taken up to Ghost-Core 56cb5ed, with one later fix to the
 gated commit copied in (J-009).
 
@@ -29,7 +29,7 @@ nothing installed. The stack's gate needs npm 11 or newer and a session's contai
 3. Confirm P-002's versions (vitest 4.1.12, typescript 7.0.2, knip 6.46.1, @stryker-mutator/core 10.1.1), the agent's choice (J-003).
 4. Write the first invariants of the contract and set `docs/modules.json` (TODO 0.4); TODO 0.5 closes after it, its decisions being written.
 5. Who owns the chain after it is carried into the adopting organisation (`VISION.md` section 16; P-018 waits on it).
-6. The roadmap (`docs/ROADMAP.md`, J-004): Phases 1 to 4 numbered and 5 to 7 outlined from `VISION.md`; the order and the items are the agent's, for your ruling.
+6. The roadmap (`docs/ROADMAP.md`, J-013): re-cut to the compiler, Phases 1 to 3 numbered and 4 to 6 outlined from `VISION.md`; the order and the items are the agent's, for your ruling.
 
 ## Overrides to remove once past the cooldown
 
