@@ -68,7 +68,7 @@ The core's principles, copied from Ghost-Core when this project was stamped; thi
 | F-05 | The chain holds no model. | Ghost, 2026-11-26; P-008 | P-15; `docs/modules.json` forbids a model client's import. |
 | F-06 | No machine-checked proof. | Ghost, 2026-11-26; P-020 | The ladder ends at a generated plan. |
 | F-07 | A clause that says what code guarantees stays in a comment; a reason is a decision. | Ghost, 2026-11-26; Core C-042 | `scripts/checks/comments.py` holds the code here. |
-| F-08 | The language project does not exist yet, and no real requirement is available here. | Ghost, 2026-11-26 | The first trees are written by hand; the format is held here until the language project's repository exists (Phase 4). |
+| F-08 | The language project, Psiberline Language, is founded and has built nothing yet; no real requirement is available here. | Ghost, 2026-11-26; J-014 | The first trees are written by hand; the format is held here until Ghost says where it lives (`docs/HANDOFF.md`; Phase 4). |
 | F-09 | The first slice is "read 50 panels of type A", then "read 10 more of type B". | `VISION.md` section 15 | Phase 1's items. |
 
 ## 4. What is deliberately not built
