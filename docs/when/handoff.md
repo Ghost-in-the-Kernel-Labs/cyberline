@@ -9,16 +9,16 @@ report, the Cost line): `docs/when/hand-out-a-task.md`.
 2. Your debrief in `docs/NAVIGATION-LOG.md`, as its header says: Task, Opened (files, in order),
    Complaints, Suggestions. Not the task's own findings; those go in the journal. "none" is an answer.
 3. Your journal entry, if an event happened (a contradiction, a decision, a failure caught).
-4. Save (`scripts/save.sh -m <message>`) when you work on a session branch, so nothing you built is dirty
-   or unpushed when your turn ends (C-040); on `main` there is nothing to save.
+4. Save (`scripts/save.sh -m <message>`) on your session branch, so nothing you built is dirty
+   or unpushed when your turn ends (C-040); no work is done on `main` (C-049).
 5. Report as your brief says (`docs/when/hand-out-a-task.md`, "The report"). Land only if its
-   commit mode says so, and then through `scripts/commit.sh` after `scripts/gate.sh --fast`, never a raw commit
+   commit mode says so, and then from your branch, through `scripts/commit.sh -a -F <message> --ship` after `scripts/gate.sh --fast`, never a raw commit
    on `main` (`docs/when/tune-up.md` says why).
 
 ## Reviewing a task (the strong grade)
 
 Read the diff against the task; run the fast checks (`scripts/gate.sh --fast`); write the journal entry; land what
-the worker saved on its branch, through `scripts/commit.sh`; ship (`scripts/ship.sh`). A tune-up's diff is
+the worker saved from its branch, through `scripts/commit.sh --ship` (the commit and the ship in one step, C-049). A tune-up's diff is
 read against the agent's notes; a fix that reached past the may-change list is reverted.
 
 Why: a fresh agent meets the repository as a newcomer does, so its trouble is the repository's, and

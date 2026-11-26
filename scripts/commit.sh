@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # The gated commit (C-037, C-024, C-040): the landing, the only way a commit reaches `main` (a session's checkpoints on
 # its own branch are scripts/save.sh, which never lands). In order, each refusal one line naming its step:
-#   1. stage: the paths given, or everything (-a or -A); refused when nothing is staged
+#   1. stage: the paths given, or everything (-a or -A); refused when nothing is staged. From a session branch (C-049) the
+#      landing is made on `main`'s tip from the branch's saved tree, refused while the branch holds an unsaved change; on
+#      `main` itself it is refused where a remote `origin` exists
 #   2. the secret scan over the staged diff (scripts/checks/secrets.py --diff)
 #   3. the commit check (C-039): a staged change to an auto-execution surface (scripts/*.sh, a stack's gate.sh, an agent
 #      file, a workflow: docs/SUPPLY-CHAIN.md's inventory) is refused unless the message names a decision id, so every
@@ -18,8 +20,10 @@
 #      staged path under docs/, the record is not compared and the message gets the trailer `Gate: fast loop only`
 #   7. the secret scan again, and the staged tree unchanged after step 6
 #   8. the commit: `git commit-tree` of the recorded tree on the parent HEAD named at step 1, author Ghost and committer
-#      Claude, then `git update-ref` from that parent, so a HEAD that moved meanwhile refuses it; never `git commit`
-# Usage: scripts/commit.sh [-a | <paths>…] -F file | -m msg [--docs-only]     (-F - reads the message from stdin)
+#      Claude, then `git update-ref` from that parent, so a HEAD that moved meanwhile refuses it; never `git commit`. From a
+#      session branch the branch then takes `main`'s new commit as a second parent, its tree unchanged
+#   9. with --ship, scripts/ship.sh at once, then scripts/save.sh for the session branch (C-049)
+# Usage: scripts/commit.sh [-a | <paths>…] -F file | -m msg [--docs-only] [--ship]     (-F - reads the message from stdin)
 # A refusal leaves the index as it was before the script ran; the working tree is never touched. Never a git hook: an agent
 # never installs one (C-034), and nothing checks a commit after it exists (C-037).
 set -uo pipefail
@@ -29,7 +33,7 @@ AUTHOR_NAME=Ghost
 AUTHOR_EMAIL=118085043+ghost-in-the-kernel@users.noreply.github.com
 COMMITTER_NAME=Claude
 COMMITTER_EMAIL=noreply@anthropic.com
-USAGE="usage: scripts/commit.sh [-a | <paths>…] -F file | -m msg [--docs-only]"
+USAGE="usage: scripts/commit.sh [-a | <paths>…] -F file | -m msg [--docs-only] [--ship]"
 
 scratch=$(mktemp -d)
 saved_index=""
@@ -43,11 +47,12 @@ trap cleanup EXIT
 refuse() { echo "commit: refused at $1"; exit 1; }
 
 # The arguments: -a/-A or paths, one message, --docs-only.
-all="" docs_only="" message="" paths=()
+all="" docs_only="" ship="" message="" paths=()
 while [ "$#" -gt 0 ]; do
   case "$1" in
     -a|-A) all=1;;
     --docs-only) docs_only=1;;
+    --ship) ship=1;;
     -m) [ "$#" -ge 2 ] && [ -z "$message" ] || refuse "the arguments ($USAGE)"; printf '%s\n' "$2" > "$scratch/message"; message=1; shift;;
     -F|--file)
       [ "$#" -ge 2 ] && [ -z "$message" ] || refuse "the arguments ($USAGE)"
@@ -68,18 +73,31 @@ subject=$(head -1 "$scratch/message")
 
 # 1. Stage. The parent is named once, here: the commit is made on it or not at all.
 branch=$(git symbolic-ref --short -q HEAD) || refuse "staging (HEAD is not on a branch)"
-parent=$(git rev-parse --verify -q HEAD) || refuse "staging (the branch has no commit yet)"
+head=$(git rev-parse --verify -q HEAD) || refuse "staging (the branch has no commit yet)"
+# The landing's target and parent (C-049): from a session branch the saved tree lands on main's tip; on main, or in a
+# clone with no main, the commit is made on the branch itself.
+if [ "$branch" != main ] && git rev-parse -q --verify refs/heads/main >/dev/null; then
+  target=main; parent=$(git rev-parse refs/heads/main)
+else
+  target=$branch; parent=$head
+fi
+if [ "$branch" = main ] && git remote get-url origin >/dev/null 2>&1; then
+  refuse "the branch (main is not worked on where origin exists: work on a session branch, save with scripts/save.sh, and land from it; C-049)"
+fi
 saved_index=$(git rev-parse --git-path index)
 if [ -f "$saved_index" ]; then cp "$saved_index" "$scratch/index"; else saved_index=""; fi
 if [ -n "$all" ]; then git add -A || refuse "staging (git add failed)"; else git add -A -- "${paths[@]}" || refuse "staging (git add failed on the paths given)"; fi
-git diff --cached --quiet && refuse "staging (nothing is staged: the paths hold no change)"
+if [ "$target" != "$branch" ]; then
+  git diff --cached --quiet HEAD || refuse "the working tree (unsaved changes on $branch: scripts/save.sh first; C-049)"
+fi
+git diff --cached --quiet "$parent" && refuse "staging (nothing is staged: the paths hold no change)"
 
 # 2. The secret scan, over the staged diff.
-scan() { git diff --cached --no-color --no-ext-diff | python3 -I scripts/checks/secrets.py --diff; }
+scan() { git diff --cached --no-color --no-ext-diff "$parent" | python3 -I scripts/checks/secrets.py --diff; }
 findings=$(scan) || refuse "the secret scan (the staged diff holds a secret: $(echo "$findings" | paste -sd ';' -); nothing committed)"
 
 # 3. The commit check (C-039): a staged surface needs a decision id somewhere in the message.
-surface=$(git diff --cached --name-only | grep -E '^(scripts/[^/]+\.sh|stacks/[^/]+/gate\.sh|\.claude/agents/[^/]+\.md|\.github/workflows/[^/]+\.ya?ml)$' | head -1)
+surface=$(git diff --cached --name-only "$parent" | grep -E '^(scripts/[^/]+\.sh|stacks/[^/]+/gate\.sh|\.claude/agents/[^/]+\.md|\.github/workflows/[^/]+\.ya?ml)$' | head -1)
 if [ -n "$surface" ] && ! grep -qE '\b[A-Z]{1,4}-[0-9]{3,}\b' "$scratch/message"; then
   refuse "the commit check ($surface runs code by itself: a change to it names the decision it carries, as C-nnn, in the message; C-039)"
 fi
@@ -118,7 +136,7 @@ record_file="$(git rev-parse --git-dir)/ghost/tree"
 recorded=$( [ -f "$record_file" ] && tr -d '[:space:]' < "$record_file" )
 kind=$( [ -f "${record_file%tree}kind" ] && tr -d '[:space:]' < "${record_file%tree}kind" )
 if [ -n "$docs_only" ]; then
-  outside=$(git diff --cached --name-only | grep -v '^docs/' | head -1)
+  outside=$(git diff --cached --name-only "$parent" | grep -v '^docs/' | head -1)
   [ -z "$outside" ] || refuse "the record (--docs-only, but $outside is not under docs/: run scripts/gate.sh --fast first)"
   git interpret-trailers --in-place --trailer "Gate: fast loop only" "$scratch/message"
   tree=$staged
@@ -138,8 +156,23 @@ findings=$(scan) || refuse "the second secret scan (the staged diff holds a secr
 # 8. The commit, from the tree, on the parent named at step 1; the branch moves only from that parent.
 commit=$(GIT_AUTHOR_NAME=$AUTHOR_NAME GIT_AUTHOR_EMAIL=$AUTHOR_EMAIL GIT_COMMITTER_NAME=$COMMITTER_NAME \
   GIT_COMMITTER_EMAIL=$COMMITTER_EMAIL git commit-tree "$tree" -p "$parent" -F "$scratch/message") || refuse "the commit (git commit-tree failed)"
-git update-ref -m "commit: $subject" "refs/heads/$branch" "$commit" "$parent" 2>/dev/null \
-  || refuse "the commit (HEAD moved since staging: $branch is no longer ${parent:0:10}; nothing committed)"
+git update-ref -m "commit: $subject" "refs/heads/$target" "$commit" "$parent" 2>/dev/null \
+  || refuse "the commit (HEAD moved since staging: $target is no longer ${parent:0:10}; nothing committed)"
+# From a session branch: the branch takes main's new commit as a second parent, the tree unchanged, so its next landing
+# is read against it.
+if [ "$target" != "$branch" ]; then
+  joined=$(GIT_AUTHOR_NAME=$AUTHOR_NAME GIT_AUTHOR_EMAIL=$AUTHOR_EMAIL GIT_COMMITTER_NAME=$COMMITTER_NAME \
+    GIT_COMMITTER_EMAIL=$COMMITTER_EMAIL git commit-tree "$tree" -p "$head" -p "$commit" -m "landed: $subject") \
+    && git update-ref -m "landed: $subject" "refs/heads/$branch" "$joined" "$head" 2>/dev/null \
+    || refuse "the branch ($branch moved while the landing ran: main holds $(git rev-parse --short "$commit"); merge main into $branch by hand)"
+fi
 committed=1
 git reset -q
 echo "commit: $(git rev-parse --short "$commit") $subject"
+# 9. The ship, in the same step when asked (C-049): main by scripts/ship.sh, then the session branch by scripts/save.sh.
+if [ -n "$ship" ]; then
+  scripts/ship.sh || exit 1
+  if [ "$target" != "$branch" ] && git remote get-url origin >/dev/null 2>&1; then
+    scripts/save.sh -m "landed: $subject" >/dev/null || { echo "commit: main is shipped; the save of $branch failed (run scripts/save.sh)"; exit 1; }
+  fi
+fi

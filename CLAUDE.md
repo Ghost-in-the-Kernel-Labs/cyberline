@@ -21,9 +21,9 @@ workpath's file, never here.
 installed. Three checkpoints (C-040): `scripts/save.sh -m <message>` saves a session's work on its own branch
 (the key scan, a plain commit as Ghost, a push of that branch; no gate), so no turn ends with a dirty tree.
 `scripts/gate.sh --fast` is the fast checks, the check before a landing: the fast loop, the key scan, each present
-stack's fast checks; it records the tree it passed on (C-037). `scripts/commit.sh -a -F <message>` is the only way a
-commit reaches `main`: it stages, scans, runs the fast loop, refuses a tree the gate did not record, and refuses any
-but a `tune-up:` commit while a tune-up is due; `scripts/ship.sh` is the only push to `main`. The full gate,
+stack's fast checks; it records the tree it passed on (C-037). `scripts/commit.sh -a -F <message> --ship`, run on the session branch once it is saved, is the only way a
+commit reaches `main` (C-049; on `main` itself it refuses): it lands the saved tree, scans, runs the fast loop, refuses a tree the gate did not record and any
+but a `tune-up:` commit while a tune-up is due, and with `--ship` runs `scripts/ship.sh`, the only push to `main`, in the same step. The full gate,
 `scripts/gate.sh` (the slow tests, every stack's gate, the metrics; build/gate.log, one `gate:` verdict line), is the
 release checkpoint: each tune-up pass and before a real project is stamped. Long output goes to a file (`docs/when/long-run.md`).
 `python3 -I scripts/next_id.py decision|journal` gives the next id after fetching main.
@@ -62,8 +62,8 @@ The maintainer is "Ghost" (GitHub: ghost-in-the-kernel) in every file, comment a
 are authored as Ghost (`git config user.name Ghost`, `git config user.email
 118085043+ghost-in-the-kernel@users.noreply.github.com`; an agent keeps its Co-Authored-By line); the commit
 script sets author Ghost and committer Claude.
-One branch, `main`, landed through the gate; a session saves on its own branch (`scripts/save.sh`) and lands on `main`
-only through `scripts/commit.sh` and `scripts/ship.sh` (C-040). Nothing a customer gave, nothing a run produced, nothing under a license that
+One branch, `main`, landed through the gate and never worked on; a session works and saves on its own branch (`scripts/save.sh`) and lands on `main`
+only through `scripts/commit.sh` and `scripts/ship.sh` (C-040, C-049). Nothing a customer gave, nothing a run produced, nothing under a license that
 forbids redistribution, and nothing that requires the maintainer's own machine ever enters this
 repository (C-033, AGT-01).
 

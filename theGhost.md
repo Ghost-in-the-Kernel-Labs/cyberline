@@ -532,15 +532,25 @@ how work is done, then how the repository is kept.
 - **subject:** stacks
 
 ### C-048: A tune-up commit falls due every twenty-fifth commit
-- **Decision:** The tune-up's one counter (C-024), commits on `main` since the last tune-up, falls due at twenty-five, not eight. The rest of C-024 stands: the commit gate accepts a commit whose message starts `tune-up:` at any count and refuses any other while one is due, and every phase still ends with its numbered tune-up pass.
-- **Why:** Ghost, 2026-11-26: "set tuneups on both to one per 25 commits", with no reason given. What the day had shown: Phase 5's fourteen items, most of them one file and its test, crossed the count of eight twice in one session; the commit that fell due mid-phase had four debriefs and nothing to act on (J-095), while the pass at the phase's end is what found the two faults that mattered (J-105). The commit gate's share of the work falls from one commit in eight to one in twenty-five; the passes are unchanged.
+- **Decision:** The tune-up's one counter (C-024), commits on `main` since the last tune-up, falls due at twenty-five, not eight. The rest of C-024 stands: the commit gate accepts a commit whose message starts `tune-up:` at any count and refuses any other while one is due, and every phase still ends with its numbered tune-up pass. The count is each project's own, and Ghost moves it as the project ages: twenty-five while the foundation is new, back toward ten when optimizing the agent's environment starts to matter more. When that is has no rule; it is Ghost's judgement of the project.
+- **Why:** Ghost, 2026-11-26: "with a well laid foundation, refactoring work drops sharply in the initial phases of a project. However, the optimization component of a tuneup becomes more important later. When is individual to each project, and its a question of art, not science. i dont have a hard rule when to go from 25 to 10, but it does happen." What the day had shown agrees: Phase 5's fourteen items crossed the count of eight twice in one session, and the commit that fell due mid-phase had four debriefs and nothing to act on (J-095), while the pass at the phase's end found the two faults that mattered (J-105).
 - **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py` (the rule at twenty-four and at twenty-five), `docs/when/tune-up.md`.
-- **Source:** Ghost, 2026-11-26, in chat.
+- **Source:** Ghost, 2026-11-26, in chat: the count, then the reason.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
 - **See also:** C-024, C-025, C-037
 - **Supersedes:** C-024, in part: its "with one due every eighth commit" (every twenty-fifth). The rest of C-024 stands.
 - **subject:** tune-up cadence
+
+### C-049: A landing is made from a session branch; `main` is never worked on; the commit and the ship are one step
+- **Decision:** No work is done on `main`. A session works on its own branch and saves there (C-040), so the tree is committed and pushed before any gate runs on it. The landing is made from that branch: `scripts/commit.sh`, run on a session branch, refuses while the branch holds an unsaved change, takes the branch's saved tree, and commits it on `main`'s tip as one commit (author Ghost, committer Claude), by the same steps as before: the scan, the commit check, the tune-up rule, the fast loop, the gate's record. The branch then takes `main`'s new commit as a second parent, its tree unchanged, so the next landing is read against it. With `--ship` the same step runs `scripts/ship.sh`, which ships the local `main` from whatever branch it is run on, and then saves the branch. Run on `main` where a remote `origin` exists, `scripts/commit.sh` refuses and names the branch route. A clone with no remote, or with no `main` yet, commits on the branch it is on, as before. This amends C-040, whose landing could be made from `main`'s working tree.
+- **Why:** Ghost, 2026-11-26: "there is a failure mode in the commit gate. A hook recalls the agent prompting it to commit changed files while the gate runs. This runs repeatedly wasting tokens. The solution is moving the work to other branches and then merging after the gate has run." C-040 and `docs/when/coordinate.md` said to work on a branch and nothing held it: the agent that wrote this entry had worked on `main` through a whole session, the tree dirty there during every gate run, the five-minute full gates among them (J-110). A rule nothing holds is kept while it is convenient. The ship in the same step is J-080's proposal from Suite Builder's `gated-commit --ship-only` (G-646, G-363), so `main` is never ahead of origin between a commit and its push.
+- **Held by:** `scripts/commit.sh` (the branch landing, the refusal on `main`, `--ship`), `scripts/ship.sh` (ships the local `main`), `test/test_landing.py` (seven cases on a scratch repository with a bare remote), `CLAUDE.md` ("Commands", "Three rules"), `docs/when/coordinate.md` ("Commits and hooks").
+- **Source:** Ghost, 2026-11-26, in chat (the failure and the solution; "Yes, lets make the repos follow this"); the mechanism is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-031, C-037, C-040
+- **subject:** landing
 
 ---
 
@@ -574,3 +584,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** Core C-048, Core C-024
 - **subject:** tune-up cadence
+
+### P-004: Core C-049 adopted: a landing is made from a session branch, and `main` is never worked on
+- **Decision:** Psiberline takes Core C-049: no work is done on `main`; a session works and saves on its own branch, and `scripts/commit.sh -a -F <message> --ship`, run from that branch, lands the saved tree on `main`, ships it and saves the branch in one step. On `main` itself the gated commit refuses.
+- **Why:** Ghost, 2026-11-26: a hook re-prompts the agent to commit changed files while the gate runs, again and again, and the answer is to work on another branch and land after the gate has run. The core's reasons are in Core C-049. This session's agent had worked on this project's `main` after its first ship, with nothing to refuse it.
+- **Held by:** `scripts/commit.sh`, `scripts/ship.sh`, `test/test_landing.py`, `CLAUDE.md`.
+- **Source:** Ghost, 2026-11-26, in chat ("Yes, lets make the repos follow this").
+- **Status:** in force
+- **See also:** Core C-049, Core C-040
+- **subject:** landing

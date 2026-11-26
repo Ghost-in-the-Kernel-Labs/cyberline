@@ -30,10 +30,9 @@ in CLAUDE.md's workpath table when the routing table outgrows the word ceiling.
 Research (what the item needs, read against its check), build, the fast loop, the journal entry
 (then `python3 -I scripts/journal_index.py` and `python3 -I scripts/metrics.py --write`, the two
 generated files it changes), the debrief, the save (`scripts/save.sh -m <message>` on a session branch: the key
-scan, a plain commit as Ghost, the branch pushed; on `main` itself there is nothing to save, so the step is skipped
-there), the fast checks (`scripts/gate.sh --fast`: the fast loop, the key scan, each present stack's fast checks; it
-records the tree), the commit through `scripts/commit.sh -a -F <message>` (it stages, scans, runs the fast loop and
-refuses a tree the gate did not record, C-037, C-040; a fast record adds the trailer `Gate: fast checks`; a change
+scan, a plain commit as Ghost, the branch pushed; all work is on a session branch, C-049), the fast checks (`scripts/gate.sh --fast`: the fast loop, the key scan, each present stack's fast checks; it
+records the tree), the commit through `scripts/commit.sh -a -F <message> --ship` from the session branch (it lands the saved tree on `main`, scans, runs the fast loop and
+refuses a tree the gate did not record, C-037, C-040, C-049; `--ship` ships in the same step; a fast record adds the trailer `Gate: fast checks`; a change
 wholly under `docs/` may add `--docs-only`, which skips the record and adds the trailer `Gate: fast loop only`, the
 one path open in a stamped project before its stack's gate is wired), the ship (`scripts/ship.sh`, the only
 `git push` to `main`: it fetches `main` and refuses a HEAD whose tree is not the record or that is not a
