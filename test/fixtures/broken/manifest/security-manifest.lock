@@ -1,0 +1,7 @@
+# A planted break for scripts/checks/manifest.py (test/test_manifest.py): a changed gate, a pinned file gone,
+# a file pinned outside the criterion, a line not in the form; and new.yml, a workflow nobody pinned.
+96d9e6bad07afb6b6497832521c05b2c6401cd7ebf34ee47898584a46ae19ee5  docs/notes.md
+633440683b293cb845ad19a7e19fd450ffad38a54cd29be5130ba08539d8c8c5  scripts/fast.sh
+0000000000000000000000000000000000000000000000000000000000000000  scripts/gate.sh
+1111111111111111111111111111111111111111111111111111111111111111  scripts/ship.sh
+not-a-hash  scripts/x.sh

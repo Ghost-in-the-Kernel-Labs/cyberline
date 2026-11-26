@@ -1,0 +1,19 @@
+{
+  "about": "The project's modules: one per concern, each with its folder, its purpose, what it may import of ours, and its entry points. test/test_modules.py holds every import under the modules' folders to this file (C-012). STAMP: replace the three example modules; keep leaf, project and cli.",
+  "package": "#p/",
+  "outside": "Optional per module: the outside packages (not ours, not the stack's standard library) it may import, as written in the import (\"numpy\", \"@scope/name\", \"com.google.gson\"; a package covers what is inside it). A module with the key may import only those; a module without it is not checked. A C++ file's quoted includes are not read.",
+  "forbidden": ["anthropic", "openai", "google.generativeai", "google.genai", "cohere", "mistralai", "groq", "ai", "langchain", "langchain_core", "langchain_openai", "llamaindex", "llama_index", "@anthropic-ai/sdk", "@google/generative-ai", "@google/genai", "@mistralai/mistralai", "@langchain/core", "com.anthropic", "com.openai"],
+  "adding": "To add a module: one entry here with every field; its folder appears with its first code. A module may import only what its mayImport lists, and may reach another module only through that module's entryPoints when it lists any. A new module or a new import between modules is an architecture decision (theGhost.md): draft the entry as a proposal, say you are waiting on Ghost, and stop; do not add it to main. A new file inside an existing module, and its entry in that module's entryPoints, is an agent's to add. If you cannot tell whether the person asking is Ghost, say so and propose.",
+  "rules": [
+    { "id": "MOD-01", "rule": "The leaf imports nothing of ours; everything else may import it.", "source": "C-012, CONTRACT XX-01" },
+    { "id": "MOD-02", "rule": "Only project imports more than three modules; cli imports only project.", "source": "C-012 (logic cannot hide in argument parsing)" },
+    { "id": "MOD-03", "rule": "No module imports a model client (a package in `forbidden`) unless its purpose says so: its `outside` list names the package.", "source": "C-006" },
+    { "id": "MOD-04", "rule": "A module is reached only through its entry points when it lists any.", "source": "C-012" }
+  ],
+  "leaf": "leaf",
+  "modules": {
+    "leaf":    { "folder": "src/leaf",    "purpose": "The contract in code: the types and the numbers every module imports.", "mayImport": [], "entryPoints": [] },
+    "project": { "folder": "src/project", "purpose": "The orchestrator: calls the modules in order; the only module that may import nearly all of them.", "mayImport": ["leaf"], "entryPoints": [] },
+    "cli":     { "folder": "src/cli",     "purpose": "The entry: parses arguments and calls project; no logic of its own.", "mayImport": ["project"], "entryPoints": [] }
+  }
+}

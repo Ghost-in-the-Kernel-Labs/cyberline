@@ -1,0 +1,8 @@
+{
+  "package": "app.",
+  "leaf": "leaf",
+  "modules": {
+    "leaf":    { "folder": "src/leaf",    "purpose": "p", "mayImport": [], "entryPoints": [] },
+    "project": { "folder": "src/project", "purpose": "p", "mayImport": ["leaf"], "entryPoints": [] }
+  }
+}

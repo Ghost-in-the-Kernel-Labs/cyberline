@@ -1,0 +1,10 @@
+{
+  "package": "app.",
+  "forbidden": ["anthropic", "@anthropic-ai/sdk"],
+  "leaf": "leaf",
+  "modules": {
+    "leaf":    { "folder": "src/leaf",    "purpose": "p", "mayImport": [], "entryPoints": ["leaf.sizes.LIMIT"] },
+    "project": { "folder": "src/project", "purpose": "p", "mayImport": ["leaf"], "entryPoints": [], "outside": ["requests"] },
+    "cli":     { "folder": "src/cli",     "purpose": "p", "mayImport": ["project"], "entryPoints": [] }
+  }
+}

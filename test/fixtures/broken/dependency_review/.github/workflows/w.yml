@@ -1,0 +1,10 @@
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  x:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@1111111111111111111111111111111111111111
+      - uses: actions/setup-node@2222222222222222222222222222222222222222

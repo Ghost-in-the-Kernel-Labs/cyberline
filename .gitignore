@@ -1,0 +1,13 @@
+# Anchored (EE J-023: an unanchored entry silently dropped fixtures). Nothing a run produced enters git (C-033).
+/.venv/
+/__pycache__/
+/**/__pycache__/
+/build/
+/.mutmut-cache
+/mutants/
+# TypeScript stack output (npm ci, Stryker, the build; the gate logs go under build/)
+/node_modules/
+/.stryker-tmp/
+/reports/
+/.tmp/
+/dist/

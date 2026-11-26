@@ -1,0 +1,15 @@
+{
+  "name": "psiberline",
+  "private": true,
+  "type": "module",
+  "imports": { "#p/*": "./src/*" },
+  "engines": { "npm": ">=11" },
+  "scripts": {
+    "test": "vitest run --project unit",
+    "check": "bash scripts/gate.sh",
+    "mutate": "node scripts/mutate.mjs"
+  },
+  "devDependencies": {
+    "STAMP": "pin vitest, typescript, knip and @stryker-mutator/core here (the command runner is part of core), each with a reason in theGhost.md, then npm install --package-lock-only --ignore-scripts and delete this line"
+  }
+}

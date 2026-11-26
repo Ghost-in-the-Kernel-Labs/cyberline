@@ -1,0 +1,8 @@
+{
+  "package": "app.",
+  "leaf": "policy",
+  "modules": {
+    "policy":  { "folder": "src/policy",  "purpose": "p", "mayImport": [], "entryPoints": [] },
+    "project": { "folder": "src/project", "purpose": "p", "mayImport": ["policy"], "entryPoints": [] }
+  }
+}

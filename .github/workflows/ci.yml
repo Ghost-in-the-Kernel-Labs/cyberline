@@ -1,0 +1,17 @@
+# Run by hand only (C-032; Ghost, 2026-10-23: Actions minutes are scarce and spent strategically). No push,
+# pull request or schedule starts a run. The gate before a push is scripts/gate.sh, run in the session; this
+# workflow exists for what a session cannot do: a second operating system or a long matrix, when a decision says so.
+name: ci
+on:
+  workflow_dispatch:
+# Least privilege: the job reads the repository and nothing else.
+permissions:
+  contents: read
+jobs:
+  fast-loop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0, pinned by SHA
+      - name: The fast loop, nothing installed
+        run: scripts/fast.sh
