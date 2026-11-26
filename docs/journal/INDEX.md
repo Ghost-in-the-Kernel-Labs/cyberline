@@ -9,3 +9,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-003 | The stack wired: four pins, a founding lockfile, the gate green (0.2) | failure-caught | `J-000-099.md` |
 | J-004 | The roadmap written from the vision: Phases 1 to 4 numbered, 5 to 8 outlined (0.3) | direction | `J-000-099.md` |
 | J-005 | Core taken up to 6d13f63: C-048 adopted, the core's fixes to its own stamp copied in | decision | `J-000-099.md` |
+| J-006 | Tune-up commit at Ghost's word, the first here | measurement | `J-000-099.md` |

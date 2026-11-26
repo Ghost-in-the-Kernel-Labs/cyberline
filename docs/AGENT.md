@@ -47,7 +47,7 @@ stamped project inherits these lines and its tune-up pass re-measures the first.
 | Files a routing row opens | ≤ 5 | 2 | the first five reads decide the task |
 | Decisions without `See also` | 0 | 0 | links find what grep misses |
 | Stale generated files | 0 | 0 | AGT-05 |
-| Docs lines per source line | < 0.35 | 412 | Suite Builder reached 0.37 and it hurt; unarmed until there is source |
+| Docs lines per source line | < 0.35 | 412.6 | Suite Builder reached 0.37 and it hurt; unarmed until there is source |
 | Cost rows since the thresholds were set | — | 0 | informational, never armed: `docs/when/grades.md`'s provisional numbers move only by a decision from these rows (C-036) |
 
 ## Re-measuring (a tune-up pass, C-024)
