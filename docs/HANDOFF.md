@@ -23,6 +23,7 @@ nothing installed. The stack's gate needs npm 11 or newer and a session's contai
 
 ## For Ghost: waiting on you
 
+0. The split (P-021, J-012): Psiberline is the compiler. Three things are yours: the language project's name and its repository, which an agent cannot create; where the tree's format is written down (the agent's proposal: in the language project, Psiberline pinning a version, and here until that repository exists); and the seven founding decisions that are about the language (P-005, P-006, P-007, P-012, P-013, P-014, P-015): say for each whether it is withdrawn here and re-made there, or stands here as what the compiler expects of its input.
 1. Confirm the wording of P-005 to P-020, the founding decisions (J-010, J-011): you took the options the agent set out; the words are the agent's.
 2. Confirm the wording of this project's ghost (`docs/GHOST-IN-THE-KERNEL.md`, J-002): drafted from `VISION.md`.
 3. Confirm P-002's versions (vitest 4.1.12, typescript 7.0.2, knip 6.46.1, @stryker-mutator/core 10.1.1), the agent's choice (J-003).

@@ -49,3 +49,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `VISION.md`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `theGhost.md`.
 - **Complaints**: none
 - **Suggestions**: none
+
+### 2026-11-26 · the split: Psiberline is the compiler · Fable
+
+- **Task**: replace the vision with the compiler's, rename the ghost, record P-021.
+- **Opened**: `VISION.md`, `docs/GHOST-IN-THE-KERNEL.md`, `theGhost.md`, `CLAUDE.md`, `README.md`, `docs/LINEAGE.md`, `docs/HANDOFF.md`.
+- **Complaints**: none
+- **Suggestions**: none

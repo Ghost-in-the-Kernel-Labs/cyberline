@@ -1,244 +1,177 @@
 # Psiberline: Vision and Product Thesis
 
-**Status:** Revised vision (draft for Ghost's approval); aspirational, not a statement of implemented capability
-**Supersedes:** the founding vision of 2026-11-25
+**Status:** Approved by Ghost, 2026-11-26 (P-021); aspirational, not a statement of implemented capability
+**Supersedes:** the revised vision of 2026-11-26, which covered the language and the compiler together
 **Implementation language:** TypeScript
 **Repository:** https://github.com/Ghost-in-the-Kernel-Labs/psiberline
 
 ---
 
-## 1. What changed from the founding vision
+## 1. What changed from the last vision
 
-The founding vision described a general compiler from any requirements corpus to any software target. This revision narrows it on purpose.
+The work is now two projects, split where the typed tree is handed over.
 
-- **One domain.** Psiberline targets utility-scale solar software. Other domains are a non-goal until the solar pipeline works end to end.
-- **One entry point.** Requirements arrive through quality-assurance (QA) ticket triage, not as a finished corpus.
-- **Tests before product code.** The first thing compiled is a test for an existing application. Compiling the application itself comes last.
-- **Composition, not free generation.** Output is assembled from fixtures that have already been verified. A model does not write new product code inside the compiler.
-- **A verification ladder.** Each claim is checked on the lowest rung that can establish it. Machine-checked proof is not one of the rungs (P-020).
-- **No AI in the chain.** The goal is a fully deterministic chain of work, from a requirements document to its output. A model may help build the chain; it is not a stage in it.
+- **The language project** (its own repository) owns everything up to an accepted requirement: the corpus, the catalogue, the ontology, the EARS grammar and parser, the proofreader, the rewrite rules, the checks on a requirement's meaning, and triage. It is built first and pays for itself in clearer tickets and faster triage.
+- **Psiberline is the compiler.** It starts from an accepted requirement, already parsed and approved, and composes tests, and later application modules, from verified fixtures.
+
+Psiberline no longer reads English. It does not parse, proofread, rewrite or triage. Those sections of the last vision move to the language project.
 
 ## 2. Purpose
 
-The immediate purpose is to raise the rate at which QA tickets are closed, without lowering what "closed" means.
+Compile an accepted requirement into a test that proves it, by selecting and configuring parts that are already verified, with every step traced back to the requirement.
 
-The long-term purpose is unchanged: treat a well-specified body of requirements as a source language, and compile it into software whose behaviour is supported by evidence.
+> A requirement that has been written formally and approved should not need a person to turn it into a test. If the same kind of requirement has been tested before, the test already exists in pieces. The compiler finds the pieces and addresses them.
 
-> Every ticket that passes through triage should leave behind a formal, reviewed statement of what the system must do. Enough of those statements make a language. A language can be compiled.
-
-Each phase below has to be worth running if the phases after it never arrive.
+The long-term purpose reaches further: application modules composed the same way, so a defect fixed once is fixed for every application built from the same parts.
 
 ## 3. What Psiberline is and is not
 
-Psiberline is a pipeline that turns solar requirements into a typed, checked representation, and then into tests and, later, application modules.
+Psiberline is a compiler from typed requirement trees to test plans, and later to application modules.
 
 It is not:
 
-- A prompt that reads a ticket and writes an application in one leap, or a pipeline with a model as one of its stages.
-- A general-purpose requirements compiler.
-- A replacement for human review of what a requirement means.
-- A way to restructure an existing product without its developers' agreement.
+- A reader of tickets or free English. Its input is the language project's output.
+- A code generator. It writes no new code; it selects and configures fixtures.
+- A stage with a model in it.
+- A judge of what a requirement meant. That was settled when a person approved the tree.
+- A way to restructure an application without its developers' agreement.
 
-## 4. The pipeline
+## 4. Where Psiberline sits
 
-| Phase | What happens | What it delivers by itself |
+```
+requirement in English ──► language project ──► accepted typed tree ──► Psiberline ──► test plan ──► runner
+                           (parse, proofread,     (JSON, approved,       (classify,      (JSON)
+                            check, approve)        versioned)             resolve, compose)
+```
+
+**The handover is files, not code.** The language project writes each accepted requirement as JSON: its typed tree, its acceptance criteria, its provenance and the name of the person who approved it, with the version of the ontology and of the tree's format. Psiberline reads those files. Neither project imports the other.
+
+**The format is a contract with a version.** Psiberline names the version it accepts and refuses any other. A change to the format is a change both projects make on purpose.
+
+**Psiberline never trusts its input.** It checks every tree against the format, refuses one that is not approved or not accepted, and refuses a word or a unit it does not know. A refusal names the requirement and the rule.
+
+## 5. The compiler's stages
+
+| Stage | What happens | Fails with |
 | --- | --- | --- |
-| 0. Triage | A rule set classifies each ticket (section 7) and rewrites the sentences it recognises into controlled English. A proofreader flags every sentence that does not conform, and says why. A person rewrites the flagged sentences until none remain. | Faster, more consistent triage; requirements that are clear before development |
-| 1. Catalogue | Reviewed records are stored with their source, status and history, and linked to the code change that closed the ticket. | A searchable requirements history |
-| 2. Ontology | The nouns, measurements and operations of conforming requirements enter the domain ontology. A word the ontology does not know is a proofreader flag. | A shared, checked vocabulary |
-| 3. Parser and checks | Controlled English is parsed into a typed syntax tree and checked for units, asset identity, ranges and contradiction. | Inconsistent requirements caught mechanically |
-| 4. Generated tests | Acceptance criteria compile into tests that run against the existing application. | Falling QA effort per ticket |
-| 5. Fixtures and host | Application modules are composed from verified fixtures on a common host. | The compiler in full |
+| 1. Intake | A tree is read and checked against the format's version, its status and its approval. | The requirement and the rule it broke |
+| 2. Classification | The requirement's kind decides the compiler's response (section 6). | "No rule classifies this" |
+| 3. Capability resolution | Each acceptance criterion is matched to a fixture that can prove it. | "No fixture exists": a named gap, never a guess |
+| 4. Composition | The fixture's inputs are addressed from the tree: which asset, how many, what unit, what limit. | An input the tree does not supply |
+| 5. Plan | The result is written as a test plan in JSON: the fixture, its inputs, what is asserted, and the trace. | n/a |
+| 6. Run | One runner executes a plan against the application under test. | The assertion that failed |
+| 7. Trace | From any plan back to its criterion, requirement, source passage and approver. | A trace that does not reach a source |
 
-Each phase has explicit inputs, outputs and failure states. Any phase may stop with a precise question instead of an answer.
+Every stage is deterministic: the same trees, fixture versions and compiler version give the same bytes.
 
-## 5. The catalogue
-
-Requirements and acceptance criteria are separate entities. One requirement may have many acceptance criteria, and one criterion may give evidence for many requirements.
-
-| Entity | Purpose |
-| --- | --- |
-| Requirement | Canonical statement of system intent |
-| Acceptance criterion | Observable condition for acceptance |
-| Criterion link | Joins a criterion to a requirement, and says what it evidences |
-| Source artifact | The original ticket, document or specification |
-| Decision | A human-approved interpretation or design decision |
-| Constraint | A mandatory limit on implementation |
-| Dependency | A relationship between requirements |
-| Evidence | A test result, measurement, document or approval |
-| Revision | A historical version of any entity |
-
-Every requirement carries a status (proposed, accepted, superseded, withdrawn) and may name the requirement it supersedes. Old tickets contradict new ones; without supersession, history would block compilation.
-
-Every record keeps its provenance: which source passage it came from, which rule or person produced it, and who approved it.
-
-The catalogue is stored as JSON files under version control, so its history is the repository's history and nothing needs hosting.
-
-## 6. The language
-
-### 6.1 Surface: controlled English
-
-Requirements are written in EARS (Easy Approach to Requirements Syntax), a small set of sentence templates such as "When *trigger*, the *system* shall *response*." EARS fixes the shape of a sentence. It does not fix the meaning; the ontology and the typed tree do that.
-
-### 6.2 Ontology and symbol tables
-
-The ontology defines what the words mean in this domain.
-
-- **Assets:** solar plant, site, pad, panel, inverter, tracker, and how they contain one another. For example: every panel has a pad, every pad has a site and a voltage, every site has a parent plant.
-- **Measurements:** voltage, current, energy, each with units and valid ranges.
-- **Operations:** what reading a measurement means, what calculating performance means.
-- **Constraints:** unit compatibility, asset identity, measurement range, access control.
-
-Symbol tables hold these relationships so the parser can resolve a word against them.
-
-### 6.3 Typed syntax tree
-
-A parsed requirement becomes a typed tree of actors, events, conditions, states, operations and constraints. The tree is the intermediate representation: independent of the ticket's wording and of any target language.
-
-### 6.4 The rule set and the proofreader
-
-Two deterministic tools stand at the front of the chain.
-
-- **The rule set** takes a requirements document and rewrites the sentences it recognises into EARS. Each rule is a pattern and a rewrite, versioned and tested, and each rewrite records the rule that made it. A sentence no rule matches is left unchanged and flagged.
-- **The proofreader** works like a spelling checker for requirements. It marks any sentence that does not meet EARS, any word the ontology does not know, and any unit or reference that does not resolve, and it says which rule was broken.
-
-No rule set can turn all free English into EARS, because much of what a ticket leaves out is not on the page to be rewritten. The chain does not depend on that. What the rules cannot convert, a person rewrites with the proofreader's guidance, and nothing moves downstream until the proofreader passes. The rule set grows from the sentences people had to rewrite by hand.
-
-The same input, rule version and ontology version always give the same output.
-
-### 6.5 Order of construction
-
-Ontology first, then the proofreader, then the rewrite rules, then tokenizer and parser, then semantic analysis. The grammar is built from reviewed requirements. Code that passed QA is linked to its requirement as an example of one implementation. It is evidence, not specification, because it may contain defects QA did not find.
-
-## 7. Story classification
+## 6. Story classification
 
 | Story classification | Compiler response |
 | --- | --- |
 | New capability | Select a module, or report that a fixture must be written |
 | Existing capability | Reuse an existing module |
 | Configuration change | Modify module configuration |
-| Domain extension | Extend the ontology |
-| Constraint change | Re-evaluate dependent checks |
+| Domain extension | Refuse until the ontology's new version is accepted |
+| Constraint change | Re-evaluate the plans that depend on it |
 | Integration change | Select or modify an adapter |
 | Defect correction | Identify the affected capability and its verification obligations |
 | Documentation | Update generated documentation |
 | Research or investigation | No automatic implementation |
 
-Epics route to a module; stories live within it. Classification is by rule, from the ticket's fields and wording; a ticket no rule classifies goes to a person.
+## 7. Fixtures and the host
 
-## 8. Fixtures and the host
+A fixture is a verified unit that satisfies a canonical requirement. Two requirements asking to read 50 panels of type A and 10 of type B resolve to one reading fixture, addressed twice.
 
-A fixture is a verified unit that satisfies a canonical requirement within a module. Two stories asking to read 50 panels of type A and 10 of type B resolve to two reading fixtures in one module, with addressable inputs for 50 and 10.
+**Test side first.** The first fixtures are test fixtures: verified pieces from which test plans are composed. They change nothing in the application under test.
 
-**Test side first.** The first fixtures are test fixtures: verified pieces from which acceptance tests are composed. They need no change to the application under test.
-
-**Product side later.** Product fixtures are written against a host that provides common services: type and schema enforcement, dependency injection, capability registration, event dispatch, transaction management, error handling, logging and telemetry, authorization, configuration, and version compatibility. A host service is built when the first fixture needs it, not before.
+**Product side later.** Product fixtures are written against a host that provides common services: type and schema enforcement, dependency injection, capability registration, event dispatch, transaction management, error handling, logging and telemetry, authorization, configuration, and version compatibility. A host service is built when the first fixture needs it.
 
 **Writing a new fixture is ordinary development.** It is written, reviewed and verified before the compiler may select it. The compiler composes; it does not improvise.
 
-**Composition is checked.** Two verified fixtures can still interact badly. The host checks contracts between fixtures at assembly time.
+**Composition is checked.** Two verified fixtures can still interact badly. Contracts between fixtures are checked when they are composed.
 
-A defect fixed in the compiler, the host or a fixture is fixed for every application built from them. A defect in a requirement is not; that is what phases 0 to 3 are for.
+**A missing fixture is a result.** "No fixture exists for this criterion" is the compiler's honest answer, and the list of such gaps is the fixture library's backlog.
 
-## 9. Verification ladder
+## 8. Verification
 
-Each claim is checked on the lowest rung that can establish it.
+Each claim is checked on the lowest rung that can establish it. There is no machine-checked proof (P-020).
 
-1. **Type and semantic checks** on the typed tree: units, asset identity, ranges, references.
-2. **Constraint solving** for conditions of the form "A equals B when C."
-3. **Property-based tests** for behaviour over many generated inputs.
-4. **Generated acceptance tests**, traced to their criteria.
+1. **Checks on the input tree:** format, status, approval, known words and units.
+2. **Each fixture's own tests and mutation**, before it can be selected.
+3. **Constraint solving** for conditions of the form "A equals B when C."
+4. **Property-based tests** for a fixture's behaviour over many generated inputs.
+5. **The generated plans themselves**, run against the application.
 
-Tests derived from the typed tree show that code matches the interpretation. Only human approval of the tree, or independent evidence such as customer-supplied examples, shows that the interpretation matches the intent.
+A plan that passes shows the application matches the approved tree. It does not show the tree matches what was wanted; that is the language project's approval step.
 
 Generated, compiled, tested, verified and accepted are different words and are not used as synonyms.
 
-## 10. A deterministic chain, and where AI stands
+## 9. A deterministic chain, and where AI stands
 
-The chain from requirements document to output contains no model. Every stage is a rule set, a parser, a checker or a composer, and every stage gives the same output for the same input, byte for byte.
+No stage of Psiberline is a model. A model may help write a fixture or a classification rule, which is then reviewed, tested and committed as ordinary code. The compiler runs to completion with no model available.
 
-AI stands outside the chain, in two places.
+Trees and the documents behind them are data. Text inside them cannot change Psiberline's rules.
 
-- **Building it.** A model may help write rewrite rules, ontology entries and fixtures. What it writes is reviewed, tested and committed like any other code, and from then on it is an ordinary deterministic part.
-- **Assisting a person.** A model may suggest how to rewrite a flagged sentence. The person decides, and the proofreader judges the result. Removing the model changes the speed of the work, not its outcome.
+## 10. The data boundary
 
-The chain must run to completion with no model available.
+This repository holds the compiler, its fixtures for synthetic applications, and synthetic trees.
 
-Tickets and documents are data. Text inside them cannot change Psiberline's rules, permissions or policy.
+- Nothing an employer or customer gave enters this repository: no requirement, no tree made from one, no code.
+- Development here uses trees written by hand, or produced by the language project from its synthetic corpus.
+- Fixtures for a real application are written in that application's own environment.
 
-## 11. The data boundary
+## 11. Measurement
 
-This repository holds the engine and synthetic material only.
+For every run, measure:
 
-- Nothing an employer or customer gave enters this repository: no tickets, no requirements, no code, nothing derived from them.
-- Development here uses a synthetic solar corpus written for the purpose.
-- Work on real requirements happens only inside the adopting organisation's own environment, with that organisation's approved tools.
-- The engine is transferred into that environment. Ontology entries, grammar and fixtures learned from real tickets are created there and stay there.
-
-Who owns what after the transfer is an open decision (section 16) and is settled before the transfer.
-
-## 12. Measurement
-
-The one-hour target of the founding vision remains an aspiration, for stories that resolve to existing fixtures. For every run, measure:
-
-- Ticket cycle time, from triage to accepted.
-- Human active time and number of interventions.
-- **Conversion rate:** the share of sentences the rule set rewrites into EARS without a person.
-- **Coverage rate:** the share of stories that resolve to existing fixtures without new development.
-- Open questions raised, and how many were real.
-- Acceptance criteria passed, failed or not tested.
-- Rework after verification.
+- **Coverage rate:** the share of accepted requirements that compile from fixtures that already exist.
+- Time from an accepted requirement to a passing plan.
+- Human interventions, and what each was for.
+- Gaps reported, by kind.
+- Plans passed, failed or not run.
 - Reproducibility across repeated runs.
 
-A fast result that hides an ambiguity is a failure. A slower one that exposes it before development is a success.
+The founding vision's one-hour target stands as an aspiration for requirements that resolve to existing fixtures.
 
-## 13. Reuse and governance
+## 12. Reuse and governance
 
-Psiberline is a sibling of Suite Builder, which compiles website evidence into test suites. Phase 4 has the same shape, and Suite Builder's pipeline organisation, typed intermediate structures, byte-for-byte goldens and mutation testing are candidates for reuse. Each is inspected first and reused only where the abstraction is real. Crawling, HTML interpretation and page models are left behind.
+Psiberline is a sibling of Suite Builder, which compiles website evidence into test suites. Its pipeline organisation, typed intermediate structures, byte-for-byte goldens and mutation testing are candidates for reuse, each inspected first and reused only where the abstraction is real.
 
-TypeScript is the implementation language because Suite Builder is written in it. That constrains the compiler, not its output.
+Governance comes from Ghost-Core, from which this repository is stamped.
 
-Governance comes from Ghost-Core by its stamping process, after this vision is approved.
+## 13. Principles
 
-## 14. Principles
+1. **Compose from verified parts.**
+2. **The typed tree is the contract** between the two projects, with a version.
+3. **Never trust the input.**
+4. **A gap is a result, not a failure to hide.**
+5. **Preserve the trace** from plan to source passage.
+6. **No model in the chain; deterministic end to end.**
+7. **Check on the lowest rung that works.**
+8. **No abstraction before its second use.** One domain, one target, until a second exists.
+9. **Keep the data boundary.**
 
-1. **Each phase pays for itself.**
-2. **The typed tree is the contract** between interpretation and everything downstream.
-3. **Compose from verified parts.** New parts are verified before they can be selected.
-4. **Preserve provenance** from source passage to generated test or module.
-5. **Fail visibly.** Ambiguity, contradiction and unsupported constructs stop the pipeline.
-6. **No model in the chain.** What a model helps write is reviewed and committed before it runs.
-7. **Deterministic end to end.**
-8. **Check on the lowest rung that works.**
-9. **No abstraction before its second use.** One domain, one target, until a second exists.
-10. **Keep the data boundary.**
+## 14. Risks
 
-## 15. Risks
+- **A tree designed without its consumer.** If the language project fixes the format alone, it may leave out what composition needs. Psiberline's first slice is built early, against a hand-written tree, so the format is tested from both sides.
+- **The format drifts.** Two repositories can change one contract out of step. The version check at intake is what catches it.
+- **Coverage may grow slowly.** If most requirements need a new fixture, the compiler adds little. Coverage rate is the number that says so.
+- **Synthetic trees are cleaner than real ones.** What compiles here may not survive real requirements.
+- **Product fixtures need the developers.** That phase cannot be done to a team, only with one.
 
-- **Natural language is not a specification.** Tickets omit edge cases and lean on unwritten knowledge. The pipeline must ask, not guess.
-- **The rules may convert less English than hoped.** If most sentences need a person, phase 0 is a proofreader with a small helper. That is still useful, and conversion rate is the number that says which it is.
-- **The typed tree may be costly to review.** If approving it takes as long as testing by hand, phases 2 and 3 do not pay. Review time is measured from the first slice.
-- **Tickets may not trace to code.** Phase 1 depends on commits that name their ticket. Where they do not, linking is manual.
-- **A synthetic corpus is cleaner than a real one.** What works here may not survive real tickets. The first weeks on real requirements are a test of the design, not a rollout.
-- **Coverage may grow slowly.** If most stories need a new fixture, the compiler adds little. Coverage rate is the number that says so.
-- **Product fixtures need the developers.** Phase 5 cannot be done to a team, only with one.
+## 15. The first slice, and decisions
 
-## 16. This sprint, and decisions
+**Scope of the first slice.** One accepted tree, written by hand, for "read 50 panels of type A": intake, classification, one test fixture verified by its own tests, a plan in JSON, the runner green against a stand-in application, and the trace. A second tree, "read 10 more of type B," then proves reuse with nothing new written.
 
-**Scope of the first slice.** One requirement, "read 50 panels of type A," taken through the whole chain in miniature: a catalogue record, one EARS sentence, an ontology of four assets (plant, site, pad, panel), the proofreader, one rewrite rule, a parser, a unit check, and one generated test from one test fixture. A second requirement, "read 10 more of type B," then proves reuse.
+**Carried over, settled by Ghost.** The stack is TypeScript; no model is in the chain; tests before product code; one domain, solar; a generated test is a plan in JSON run by one TypeScript runner; no machine-checked proof; the adopting organisation is never named here.
 
-**Settled by Ghost (2026-11-26).**
+**Open, for Ghost.**
 
-1. EARS is the controlled English.
-2. The synthetic corpus is drawn from Solarpunk, a solar project Ghost owns.
-3. The catalogue is JSON files under version control.
-4. The stack is TypeScript.
-5. The chain is deterministic end to end, with no AI in it.
-
-**Open.**
-
-1. Ownership of the engine after transfer into the adopting organisation.
+1. The language project's name and repository.
+2. Where the tree's format is written down: in the language project, with Psiberline pinning a version, or here until that repository exists.
+3. Which of Psiberline's founding decisions move to the language project (EARS, the corpus, the catalogue, the proofreader, rewrite rules, approval, units).
+4. Ownership after the carry-over, now a question for each project.
 
 ---
 
-**Psiberline's goal is to make every triaged ticket leave behind a checked statement of intent, and to compile those statements into tests first and software after, by a chain that needs no AI to run.**
+**Psiberline's goal is to turn an accepted requirement into a test that proves it, by composing parts that are already verified, with nothing guessed and everything traced.**

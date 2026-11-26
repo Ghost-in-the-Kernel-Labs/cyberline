@@ -1,6 +1,6 @@
 # Psiberline: for an agent working in this repository
 
-A deterministic chain that turns solar software requirements into controlled English (EARS), a typed and checked representation, and then tests and application modules composed from verified fixtures, with no AI in the chain. Stamped from Ghost-Core 31a0aee; the checks are Python 3 standard library and run with nothing installed.
+A compiler that turns accepted solar software requirements, handed over as typed and approved trees, into test plans, and later application modules, composed from verified fixtures, with no AI in the chain. Stamped from Ghost-Core 31a0aee; the checks are Python 3 standard library and run with nothing installed.
 
 ## Where to start: find the task's row
 

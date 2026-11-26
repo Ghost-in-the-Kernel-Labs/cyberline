@@ -73,3 +73,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | P-018 | The repository stays public with no licence file until ownership is settled | in force | licence |
 | P-019 | Psiberline refuses no core decision at its founding | in force | core decisions |
 | P-020 | No machine-checked proof: the chain is verified without Lean | in force | verification |
+| P-021 | Psiberline is the compiler; the language is a second project; the handover is the typed tree | in force | scope of the project |

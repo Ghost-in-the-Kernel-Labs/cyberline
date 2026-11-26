@@ -74,32 +74,33 @@ evidence when the implementation no longer agrees with its foundations.
 
 ## This project's ghost
 
-The loss Psiberline is built against is the requirement behind the ticket. A ticket is written
-once, by someone who knew what the system had to do. The code that closes it survives; the test may
-survive; the statement of what was wanted is left in a tracker nobody reads again. Months later
-nobody can say whether the code is right, only that it passed. Where a model is asked to fill that
-gap there is a second loss: an answer nobody can reproduce, so nobody can say where it came from.
+The loss Psiberline is built against is the test that has to be written again. A requirement of a
+kind the application has met before is tested by hand once more, from the ticket, by whoever is
+there that week. The earlier test is somewhere in the suite, proving something like it; nothing
+says which requirement it proves, so nobody dares reuse it and nobody dares delete it. And when a
+model is asked to write the test instead, there is a second loss: a test nobody can reproduce, so
+nobody can say what it was made from.
 
 So the kernel remembers by these means, each cited to `VISION.md` until the contract (TODO 0.4)
 numbers it as an invariant:
 
-- **Every requirement keeps its source.** A record in the catalogue names the passage it came
-  from, the rule or the person that produced it, and who approved it (`VISION.md` section 5).
-- **A requirement is written in a language a parser accepts.** Controlled English, checked by the
-  proofreader against the ontology, so a sentence is formal by its form and not by a reader's
-  goodwill (`VISION.md` section 6).
-- **No model is in the chain.** From an accepted requirement on, the same input gives the same
-  bytes; a model may help build a part, never be one (`VISION.md` section 10; `docs/modules.json`,
-  MOD-03).
-- **A generated test names the criterion it came from**, and the criterion its requirement, back
-  to the source passage (`VISION.md` section 9).
-- **Nothing an employer or a customer gave enters this repository** (C-033; `VISION.md` section 11).
+- **A test is composed, never written.** The compiler selects a fixture that is already verified
+  and addresses its inputs from the requirement; it writes no new code (`VISION.md` sections 5, 7).
+- **Every plan names what it proves.** From a test plan back to its acceptance criterion, its
+  requirement, the source passage and the person who approved it (`VISION.md` section 5, stage 7).
+- **The input is never trusted.** A tree of the wrong format, unapproved, or using a word or a unit
+  the compiler does not know is refused with the rule it broke (`VISION.md` section 4).
+- **A missing fixture is said out loud.** "No fixture exists" is a result with a name, never a
+  guess (`VISION.md` section 7).
+- **No model is in the chain.** The same trees and fixtures give the same bytes
+  (`VISION.md` section 9; `docs/modules.json`, MOD-03).
+- **Nothing an employer or a customer gave enters this repository** (C-033; `VISION.md` section 10).
 
-The lie to expect here has two shapes. The first is a requirement that reads as formal and means
-nothing: a sentence that passes the proofreader because its shape is right while a word in it is
-defined nowhere. The second is a test that agrees with the code because both were made from the
-same wrong reading: tests made from the typed tree show that the code matches the reading, never
-that the reading matches what was wanted.
+The lie to expect here has two shapes. The first is a plan that passes and proves nothing: a
+fixture whose assertion cannot fail, composed and run green. The second is coverage that is
+claimed: a requirement counted as compiled because a fixture matched its words, while the fixture
+proves something else. A plan that passes shows the application matches the approved tree, never
+that the tree is what was wanted; that was settled, or not, before the tree arrived.
 
 ## What it asks of a project's own code
 

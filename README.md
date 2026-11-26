@@ -1,6 +1,6 @@
 # Psiberline
 
-A deterministic chain that turns solar software requirements into controlled English (EARS), a typed and checked representation, and then tests and application modules composed from verified fixtures, with no AI in the chain.
+A compiler that turns accepted solar software requirements, handed over as typed and approved trees, into test plans, and later application modules, composed from verified fixtures, with no AI in the chain.
 
 ## Status
 
