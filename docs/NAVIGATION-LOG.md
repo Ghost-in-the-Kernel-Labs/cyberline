@@ -35,3 +35,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `docs/HANDOFF.md`, `TODO.md`, `docs/DONE.md`.
 - **Complaints**: none
 - **Suggestions**: none
+
+### 2026-11-26 · the founding decisions, P-005 to P-019 · Fable
+
+- **Task**: write the founding decisions Ghost chose.
+- **Opened**: `TODO.md` (0.5), `theGhost.md`, `VISION.md`, `docs/HANDOFF.md`.
+- **Complaints**: none
+- **Suggestions**: none

@@ -23,12 +23,12 @@ nothing installed. The stack's gate needs npm 11 or newer and a session's contai
 
 ## For Ghost: waiting on you
 
-1. Confirm the wording of this project's ghost (`docs/GHOST-IN-THE-KERNEL.md`, J-002): drafted from `VISION.md`.
-2. Confirm P-002's versions (vitest 4.1.12, typescript 7.0.2, knip 6.46.1, @stryker-mutator/core 10.1.1), the agent's choice (J-003).
-3. Write the first invariants of the contract and set `docs/modules.json` (TODO 0.4).
-4. Write the founding decisions in `theGhost.md`, a decision for each core decision this project refuses among them (TODO 0.5): agents cannot author them.
-5. `VISION.md` section 8 calls the program a product fixture is written against the kernel; here the kernel is the codebase (`docs/GLOSSARY.md`), so the roadmap and the glossary call it the host. Say whether the vision takes the word.
-6. Who owns the chain after it is carried into the adopting organisation (`VISION.md` section 16).
+1. Confirm the wording of P-005 to P-019, the founding decisions (J-010): you took the options the agent set out; the words are the agent's.
+2. Machine-checked proof (Lean): `VISION.md` section 9 and Phase 8 of the roadmap keep it as the last rung, for the calculations only. You asked on 2026-11-26 whether it had been decided against; it had been put last and narrowed, not refused. Say whether it stays deferred or is struck from the vision and the roadmap.
+3. Confirm the wording of this project's ghost (`docs/GHOST-IN-THE-KERNEL.md`, J-002): drafted from `VISION.md`.
+4. Confirm P-002's versions (vitest 4.1.12, typescript 7.0.2, knip 6.46.1, @stryker-mutator/core 10.1.1), the agent's choice (J-003).
+5. Write the first invariants of the contract and set `docs/modules.json` (TODO 0.4); TODO 0.5 closes after it, its decisions being written.
+6. Who owns the chain after it is carried into the adopting organisation (`VISION.md` section 16; P-018 waits on it).
 7. The roadmap (`docs/ROADMAP.md`, J-004): Phases 1 to 4 numbered and 5 to 8 outlined from `VISION.md`; the order and the items are the agent's, for your ruling.
 
 ## Overrides to remove once past the cooldown
