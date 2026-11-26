@@ -52,7 +52,7 @@ The core's principles, copied from Ghost-Core when this project was stamped; thi
 - **P-20 Fail visibly.** A sentence no rule matches, a word the ontology lacks, a unit that does not resolve: each
   stops the chain with the rule it broke, and none is passed on.
 - **P-21 Check on the lowest rung that can.** A type check before a solver, a solver before a property test, a
-  proof last (`VISION.md` section 9).
+  generated test last (`VISION.md` section 9; no machine-checked proof, P-020).
 - **P-22 Nothing an employer or a customer gave enters this repository** (C-033): the corpus here is synthetic.
 - **P-23 No abstraction before its second use** (C-002): one domain and one target until a second exists.
 
@@ -82,7 +82,7 @@ The core's principles, copied from Ghost-Core when this project was stamped; thi
 - **An editor plug-in.** The proofreader is a command first; an editor's view of it waits on Phase 4's proof that the
   command is right.
 - **A connector to a ticket tracker in this repository.** Real tickets are read only in the adopter's environment.
-- **Machine-checked proof before the lower rungs.** Lean is Phase 8, for the calculations only.
+- **Machine-checked proof.** No Lean, and no other proof assistant: the ladder is type checks, a solver, property tests and generated tests (P-020). It is taken up again only if those rungs cannot establish something the calculations need.
 
 ## 5. The meta-architecture
 
@@ -111,7 +111,7 @@ renamed and numbered (0.4), the corpus's manifest (1.1), the ontology (1.3), the
 
 ## 6. Phases
 
-Each phase ends with a tune-up pass. Phases 1 to 4 are numbered; Phases 5 to 8 are numbered when the phase before
+Each phase ends with a tune-up pass. Phases 1 to 4 are numbered; Phases 5 to 7 are numbered when the phase before
 them is built, since what they need is learned there.
 
 ### Phase 0: founding
@@ -195,7 +195,7 @@ phase 0).
 - 4.7 The proofreader's messages reviewed against a person's rewrites: what a person needed to be told.
 - 4.8 Tune-up pass 4
 
-### Phases 5 to 8 (outline; items are numbered when the phase before is built)
+### Phases 5 to 7 (outline; items are numbered when the phase before is built)
 
 - **Phase 5, generated tests at scale and the ladder's middle rungs.** A library of test fixtures; acceptance
   criteria of every class compiled; property tests over generated inputs; conditions of the form "A equals B when
@@ -206,5 +206,3 @@ phase 0).
 - **Phase 7, product fixtures and the host.** A host that gives fixtures their common services, each built when a
   fixture first needs it; adapters for equipment; contracts between fixtures checked when they are composed. It
   waits on the application's developers.
-- **Phase 8, proof for the calculations.** The performance mathematics stated and proven in Lean, the proof
-  checked by the gate.

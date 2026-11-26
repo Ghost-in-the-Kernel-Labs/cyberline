@@ -72,3 +72,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | P-017 | The adopting organisation is never named in this repository | in force | data boundary |
 | P-018 | The repository stays public with no licence file until ownership is settled | in force | licence |
 | P-019 | Psiberline refuses no core decision at its founding | in force | core decisions |
+| P-020 | No machine-checked proof: the chain is verified without Lean | in force | verification |

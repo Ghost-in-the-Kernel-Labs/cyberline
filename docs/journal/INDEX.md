@@ -14,3 +14,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-008 | Core taken up to 56cb5ed: C-049 adopted, the landing made from a session branch | decision | `J-000-099.md` |
 | J-009 | The handoff rewritten for a cold start; the core's fix to --docs-only with --ship taken | direction | `J-000-099.md` |
 | J-010 | The founding decisions written at Ghost's word: P-005 to P-019 | decision | `J-000-099.md` |
+| J-011 | Lean struck from the vision and the roadmap: P-020 | decision | `J-000-099.md` |

@@ -42,3 +42,10 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Opened**: `TODO.md` (0.5), `theGhost.md`, `VISION.md`, `docs/HANDOFF.md`.
 - **Complaints**: none
 - **Suggestions**: none
+
+### 2026-11-26 · P-020, no machine-checked proof · Fable
+
+- **Task**: strike Lean from the vision and the roadmap.
+- **Opened**: `VISION.md`, `docs/ROADMAP.md`, `docs/HANDOFF.md`, `theGhost.md`.
+- **Complaints**: none
+- **Suggestions**: none

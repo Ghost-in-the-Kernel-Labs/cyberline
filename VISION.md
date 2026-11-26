@@ -15,7 +15,7 @@ The founding vision described a general compiler from any requirements corpus to
 - **One entry point.** Requirements arrive through quality-assurance (QA) ticket triage, not as a finished corpus.
 - **Tests before product code.** The first thing compiled is a test for an existing application. Compiling the application itself comes last.
 - **Composition, not free generation.** Output is assembled from fixtures that have already been verified. A model does not write new product code inside the compiler.
-- **A verification ladder.** Formal proof is the top rung, used where the cheaper rungs cannot reach.
+- **A verification ladder.** Each claim is checked on the lowest rung that can establish it. Machine-checked proof is not one of the rungs (P-020).
 - **No AI in the chain.** The goal is a fully deterministic chain of work, from a requirements document to its output. A model may help build the chain; it is not a stage in it.
 
 ## 2. Purpose
@@ -118,7 +118,7 @@ Ontology first, then the proofreader, then the rewrite rules, then tokenizer and
 | Existing capability | Reuse an existing module |
 | Configuration change | Modify module configuration |
 | Domain extension | Extend the ontology |
-| Constraint change | Re-evaluate dependent checks and proofs |
+| Constraint change | Re-evaluate dependent checks |
 | Integration change | Select or modify an adapter |
 | Defect correction | Identify the affected capability and its verification obligations |
 | Documentation | Update generated documentation |
@@ -148,7 +148,6 @@ Each claim is checked on the lowest rung that can establish it.
 2. **Constraint solving** for conditions of the form "A equals B when C."
 3. **Property-based tests** for behaviour over many generated inputs.
 4. **Generated acceptance tests**, traced to their criteria.
-5. **Machine-checked proof (Lean)** for the calculation core, such as performance mathematics.
 
 Tests derived from the typed tree show that code matches the interpretation. Only human approval of the tree, or independent evidence such as customer-supplied examples, shows that the interpretation matches the intent.
 
@@ -160,7 +159,7 @@ The chain from requirements document to output contains no model. Every stage is
 
 AI stands outside the chain, in two places.
 
-- **Building it.** A model may help write rewrite rules, ontology entries, fixtures and proofs. What it writes is reviewed, tested and committed like any other code, and from then on it is an ordinary deterministic part.
+- **Building it.** A model may help write rewrite rules, ontology entries and fixtures. What it writes is reviewed, tested and committed like any other code, and from then on it is an ordinary deterministic part.
 - **Assisting a person.** A model may suggest how to rewrite a flagged sentence. The person decides, and the proofreader judges the result. Removing the model changes the speed of the work, not its outcome.
 
 The chain must run to completion with no model available.
@@ -226,7 +225,7 @@ Governance comes from Ghost-Core by its stamping process, after this vision is a
 
 ## 16. This sprint, and decisions
 
-**Scope of the first slice.** One requirement, "read 50 panels of type A," taken through the whole chain in miniature: a catalogue record, one EARS sentence, an ontology of four assets (plant, site, pad, panel), the proofreader, one rewrite rule, a parser, a unit check, and one generated test from one test fixture. A second requirement, "read 10 more of type B," then proves reuse. No Lean in the first slice.
+**Scope of the first slice.** One requirement, "read 50 panels of type A," taken through the whole chain in miniature: a catalogue record, one EARS sentence, an ontology of four assets (plant, site, pad, panel), the proofreader, one rewrite rule, a parser, a unit check, and one generated test from one test fixture. A second requirement, "read 10 more of type B," then proves reuse.
 
 **Settled by Ghost (2026-11-26).**
 
