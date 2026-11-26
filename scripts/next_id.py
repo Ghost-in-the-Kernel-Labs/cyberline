@@ -1,11 +1,11 @@
 """The next free id of a numbered record, after fetching main so two sessions do not take the same one (C-008, C-015).
 
 Run: python3 -I scripts/next_id.py decision   → C-035
-     python3 -I scripts/next_id.py journal    → J-005
+     python3 -I scripts/next_id.py journal    → `J-005`
      python3 -I scripts/next_id.py --help     prints this and does nothing else
 
 Only a heading counts (`### J-009 title`, `### C-035: title`); an id named in a sentence, a header line or a
-"J-001 to J-099" range is a mention and never raises the answer (ASB J-007: a mention made it answer J-100).
+"J-001 to J-099" range is a mention and never raises the answer (C-044).
 """
 import re
 import subprocess

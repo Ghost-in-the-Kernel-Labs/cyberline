@@ -22,7 +22,7 @@ def rows(table: str, columns: int) -> list[list[str]]:
 
 
 def finding_problems(findings: str) -> list[str]:
-    """Ids F-001, F-002, ... in order; a status that is open or resolved; no empty cell."""
+    """Ids `F-001`, `F-002`, ... in order; a status that is open or resolved; no empty cell."""
     problems: list[str] = []
     for position, cells in enumerate(rows(findings, 5), start=1):
         if cells[0] != f"F-{position:03d}":

@@ -1,4 +1,4 @@
-"""A check answers from git's file list, never the disk (3.13, 4.3; C-001, Katana J-309): a file on disk that git does not
+"""A check answers from git's file list, never the disk (3.13, 4.3; C-001): a file on disk that git does not
 track is not read, and the same file tracked is refused. The planted breaks need a git repository, so each is built in
 a scratch root here rather than under test/fixtures/broken/."""
 import importlib.util

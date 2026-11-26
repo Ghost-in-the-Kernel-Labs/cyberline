@@ -2,7 +2,7 @@
 # The fast loop: every doc check and unit test, no data, no network, nothing installed (C-022, C-032).
 # Run after every edit. Python 3 standard library only; -I ignores the environment and the current directory.
 # With arguments, only those test modules: `scripts/fast.sh test.test_stamp` (or test_stamp, or test/test_stamp.py).
-# Each becomes discover's -p pattern, since `-m unittest test.test_stamp` under -I finds the standard library's
+# Each becomes discover's -p pattern: `-m unittest test.test_stamp` under -I finds the standard library's
 # `test` package, and a module given to discover as a positional argument is read as its start folder (all of test/).
 # A name that matches no file runs no test, which unittest reports as a failure.
 set -euo pipefail

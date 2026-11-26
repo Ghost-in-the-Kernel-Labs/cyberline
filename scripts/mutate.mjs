@@ -2,10 +2,10 @@
 //   node scripts/mutate.mjs                  every src/**/*.ts but *.gen.ts
 //   node scripts/mutate.mjs src/leaf/caps.ts one file
 // For each file, the test files under test/unit whose imports reach it (through the STAMP_ALIAS and relative imports) are
-// MUTATE_TESTS, and Stryker runs with --mutate <file> (stryker.config.mjs: the command runner, G-290). A mutant no
+// MUTATE_TESTS, and Stryker runs with --mutate <file> (stryker.config.mjs: the command runner, C-018). A mutant no
 // test kills (Survived, NoCoverage) is a survivor; each must have its line in docs/MUTATION.md, and a line there with
 // no survivor behind it is stale. Red: a survivor not written up, a stale line, a source file no test reaches, and a
-// run that kills nothing when there were mutants, because then the runner may have tested nothing. A file Stryker
+// run that kills nothing when there were mutants (C-018). A file Stryker
 // makes no mutant of (a types-only file: src/leaf/types.ts) is not that case; its report holds no entry for it.
 // The cache: a file's report is kept under reports/mutation/cache/<key>.json, the key a SHA-256 over every
 // byte that can change its verdict (keyInputs); a hit replays it and its line says `cached`. `--no-cache`,

@@ -14,7 +14,7 @@ def finding(rid: str, status: str = "open") -> str:
 
 
 def escalation(kind: str, open_: str = "yes") -> str:
-    """One escalations row of the kind given, open unless told otherwise."""
+    """One escalations row of the kind given, open by default."""
     return f"| 2026-10-23 | t | {kind} | r | w | {open_} |\n"
 
 

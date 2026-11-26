@@ -1,5 +1,5 @@
 """The secret scan (C-037, TODO 3.6): a key, token or private key in a tracked file or on a diff's added line is named by
-file, line, pattern and fingerprint, never by its value, so the report cannot become the leak (SB G-570, Katana R-104).
+file, line, pattern and fingerprint, never by its value (C-037, C-043).
 
     python3 -I scripts/checks/secrets.py          every tracked file (git ls-files; the tree outside git)
     python3 -I scripts/checks/secrets.py --diff   the added lines of a unified diff read on stdin (the commit path)
@@ -66,8 +66,8 @@ def fingerprint(value: str) -> str:
 
 
 def is_generic_value(value: str) -> bool:
-    """Whether a named value reads as a secret: at least 20 characters at 3.5 bits each, holding a digit and a letter, as
-    Suite Builder's named secret has it (SB G-570): is_generic_value("response.headers.authorization") is False, a code
+    """Whether a named value reads as a secret: at least 20 characters at 3.5 bits each, holding a digit and a letter
+    (C-037): is_generic_value("response.headers.authorization") is False, a code
     expression; a random 24-character mix of letters and digits is True."""
     has_both = re.search(r"[0-9]", value) is not None and re.search(r"[A-Za-z]", value) is not None
     return has_both and len(value) >= MIN_LENGTH and entropy(value) >= MIN_ENTROPY

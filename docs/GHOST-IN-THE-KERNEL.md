@@ -1,26 +1,76 @@
 # Ghost in the Kernel
 
-Software outlives the context it was written in. People leave. Requirements change. The person who
-knew *why* a thing was built the way it was stops being reachable. The code keeps running. Nobody
-can say what it is for.
+Software eventually outlives the context in which it was written.
+
+People leave. Teams change. Requirements evolve. Implementations are replaced. Documentation
+becomes stale. And the person who knew *why* something was built a particular way may no longer be
+available to explain it.
+
+Ghost-in-the-Kernel is a philosophy for designing against that problem.
 
 **The ghost is intent. The kernel is the codebase.**
 
-Ghost in the Kernel is a way of building against that loss. Its one principle:
+The principle is simple:
 
 > **The system should remember why it exists.**
 
-Intent should become semantics. Semantics should become constraints. Constraints should govern
-implementation. Implementation should produce evidence. Evidence should let the system check that
-the implementation still agrees with the intent. Nothing important floats: a function does not exist
-because that is where someone put it; a threshold does not exist because it seemed right; a number
-does not appear in a document without the run that produced it.
+We believe software should be built from a chain of foundations in which each layer can be traced
+back to something more fundamental.
 
-The answer is not more comments and not more memorizing. It is to put the reasoning *into* the
-system, as things a machine can check: specifications, semantic models, rules, invariants,
-provenance, tests, evidence, tooling. They are the code's memory. The purpose is re-entry: an agent
-should be able to operate in the repository without being trusted to invent its architecture, and
-the system should have enough structure to expose a misunderstanding when one is brought in.
+Intent should become semantics. \
+Semantics should become constraints. \
+Constraints should govern implementation. \
+Implementation should produce evidence. \
+Evidence should allow the system to verify that implementation still reflects intent.
+
+Nothing important should simply float.
+
+A function should not exist because “that's where someone put it.” \
+A threshold should not exist because “it seemed right.” \
+A name should not require tribal knowledge to interpret. \
+An abstraction should not depend on a vanished conversation. \
+A generated artifact should not lose the reasoning that produced it.
+
+When the answer to **“why?”** disappears, the codebase has lost part of its ghost.
+
+The answer is not to write more comments everywhere or to demand that engineers memorize more
+architecture.
+
+The answer is to **externalize the reasoning into the system itself**.
+
+Specifications. \
+Semantic models. \
+Rules. \
+Invariants. \
+Provenance. \
+Tests. \
+Evidence. \
+Tooling.
+
+These are not accessories to the code. They are part of the codebase's memory.
+
+This produces what we call **extensible truth**: a system in which new layers can be built upon
+existing foundations without severing the chain of reasoning that connects implementation back to
+intent.
+
+The purpose is re-entry.
+
+A new engineer should be able to enter the system without knowing its history.
+
+An experienced engineer should be able to return after months away without reconstructing it from
+memory.
+
+An AI agent should be able to operate within it without being trusted to invent the architecture.
+
+And when any of them misunderstands the system, the system should have enough structure to expose
+that misunderstanding.
+
+**We do not want software that merely works.**
+
+We want software that can explain why it works, preserve that explanation as it evolves, and provide
+evidence when the implementation no longer agrees with its foundations.
+
+*The Ghost in The Kernel*
 
 ## This project's ghost
 
@@ -68,6 +118,19 @@ The same principle, pointed inward, and held by tests rather than hoped for:
   worth doing.
 - **Nothing requires the maintainer's own machine.** A clean clone builds, tests and gates in the
   session's container; a local run is an option a decision grants, never a step a recipe needs.
+
+## The founding words
+
+Ghost's four words for building this way (Ghost, 2026-11-06, in Suite Builder: "Extensible truth, self aware code, self
+enforcing, contextual environments."), in this page's own terms, with what holds each in the core. A project stamped
+from here keeps the words and names what holds them in its own tree.
+
+| Word | What it means | Held in the core by |
+| --- | --- | --- |
+| **Extensible truth** | New layers build on existing foundations "without severing the chain of reasoning that connects implementation back to intent". | `theGhost.md`: a decision is appended, never edited away, and a reversed one names what reversed it (C-008, `test/test_ghost.py`); a stamped project inherits the core's decisions as its baseline (`docs/LINEAGE.md`). |
+| **Self-aware code** | The system "can explain why it works": a decision cited on the code that holds it, a comment that says what and refers to a decision for the why. | C-009 and C-042 (`test/test_ghost.py`, `test/test_comments.py`); `docs/modules.json` (C-012, `test/test_modules.py`). |
+| **Self-enforcing** | The system should "provide evidence when the implementation no longer agrees with its foundations": a principle no test holds is a hope. | Every check rejects a planted break (C-001, C-013); nothing reaches `main` but through the gate (C-037). |
+| **Contextual environments** | A reader, a person or a small model, gets the context its task needs and no more. | `CLAUDE.md`'s routing rows, the when files and the ceiling on mandatory context (C-020, C-021, C-022); the tune-up (C-024). |
 
 ## On enlightenment, for the agent reading this
 

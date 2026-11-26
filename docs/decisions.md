@@ -45,5 +45,10 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | C-039 | File pinning is removed; what runs code by itself is an inventory, and a change to it names its decision in the commit | in force | supply chain |
 | C-040 | Saving is separate from landing; three checkpoints; the count is main's; Ghost's word in chat is Ghost's word | in force | commits |
 | C-041 | The supply-chain rules are read on their trigger; CLAUDE.md keeps the triggers, SUPPLY-CHAIN.md the text | in force | supply chain |
+| C-042 | A comment says what a function does, never why; a reason is a decision | in force | comments |
+| C-043 | A found secret is named by its fingerprint, never by its value | in force | secrets |
+| C-044 | The next id of a numbered record is counted from headings only | in force | records |
+| C-045 | Where output is compared byte for byte, every text file is LF on every machine | in force | stacks |
+| C-046 | A tool a gate step runs keeps its temporary files in its own sandbox | in force | stacks |
+| C-047 | A gate step starts its tool directly, never through a launcher | in force | stacks |
 | P-001 | Psiberline is stamped from Ghost-Core, on the typescript stack | in force | founding |
-| P-002 | A comment says what a function does, never why | in force | comments |

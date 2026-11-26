@@ -1,10 +1,9 @@
-"""The files a check reads: git's list, never the disk (C-001; LESSONS-2026-11 Part 2 row 18, Katana J-309).
+"""The files a check reads: git's list, never the disk (C-001).
 
-A doc check that asked the disk passed on the gate's machine, where a corpus was hard-linked in, and failed on every
-clean clone: CI was red for 44 runs over six days and nothing noticed. A check reads what a clone would hold, so a file
+A check reads what a clone would hold, so a file
 present on disk and absent from git is not read, and a pointer to it does not resolve.
 
-tracked_files(root) answers from `git ls-files` (the index: what the next commit holds, since `scripts/commit.sh -a`
+tracked_files(root) answers from `git ls-files` (the index: what the next commit holds; `scripts/commit.sh -a`
 stages before its fast loop) when root is the top of a work tree; with `others=True` it adds the untracked files git
 does not ignore. Outside git (no git, or root not a work tree's top: a fixture folder, a scratch root, a stamp made with
 --no-git) it walks the tree, skipping `.git`, and prints nothing; the list's `source` says which answered.

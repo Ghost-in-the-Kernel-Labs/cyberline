@@ -7,8 +7,8 @@ left out: each entry of a `package-lock.json` (its `packages`, the root and work
 `requirements.lock` (`name==version`); each `uses: owner/repo@<40-hex SHA>` in a workflow; each `FROM image@sha256:<hex>`
 in a Dockerfile; each row of a `third_party/MANIFEST.md` whose last cell is a SHA-256. A pin is recorded when a row's
 Package and To are its name and version. On adoption every pin already held gets an "unreviewed baseline" row (Kind
-`baseline`, From, Verdict and Reputation `—`); a baseline row for a package that already has a row is refused, since an
-update of a held package is read, never baselined. `python3 -I scripts/checks/dependency_review.py --baseline J-nnn`
+`baseline`, From, Verdict and Reputation `—`); a baseline row for a package that already has a row is refused: an
+update of a held package is read, never baselined (C-035). `python3 -I scripts/checks/dependency_review.py --baseline J-nnn`
 prints the baseline rows for the pins with none, for the adopting commit only; it writes nothing.
 """
 import json

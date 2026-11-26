@@ -11,7 +11,7 @@ Core item merely promises in plain text, never in backticks; only a path a stamp
 a pointer. A stamped project's fast loop is where the difference shows (test/test_stamp.py).
 
 It reads git's file list (scripts/checks/common.py; C-001): a routing document git does not track is not read, and a
-pointer to a file on disk that git does not track does not resolve, since a clone would not hold it (Katana J-309).
+pointer to a file on disk that git does not track does not resolve (C-001).
 """
 import re
 from pathlib import Path

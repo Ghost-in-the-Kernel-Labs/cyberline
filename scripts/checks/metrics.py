@@ -108,7 +108,7 @@ def is_cost_row(cost: str) -> bool:
 
 # Decision: C-036 (the grade limits and points move only by a decision made from the project's Cost rows)
 def cost_rows(entries: dict[str, dict[str, str]], dates: dict[str, str], since: str | None) -> int | None:
-    """Journal entries since the thresholds were set whose Cost line is a Cost row; one entry is one row, whatever
+    """Journal entries from the day the thresholds were set whose Cost line is a Cost row; one entry is one row, whatever
     table it carries. The window opens at the first entry, in journal order, that DONE.md dates on or after
     `since` (the journal is newest last, so every later entry is inside it); None while no date is set."""
     if since is None:

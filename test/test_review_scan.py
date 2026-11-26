@@ -89,7 +89,7 @@ class TheRules(unittest.TestCase):
 
 
 def fake_token() -> str:
-    """An npm token's shape assembled at runtime from fragments, so no key-shaped literal is in the source (R-105's rule)."""
+    """An npm token's shape assembled at runtime from fragments, so no key-shaped literal is in the source (C-037)."""
     return "_auth" + "Token=" + "npm" + "_" + "Qz7Wk" * 7 + "x"
 
 

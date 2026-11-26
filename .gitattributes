@@ -1,4 +1,4 @@
-# LF everywhere: goldens compared byte for byte failed on Windows with CRLF (Suite Builder G-086).
+# LF everywhere (C-045).
 * text=auto eol=lf
 *.gen.ts linguist-generated -diff
 docs/decisions.md linguist-generated -diff

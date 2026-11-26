@@ -4,7 +4,7 @@ A deterministic chain that turns solar software requirements into controlled Eng
 
 ## Status
 
-No feature exists yet. The project is stamped from Ghost-Core ca0637d; it begins at TODO 0.1, and
+No feature exists yet. The project is stamped from Ghost-Core 31a0aee; it begins at TODO 0.1, and
 `docs/HANDOFF.md` says what the human fills in first.
 
 ## Running the fast loop

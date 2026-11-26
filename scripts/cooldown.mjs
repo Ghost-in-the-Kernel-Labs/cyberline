@@ -1,4 +1,4 @@
-// The cooldown (C-034; Suite Builder G-254): no package version enters the lockfile until it has been public for
+// The cooldown (C-034): no package version enters the lockfile until it has been public for
 // 7 days. Each version package-lock.json holds that origin/main's did not is looked up on the registry; one
 // published less than 7 days ago fails with --strict, named, with the day it may come in. No list of exceptions.
 //   node scripts/cooldown.mjs --strict

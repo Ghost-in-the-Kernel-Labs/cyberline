@@ -3,7 +3,7 @@ phase, one whose tune-up pass DONE.md already holds, with at most three new item
 instead), DONE.md shares none of its items, and no item's heading appears twice in DONE.md (test/test_todo.py; C-016,
 C-024, docs/when/tune-up.md "A reopened phase").
 
-The waiting phase (ASB-010, NR's `moved`): an item that waits on something outside the repository carries a `Waits on:`
+The waiting phase (C-016): an item that waits on something outside the repository carries a `Waits on:`
 line and sits in the last phase, headed "## Phase W: waiting on Ghost", with a `Moved: from Phase N` line naming the
 phase its number belongs to; every item there carries both lines, the phase is last, and it needs no tune-up pass. The
 chain's rules (order under numbered phases, the first item's check, the passes) read the file without it.
@@ -28,7 +28,7 @@ SHAPED_KIND = re.compile(r"^Waits on: (environment|reference)\b", re.MULTILINE |
 SHAPED = re.compile(r"^Waits on: (environment|reference) \([^()\n]*[^()\s][^()\n]*\)[ \t]*$")
 PASS = "Tune-up pass"
 CLOSERS = (PASS, "Tune-up commit")
-# Ghost, 2026-11-07, provisional (docs/HANDOFF.md "Settled by Ghost"): moved only by a decision from the Cost record.
+# The most new items a reopened phase may close by a tune-up commit; provisional (C-024).
 REOPENED_LIMIT = 3
 
 
@@ -83,9 +83,9 @@ def reopened_since(done: list[tuple[int, str]]) -> int | None:
     return sum(1 for step, title in done if step > last)
 
 
-# Decision: C-024 (a reopened phase of at most three new items closes by a tune-up commit; Ghost, 2026-11-07)
+# Decision: C-024 (a reopened phase of at most three new items closes by a tune-up commit)
 def reopened_problems(phase: int, open_items: list[tuple[int, str]], since: int) -> list[str]:
-    """A reopened phase ends with a tune-up commit or pass, and with more than REOPENED_LIMIT new items (done since the
+    """A reopened phase ends with a tune-up commit or pass, and with more than REOPENED_LIMIT new items (done after the
     reopening, and open before its closing item) only with a pass."""
     title = open_items[-1][1]
     if not title.startswith(CLOSERS):
@@ -152,7 +152,7 @@ def kind_problems(phase: int, step: int, body: str) -> list[str]:
     return found
 
 
-# Decision: C-016 (an item that waits on something outside the repository is moved to the waiting phase; ASB-010)
+# Decision: C-016 (an item that waits on something outside the repository is moved to the waiting phase)
 def waiting_problems(todo: str) -> list[str]:
     """A `Waits on:` item outside the waiting phase; a waiting item without `Waits on:`, or without a `Moved: from Phase N`
     naming its own number's phase; a numbered phase after the waiting phase; waiting items out of numeric order."""

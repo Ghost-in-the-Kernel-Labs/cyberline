@@ -6,7 +6,7 @@
 #   3. the commit check (C-039): a staged change to an auto-execution surface (scripts/*.sh, a stack's gate.sh, an agent
 #      file, a workflow: docs/SUPPLY-CHAIN.md's inventory) is refused unless the message names a decision id, so every
 #      change to the gate is a recorded one; nothing is pinned to a hash
-#   4. the tune-up rule (C-024): refused while a tune-up is due, eight or more commits on `main`'s first-parent line since
+#   4. the tune-up rule (C-024): refused while a tune-up is due, eight or more commits on `main`'s first-parent line after
 #      the last `tune-up:` one or, when newer, a stamped project's founding commit (its subject starts "stamped from"),
 #      counted from and not toward (C-040: a session branch's saves are not landings and are never counted); a
 #      `tune-up:` subject always passes. A line `Tune-up deferred through <sha>` in docs/HANDOFF.md, written only on Ghost's
@@ -16,7 +16,7 @@
 #      (`scripts/gate.sh --fast`, the landing checkpoint, C-040) or the full gate; a fast record (.git/ghost/kind says
 #      `fast`) adds the trailer `Gate: fast checks` to the message. With --docs-only (or GHOST_GATE=skip) and every
 #      staged path under docs/, the record is not compared and the message gets the trailer `Gate: fast loop only`
-#   7. the secret scan again, and the staged tree unchanged since step 6
+#   7. the secret scan again, and the staged tree unchanged after step 6
 #   8. the commit: `git commit-tree` of the recorded tree on the parent HEAD named at step 1, author Ghost and committer
 #      Claude, then `git update-ref` from that parent, so a HEAD that moved meanwhile refuses it; never `git commit`
 # Usage: scripts/commit.sh [-a | <paths>…] -F file | -m msg [--docs-only]     (-F - reads the message from stdin)

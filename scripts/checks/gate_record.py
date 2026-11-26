@@ -52,7 +52,7 @@ def record(root: Path) -> str | None:
 
 
 def matches(root: Path) -> bool:
-    """Whether the record is the tree as it stands now: False when absent, or when a file changed since the gate passed."""
+    """Whether the record is the tree as it stands now: False when absent, or when a file changed after the gate passed."""
     recorded = record(root)
     return recorded is not None and recorded == tree(root)
 

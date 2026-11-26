@@ -1,5 +1,4 @@
-"""The core's own Python holds the Python stack's readability rules: the checks are the code the maintainer audits by
-test rather than by eye (stacks/python/README.md, Neon Rain R-015)."""
+"""The core's own Python holds the Python stack's readability rules (stacks/python/README.md; C-018)."""
 import importlib.util
 import unittest
 

@@ -1,6 +1,6 @@
 // Lists test weakenings in the working tree against origin/main and never fails: a removed assertion, a `skip`
 // or `only` added, an exact matcher loosened (toBe → toBeTruthy, toEqual → toMatchObject), a deleted test file.
-// The commit message says why each was right (C-018: a test is never weakened to make code pass).
+// The commit message accounts for each (C-018: a test is never weakened to make code pass).
 import { execFileSync } from 'node:child_process';
 
 const diff = execFileSync('git', ['diff', 'origin/main', '--', 'test'], { encoding: 'utf8' });

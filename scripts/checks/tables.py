@@ -86,8 +86,7 @@ def ragged(table: Table, columns: int) -> list[str]:
 
 
 def fixed(table: Table, columns: int) -> Table:
-    """The table, when every row has the count of cells given; a ragged table raises ValueError naming its rows, since
-    a check that reads cells by position would read the wrong one."""
+    """The table, when every row has the count of cells given; a ragged table raises ValueError naming its rows."""
     problems = ragged(table, columns)
     if problems:
         raise ValueError(f"a table headed {' | '.join(table.header)} is ragged: " + "; ".join(problems))

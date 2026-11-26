@@ -1,5 +1,4 @@
-"""A red gate names its failing tests before the verdict and keeps its log whole (3.13; C-001, EE J-139: a gate that
-cleaned up after itself lost a one-in-ten failure's name). Built on test/support_git.py's scratch repository."""
+"""A red gate names its failing tests before the verdict and keeps its log whole (3.13; C-001). Built on test/support_git.py's scratch repository."""
 import unittest
 
 from test.support_git import gate, gated_repo

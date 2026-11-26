@@ -199,7 +199,7 @@ how work is done, then how the repository is kept.
 - **Source:** Ghost; inherited from Katana R-046, EE E-008, NR (docs/JOURNAL.md, no decision id); SB promised in docs/HANDOFF.md, G-106 the relative.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
-- **See also:** C-010, C-014, C-029
+- **See also:** C-010, C-014, C-029; `scripts/next_id.py` counts a heading only, never an id named in a sentence or a range (AI Slop Block J-007: a mention made it answer J-100)
 - **subject:** journal
 
 ## How work is done
@@ -231,7 +231,7 @@ how work is done, then how the repository is kept.
 - **Source:** Ghost; inherited from SB G-239, G-287 and G-290, Katana R-056, EE E-019 and E-059, NR R-015.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
-- **See also:** C-001, C-017
+- **See also:** C-001, C-017; `stacks/typescript/README.md`, the Toolchain row (LF everywhere: CRLF broke byte-for-byte goldens on Windows, SB G-086) and the Mutation row (the command runner, SB G-290)
 - **subject:** mutation
 
 ### C-019: A long run's output goes to a file; an agent reads its verdict and its failures
@@ -425,7 +425,7 @@ how work is done, then how the repository is kept.
 - **Status:** in force
 - **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
 - **subject:** environment
-- **See also:** C-024, C-032, C-034, C-036, C-040
+- **See also:** C-024, C-032, C-034, C-036, C-040; `scripts/checks/secrets.py` (the secret scan names a finding by file, line, pattern and fingerprint, never its value, so the report cannot become the leak: SB G-570, Katana R-104) and the six credential bullets `scripts/checks/claude_md.py` holds (Katana R-104 and R-105, SB G-570)
 - **Supersedes:** C-032, in part: its "Before every push the agent runs the project's full check on the committing machine (the same image and commands a clean clone would run) and quotes its last line in the commit" (the gate runs before the commit, on the working tree, still on the committing machine; it binds by the tree record, and the quoted line is a record). The rest of C-032 stands, CI by hand and the minutes, so its Status stays `in force` and its See also names C-037.
 
 ### C-038: The files that run code by themselves or enforce the pins are pinned by hash, and a change to one is Ghost's to approve
@@ -471,26 +471,77 @@ how work is done, then how the repository is kept.
 - **Supersedes:** C-034, in part: its "Its seven binding rules are in CLAUDE.md, where every agent reads them on entry, word for word" (the triggers are; the rules are in `docs/SUPPLY-CHAIN.md`, read on the trigger). The rest of C-034 stands.
 - **subject:** supply chain
 
+### C-042: A comment says what a function does, never why; a reason is a decision
+- **Decision:** A comment or docstring in code says what the function does: its inputs, its result, an example. It never says why in its own words. A reason belongs in a decision in `theGhost.md`, and where a function has one its comment refers to that decision by id, on the decision line C-009 gives (`# Decision: X-nnn`): the id is the whole of the why in code. A clause that says what the code guarantees ("sorted, so two runs give the same order") is part of what it does and stays. A comment is not a requirement: an agent builds from the decisions its brief names, and a reason it meets in a comment with no decision behind it is reported, not built on. A reason already standing in a comment is moved, not lost: it becomes a decision, or the citation of one that already holds it, before the comment is cut.
+- **Why:** Ghost, 2026-11-26, from Suite Builder: one agent left a why note in a comment; a second agent, pointed by its coordinator only at the decisions it was to work on, read the note as important and built to it. Requirements no decision of Ghost's held were invented, and the work drifted: not harmful, but slop that had to be trimmed and removed. C-009 already made the decision line the one route from a function to its reason; nothing said a free-text reason may not sit beside it.
+- **Held by:** `CLAUDE.md` ("Before calling work done"), `docs/paths/process.md` (the readability row), each stack's `README.md` (its Readability row). `scripts/checks/comments.py` and `test/test_comments.py`, with a planted break under `test/fixtures/broken/comments/`.
+- **Source:** Ghost, 2026-11-26, in chat (the rule; that the comments refer to the decisions on whys; "code guarantees can stay"); the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-008, C-009
+- **subject:** comments
+
+### C-043: A found secret is named by its fingerprint, never by its value
+- **Decision:** A scan that finds a key, a token or a private key names it by file, line, pattern and fingerprint. The value is never printed, logged, written to a report or put in a commit message, by the scan or by an agent that reads its report.
+- **Why:** A report that prints what it found becomes the leak: the value is then in a log, a terminal's scrollback or a conversation, where no rotation reaches it. Suite Builder's and Katana's scans both settled on the fingerprint (SB G-570, Katana R-104 and R-105). Until now the rule stood in a comment of the scan and a cross-reference on C-037 (J-085).
+- **Held by:** `scripts/checks/secrets.py`, `test/test_secrets.py`; CLAUDE.md's credential trigger.
+- **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-034, C-037, C-041
+- **subject:** secrets
+
+### C-044: The next id of a numbered record is counted from headings only
+- **Decision:** The tool that gives the next free id of a numbered record (a decision, a journal entry) counts the record's headings and nothing else. An id named in a sentence, a header line or a range never raises the answer.
+- **Why:** A mention once made the counter answer J-100 while the journal stood at single digits (AI Slop Block J-007): the next writer would have opened a new file of ids on the strength of a sentence. Until now the rule stood in a comment of the counter and a cross-reference on C-015 (J-085).
+- **Held by:** `scripts/next_id.py`, `test/test_journal.py`.
+- **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-008, C-015
+- **subject:** records
+
+### C-045: Where output is compared byte for byte, every text file is LF on every machine
+- **Decision:** A project whose tests compare output byte for byte fixes its line endings in the repository: every text file is LF on every machine, set by the repository's own attributes file and never left to a contributor's settings.
+- **Why:** Goldens compared byte for byte failed on Windows with CRLF and passed everywhere else (SB G-086): the difference was the checkout, not the code, and it cost a search to learn that. Until now the rule stood in a comment of the TypeScript starter and one row of its stack's document (J-085).
+- **Held by:** the TypeScript and Java starters' attributes files (stacks/<stack>/starter/.gitattributes in the core, the root's `.gitattributes` in a stamp), `stacks/typescript/README.md` (the Toolchain row). No test holds it; the Python and C++ starters carry no attributes file.
+- **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-018
+- **subject:** stacks
+
+### C-046: A tool a gate step runs keeps its temporary files in its own sandbox
+- **Decision:** A tool run by a step of the gate writes its temporary files inside its own working folder in the project, which is ignored by git and removed with the run. It does not write them to the machine's shared temporary folder.
+- **Why:** A mutation run once left 8,000 temporary files in /tmp and filled it: the next step failed for a reason that had nothing to do with the code, on a machine the project does not own. Until now the fact stood in a comment of the TypeScript starter's mutation config (J-085).
+- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp: the command sets its temporary folder inside the project), `stacks/typescript/README.md` (the Mutation row). No test holds it.
+- **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-018, C-047
+- **subject:** stacks
+
+### C-047: A gate step starts its tool directly, never through a launcher
+- **Decision:** A step of the gate that starts a tool many times starts it by its own file, not through a launcher that resolves the tool on every start.
+- **Why:** A mutation run starts its test runner once per mutant; started through the package manager's launcher, the launcher's own start-up was a third of each mutant's second, and the gate's time is a metric with a ceiling (C-023). Until now the fact stood in a comment of the TypeScript starter's mutation config (J-085).
+- **Held by:** the TypeScript starter's mutation config (stacks/typescript/starter/stryker.config.mjs in the core, the root's in a stamp), `test/test_stacks.py` (`test_vitest_is_started_by_node_not_npx`), `stacks/typescript/README.md` (the Mutation row).
+- **Source:** Ghost, 2026-11-26, in chat ("these sound like good rule proposals, lets adopt them"), from the list of J-086; the wording the agent's, for Ghost to confirm.
+- **Status:** in force
+- **Core:** part of Ghost-Core; may not apply to every project, but a rule that appears in four projects is there for a reason.
+- **See also:** C-018, C-023, C-046
+- **subject:** stacks
+
 ---
 
 ## Psiberline's own decisions
 
-The core decisions above are inherited (Core C-001 to C-041); this project's begin at P-001.
+The core decisions above are inherited (Core C-001 to C-047); this project's begin at P-001.
 
 ### P-001: Psiberline is stamped from Ghost-Core, on the typescript stack
-- **Decision:** This project is built the Ghost in the Kernel way, inheriting Core C-001 to C-041 as its baseline, on the typescript stack (`stacks/typescript/README.md`). Its decision prefix is P-.
+- **Decision:** This project is built the Ghost in the Kernel way, inheriting Core C-001 to C-047 as its baseline, on the typescript stack (`stacks/typescript/README.md`). Its decision prefix is P-.
 - **Why:** The template holds what four projects converged on; a project refuses a core decision with one of its own that names it, never by editing the core entry.
 - **Held by:** `test/test_ghost.py`, `stacks/typescript/PRESENT`, `docs/LINEAGE.md`.
-- **Source:** Ghost, 2026-11-26, stamped from Ghost-Core ca0637d.
+- **Source:** Ghost, 2026-11-26, stamped from Ghost-Core 31a0aee.
 - **Status:** in force
 - **See also:** Core C-008
 - **subject:** founding
-
-### P-002: A comment says what a function does, never why
-- **Decision:** A comment or docstring in code says what the function does: its inputs, its result, an example. It never says why in its own words. A reason belongs in a decision in this file, and where a function has one its comment refers to that decision by id, on the decision line Core C-009 gives (`// Decision: P-nnn`): the id is the whole of the why in code. A comment is not a requirement: an agent builds from the decisions its brief names, and a reason it meets in a comment with no decision behind it is reported, not built on.
-- **Why:** Ghost, 2026-11-26, from Suite Builder: one agent left a why note in a comment; a second agent, pointed by its coordinator only at the decisions it was to work on, read the note as important and built to it. Requirements no decision of Ghost's held were invented, and the work drifted. Not harmful, but slop that had to be trimmed and removed.
-- **Held by:** `CLAUDE.md` ("Before calling work done"), `stacks/typescript/README.md` (the Readability row). No check holds it yet; one is proposed in `docs/HANDOFF.md`.
-- **Source:** Ghost, 2026-11-26, in chat; the wording the agent's, for Ghost to confirm.
-- **Status:** in force
-- **See also:** Core C-009, Core C-008
-- **subject:** comments

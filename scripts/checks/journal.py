@@ -28,7 +28,7 @@ def entries(journal: str) -> dict[str, dict[str, str]]:
 
 
 def number_problems(journal: str) -> list[str]:
-    """Ids J-001, J-002, ... each once, in order; the first break only."""
+    """Ids `J-001`, `J-002`, ... each once, in order; the first break only."""
     for position, found in enumerate(HEADING.findall(journal), start=1):
         if found != f"J-{position:03d}":
             return [f"entry {position} is {found}, expected J-{position:03d}"]
