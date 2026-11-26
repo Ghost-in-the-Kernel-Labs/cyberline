@@ -48,7 +48,7 @@ It is not:
 | 2. Ontology | The nouns, measurements and operations of conforming requirements enter the domain ontology. A word the ontology does not know is a proofreader flag. | A shared, checked vocabulary |
 | 3. Parser and checks | Controlled English is parsed into a typed syntax tree and checked for units, asset identity, ranges and contradiction. | Inconsistent requirements caught mechanically |
 | 4. Generated tests | Acceptance criteria compile into tests that run against the existing application. | Falling QA effort per ticket |
-| 5. Fixtures and kernel | Application modules are composed from verified fixtures on a common kernel. | The compiler in full |
+| 5. Fixtures and host | Application modules are composed from verified fixtures on a common host. | The compiler in full |
 
 Each phase has explicit inputs, outputs and failure states. Any phase may stop with a precise question instead of an answer.
 
@@ -126,19 +126,19 @@ Ontology first, then the proofreader, then the rewrite rules, then tokenizer and
 
 Epics route to a module; stories live within it. Classification is by rule, from the ticket's fields and wording; a ticket no rule classifies goes to a person.
 
-## 8. Fixtures and the kernel
+## 8. Fixtures and the host
 
 A fixture is a verified unit that satisfies a canonical requirement within a module. Two stories asking to read 50 panels of type A and 10 of type B resolve to two reading fixtures in one module, with addressable inputs for 50 and 10.
 
 **Test side first.** The first fixtures are test fixtures: verified pieces from which acceptance tests are composed. They need no change to the application under test.
 
-**Product side later.** Product fixtures are written against a kernel that provides common services: type and schema enforcement, dependency injection, capability registration, event dispatch, transaction management, error handling, logging and telemetry, authorization, configuration, and version compatibility. A kernel service is built when the first fixture needs it, not before.
+**Product side later.** Product fixtures are written against a host that provides common services: type and schema enforcement, dependency injection, capability registration, event dispatch, transaction management, error handling, logging and telemetry, authorization, configuration, and version compatibility. A host service is built when the first fixture needs it, not before.
 
 **Writing a new fixture is ordinary development.** It is written, reviewed and verified before the compiler may select it. The compiler composes; it does not improvise.
 
-**Composition is checked.** Two verified fixtures can still interact badly. The kernel checks contracts between fixtures at assembly time.
+**Composition is checked.** Two verified fixtures can still interact badly. The host checks contracts between fixtures at assembly time.
 
-A defect fixed in the compiler, the kernel or a fixture is fixed for every application built from them. A defect in a requirement is not; that is what phases 0 to 3 are for.
+A defect fixed in the compiler, the host or a fixture is fixed for every application built from them. A defect in a requirement is not; that is what phases 0 to 3 are for.
 
 ## 9. Verification ladder
 

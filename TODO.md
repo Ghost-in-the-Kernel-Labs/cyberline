@@ -60,7 +60,7 @@ Check: a tree whose units do not agree, whose asset is not in the ontology or wh
 
 ### 1.8 The first test fixture and the first generated test
 
-Check: one test fixture, verified by its own tests and mutation, reads a count of panels of a type from a stand-in application kept under `test/`; the acceptance criterion of "read 50 panels of type A" compiles to a test that is the fixture with its inputs addressed and nothing written new; the generated test is a golden, byte for byte, and passes against the stand-in.
+Check: one test fixture, verified by its own tests and mutation, reads a count of panels of a type from a stand-in application kept under `test/`; the acceptance criterion of "read 50 panels of type A" compiles to a test that is the fixture with its inputs addressed and nothing written new; the generated test is a plan in JSON (P-011), a golden byte for byte, and one TypeScript runner runs it green against the stand-in.
 
 ### 1.9 Reuse
 

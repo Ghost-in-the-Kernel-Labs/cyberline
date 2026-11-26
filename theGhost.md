@@ -593,3 +593,152 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** Core C-049, Core C-040
 - **subject:** landing
+
+### P-005: The controlled English is EARS
+- **Decision:** Requirements are written in EARS (Easy Approach to Requirements Syntax): its sentence patterns are the only shapes a requirement may take. EARS fixes a sentence's shape; the ontology and the typed tree give it meaning.
+- **Why:** A requirement has to be formal by its form for a parser to accept it, and EARS is small enough for a person to write by hand and a proofreader to check.
+- **Held by:** `VISION.md` (section 6), `docs/ROADMAP.md` (F-01). The grammar and its parser are TODO 1.4.
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** language
+
+
+### P-006: The corpus here is synthetic, drawn from Solarpunk
+- **Decision:** Everything in this repository is built and proven on synthetic requirements written from Solarpunk's own. No ticket, requirement, code or anything made from them that an employer or a customer gave enters it.
+- **Why:** The real requirements are not available here and are not this repository's to hold (Core C-033); a project of Ghost's own in the same domain gives requirements with code that passed.
+- **Held by:** `VISION.md` (section 11), `docs/ROADMAP.md` (P-22, F-02). The corpus and its manifest are TODO 1.1.
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** corpus
+
+
+### P-007: The catalogue is JSON files under version control
+- **Decision:** Requirements and what belongs to them are stored as JSON files in the repository. There is no database and nothing to host.
+- **Why:** A record's history is then the repository's history, a change is a diff a person can read, and nothing runs anywhere but in a session (Core AGT-01).
+- **Held by:** `VISION.md` (section 5), `docs/ROADMAP.md` (F-03). The records and their reader are TODO 1.2.
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** catalogue
+
+
+### P-008: No model is in the chain
+- **Decision:** Every stage from a requirements document to its output is a rule set, a parser, a checker or a composer. The same input, rule version and ontology version give the same bytes, and the chain runs to its end with no model available. A model may help write a part, which is then reviewed and committed as ordinary code, or suggest a rewrite to a person; it is never a stage.
+- **Why:** An answer nobody can reproduce is an answer nobody can trace to its source, which is the loss this project is built against.
+- **Held by:** `docs/modules.json` (MOD-03 forbids a model client's import), `VISION.md` (section 10), `docs/ROADMAP.md` (P-15, P-16).
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** determinism
+
+
+### P-009: Tests are compiled before product code
+- **Decision:** The first thing the chain composes is a test for an application that already exists. Product modules composed from fixtures come last, and only with the agreement of the application's developers.
+- **Why:** A test fixture changes nothing in the application under test, so the chain can prove itself without asking anyone to restructure their code.
+- **Held by:** `VISION.md` (section 8), `docs/ROADMAP.md` (Phase 1, Phase 7).
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** order of work
+
+
+### P-010: One domain, solar, until the chain works end to end
+- **Decision:** Psiberline's ontology, grammar and fixtures are for utility-scale solar software. A second domain is not started until the whole chain works on the first.
+- **Why:** An abstraction is extracted at its second use (Core C-002); a general requirements compiler was the founding vision's reach, and the revised vision narrowed it.
+- **Held by:** `VISION.md` (section 1), `docs/ROADMAP.md` (P-23).
+- **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** scope
+
+
+### P-011: A generated test is a plan in JSON, run by one TypeScript runner
+- **Decision:** The chain's output for an acceptance criterion is a test plan in JSON, independent of any test framework: the fixture selected, its inputs, what is asserted, and the trace. The plan is the golden. One runner, in TypeScript, runs a plan; a runner for an adopter's framework is added when that framework is known.
+- **Why:** The adopter's test stack is not known here, and an output tied to one framework would have to be regenerated for another; a plan is also something a person can read and a diff can show.
+- **Held by:** `TODO.md` (1.8, which builds the first plan and the runner), `docs/ROADMAP.md` (Phase 1).
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** output
+
+
+### P-012: The proofreader is a hard stop
+- **Decision:** Nothing moves past the proofreader until the file it read is clean. There is no override and no warning that lets a sentence through.
+- **Why:** A sentence let through with a warning is the vague requirement the chain exists to stop, with a record that someone saw it.
+- **Held by:** `VISION.md` (section 6.4), `docs/ROADMAP.md` (P-20). The proofreader is TODO 1.5.
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** proofreader
+
+
+### P-013: A rewrite rule reshapes what is on the page and supplies nothing
+- **Decision:** A rewrite rule may reorder and reword what a sentence already says into EARS. It never supplies a trigger, an actor, a unit or a value the sentence did not state; a sentence with such a gap is flagged for a person.
+- **Why:** What a ticket leaves out is not on the page to be rewritten; a rule that fills it in is guessing what was meant, which is the thesis this project refuses.
+- **Held by:** `VISION.md` (section 6.4), `docs/ROADMAP.md` (section 1). The first rule is TODO 1.6.
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** rewrite rules
+
+
+### P-014: A requirement compiles only when a named person has approved it
+- **Decision:** Every requirement carries the name of the person who approved its typed tree, and one without it does not compile. This holds on the synthetic corpus as well.
+- **Why:** Tests made from the tree show the code matches the reading; only a person's approval shows the reading matches what was wanted. Exercised from the first slice, the step is built before real requirements depend on it.
+- **Held by:** `VISION.md` (sections 5, 9). The record's approver is TODO 1.2.
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** approval
+
+
+### P-015: Every quantity carries its unit
+- **Decision:** A number in a requirement is written with a unit the ontology defines. A bare number is a proofreader fault; no measurement has a default unit.
+- **Why:** A default is a value the sentence did not state (P-013), and a wrong unit assumed silently is a defect no test made from the same reading can catch.
+- **Held by:** `VISION.md` (section 6.2). The ontology is TODO 1.3 and the unit check TODO 1.7.
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** units
+
+
+### P-016: The program product fixtures are written against is the host
+- **Decision:** The word is host. `VISION.md` section 8 said kernel and is amended; kernel keeps the meaning the glossary gives it, the codebase.
+- **Why:** One word for one thing (Core C-011): an agent that reads kernel in two senses will build to the wrong one.
+- **Held by:** `docs/GLOSSARY.md` (host), `VISION.md` (section 8).
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** words
+
+
+### P-017: The adopting organisation is never named in this repository
+- **Decision:** No file, comment, commit message or record in this repository names the organisation the chain is built for. It is "the adopting organisation".
+- **Why:** The repository is public, and who the work is for is theirs to say.
+- **Held by:** `VISION.md` (section 11). No check holds it.
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** data boundary
+
+
+### P-018: The repository stays public with no licence file until ownership is settled
+- **Decision:** No licence is chosen and the repository's visibility is not changed until Ghost and the adopting organisation have settled who owns what.
+- **Why:** Ghost, 2026-11-26: "The license for now is going to be as is until ownership is settled." A licence chosen first would settle part of that question alone.
+- **Held by:** `docs/HANDOFF.md` ("For Ghost", the ownership item). No check holds it.
+- **Source:** Ghost, 2026-11-26, in chat.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** licence
+
+
+### P-019: Psiberline refuses no core decision at its founding
+- **Decision:** Every core decision in this project's baseline, C-001 to C-049, applies here as written.
+- **Why:** Read against the vision, none conflicts with it: the comment rule, the supply-chain rules, the landing from a session branch and the tune-up's count all fit a project of this kind.
+- **Held by:** `theGhost.md` (the core's entries above this section).
+- **Source:** Ghost, 2026-11-26, in chat ("I will take the recommended", of the options the agent set out for TODO 0.5); the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-001
+- **subject:** core decisions

@@ -57,3 +57,18 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | P-002 | The founding dependencies are the stack's four, pinned exactly; nothing at run time | in force | dependencies |
 | P-003 | Core C-048 adopted: a tune-up commit falls due every twenty-fifth commit | in force | tune-up cadence |
 | P-004 | Core C-049 adopted: a landing is made from a session branch, and `main` is never worked on | in force | landing |
+| P-005 | The controlled English is EARS | in force | language |
+| P-006 | The corpus here is synthetic, drawn from Solarpunk | in force | corpus |
+| P-007 | The catalogue is JSON files under version control | in force | catalogue |
+| P-008 | No model is in the chain | in force | determinism |
+| P-009 | Tests are compiled before product code | in force | order of work |
+| P-010 | One domain, solar, until the chain works end to end | in force | scope |
+| P-011 | A generated test is a plan in JSON, run by one TypeScript runner | in force | output |
+| P-012 | The proofreader is a hard stop | in force | proofreader |
+| P-013 | A rewrite rule reshapes what is on the page and supplies nothing | in force | rewrite rules |
+| P-014 | A requirement compiles only when a named person has approved it | in force | approval |
+| P-015 | Every quantity carries its unit | in force | units |
+| P-016 | The program product fixtures are written against is the host | in force | words |
+| P-017 | The adopting organisation is never named in this repository | in force | data boundary |
+| P-018 | The repository stays public with no licence file until ownership is settled | in force | licence |
+| P-019 | Psiberline refuses no core decision at its founding | in force | core decisions |
