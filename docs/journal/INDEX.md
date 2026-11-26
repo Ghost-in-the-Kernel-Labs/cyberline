@@ -7,3 +7,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-001 | Psiberline stamped from Ghost-Core | direction | `J-000-099.md` |
 | J-002 | Psiberline's ghost named: the requirement behind the ticket (0.1) | decision | `J-000-099.md` |
 | J-003 | The stack wired: four pins, a founding lockfile, the gate green (0.2) | failure-caught | `J-000-099.md` |
+| J-004 | The roadmap written from the vision: Phases 1 to 4 numbered, 5 to 8 outlined (0.3) | direction | `J-000-099.md` |

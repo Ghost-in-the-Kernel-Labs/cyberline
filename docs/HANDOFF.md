@@ -15,6 +15,7 @@ gates are in place and green.
 4. Write the founding decisions in `theGhost.md`, a decision for each core decision this project refuses among them (TODO 0.5): agents cannot author them.
 5. `VISION.md` section 8 calls the program a product fixture is written against the kernel; here the kernel is the codebase (`docs/GLOSSARY.md`), so the roadmap and the glossary call it the host. Say whether the vision takes the word.
 6. Who owns the chain after it is carried into the adopting organisation (`VISION.md` section 16).
+7. The roadmap (`docs/ROADMAP.md`, J-004): Phases 1 to 4 numbered and 5 to 8 outlined from `VISION.md`; the order and the items are the agent's, for your ruling.
 
 ## Overrides to remove once past the cooldown
 
