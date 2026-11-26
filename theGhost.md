@@ -742,3 +742,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** P-001
 - **subject:** core decisions
+
+### P-020: No machine-checked proof: the chain is verified without Lean
+- **Decision:** Psiberline builds no proofs in Lean or any other proof assistant. Its verification ladder is type and semantic checks on the typed tree, constraint solving, property-based tests and generated acceptance tests. Proof is taken up again only if those rungs cannot establish something the calculations need, and then by a new decision of Ghost's.
+- **Why:** Ghost, 2026-11-26: "Lets remove lean proofs from the roadmap. If we can do it without them, we will." Proving a property of real code in Lean needs the code modelled in Lean, which TypeScript is not; most of what the first plan gave to proof (unit compatibility, asset identity, range) is a type check, and a condition of the form "A equals B when C" is a solver's or a property test's.
+- **Held by:** `VISION.md` (section 9), `docs/ROADMAP.md` (section 4; no Phase 8).
+- **Source:** Ghost, 2026-11-26, in chat.
+- **Status:** in force
+- **See also:** P-001, P-008
+- **subject:** verification
