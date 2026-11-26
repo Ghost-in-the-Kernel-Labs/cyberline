@@ -567,8 +567,8 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** dependencies
 
 ### P-003: Core C-048 adopted: a tune-up commit falls due every twenty-fifth commit
-- **Decision:** Psiberline takes Core C-048: the tune-up's counter falls due at twenty-five commits on `main` since the last tune-up, and every phase still ends with its tune-up pass.
-- **Why:** Ghost, 2026-11-26: "set tuneups on both to one per 25 commits." The core's reasons are in Core C-048; a stamped project adopts or refuses each decision the core gains after its stamp (`docs/when/core-update.md`).
+- **Decision:** Psiberline takes Core C-048: the tune-up's counter falls due at twenty-five commits on `main` since the last tune-up, and every phase still ends with its tune-up pass. The count is this project's own: Ghost moves it back toward ten when optimizing the agent's environment starts to matter more here.
+- **Why:** Ghost, 2026-11-26: "with a well laid foundation, refactoring work drops sharply in the initial phases of a project. However, the optimization component of a tuneup becomes more important later. When is individual to each project, and its a question of art, not science." Psiberline is in its founding phase, on a foundation stamped that day. A stamped project adopts or refuses each decision the core gains after its stamp (`docs/when/core-update.md`).
 - **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py`, `docs/when/tune-up.md`.
 - **Source:** Ghost, 2026-11-26, in chat.
 - **Status:** in force
