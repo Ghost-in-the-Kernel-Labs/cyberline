@@ -81,10 +81,18 @@ class ThePins(unittest.TestCase):
         (root / "package-lock.json").write_text('{"packages": {"node_modules/a": {"version": "1.0.1"}}}')
         self.assertEqual(dependency_review.pin_problems(root), [f"package-lock.json: a 1.0.1 {NO_ROW}"])
 
-    def test_a_baseline_row_holds_and_a_second_for_the_package_is_refused(self) -> None:
+    def test_a_baseline_row_holds_and_a_second_for_the_version_is_refused(self) -> None:
         self.assertEqual(dependency_review.record_problems(HEAD + baseline("a", "1.0.0")), [])
-        self.assertEqual(dependency_review.record_problems(HEAD + baseline("a", "1.0.0") + baseline("a", "1.0.1")),
+        self.assertEqual(dependency_review.record_problems(HEAD + baseline("a", "1.0.0") + baseline("a", "1.0.0")),
                          ["row '2026-11-07 a' baselines a package that already has a row: an update is read, never baselined"])
+
+    def test_a_version_the_lockfile_holds_twice_is_one_unrecorded_pin(self) -> None:
+        root = scratch()
+        (root / "package-lock.json").write_text('{"packages": {"node_modules/a": {"version": "1.0.0"}, "node_modules/b/node_modules/a": {"version": "1.0.0"}}}')
+        self.assertEqual(dependency_review.unrecorded(root), [("package-lock.json", "a", "1.0.0")])
+
+    def test_a_package_held_at_two_versions_has_a_baseline_row_for_each(self) -> None:
+        self.assertEqual(dependency_review.record_problems(HEAD + baseline("a", "1.0.0") + baseline("a", "2.0.0")), [])
 
     def test_a_fixture_s_pins_are_not_the_repository_s(self) -> None:
         root = scratch()

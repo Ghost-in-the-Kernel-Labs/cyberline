@@ -6,7 +6,7 @@ file. An alias without backticks is a review guide. Enforce an alias only when i
 use in the repository: "model" is both a Claude model and a project's model of its domain, and a
 test cannot tell the uses apart. Add a term before using a new word for a concept (C-011).
 
-Not governed: `docs/LESSONS.md`, `docs/LINEAGE.md`.
+Not governed: `docs/LESSONS.md`, `docs/LINEAGE.md`, `docs/REVIEWED-VERSIONS.md`.
 They quote the parents in the parents' words.
 
 A project stamped from this template keeps every row here and adds its own below them; a row it

@@ -545,3 +545,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** Core C-008
 - **subject:** founding
+
+### P-002: The founding dependencies are the stack's four, pinned exactly; nothing at run time
+- **Decision:** Psiberline has four development dependencies and no other: `vitest` 4.1.12 (the unit tests and the fast loop), `typescript` 7.0.2 (the type check), `knip` 6.46.1 (no unused file, export or dependency) and `@stryker-mutator/core` 10.1.1 (mutation, by its command runner). Each is pinned to an exact version. The product has no dependency at run time. A version the founding lockfile would have brought in younger than seven days is held to the version before it by an override, listed in `docs/HANDOFF.md` until it is removed.
+- **Why:** These are the four the TypeScript stack's rule table names (Core C-018), each proven in the parents. vitest stays on 4: the stack's scripts were proven against it, and 5 was three weeks old on the day. Nothing at run time, since the chain is a parser and its checks, and every package it does not have is one that cannot change its output or reach it through the supply chain (Core C-034).
+- **Held by:** `package.json`, `package-lock.json`, `docs/REVIEWED-VERSIONS.md` (a baseline row for each pin), `stacks/typescript/gate.sh` (the cooldown, the audit).
+- **Source:** Ghost, 2026-11-26, in chat ("First push to main should be done by you. During this push we will run the entire system"); the four are the ones the template names; the versions are the agent's choice, for Ghost to confirm.
+- **Status:** in force
+- **See also:** Core C-018, Core C-034, Core C-035
+- **subject:** dependencies

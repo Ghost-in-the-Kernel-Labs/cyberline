@@ -7,8 +7,9 @@ left out: each entry of a `package-lock.json` (its `packages`, the root and work
 `requirements.lock` (`name==version`); each `uses: owner/repo@<40-hex SHA>` in a workflow; each `FROM image@sha256:<hex>`
 in a Dockerfile; each row of a `third_party/MANIFEST.md` whose last cell is a SHA-256. A pin is recorded when a row's
 Package and To are its name and version. On adoption every pin already held gets an "unreviewed baseline" row (Kind
-`baseline`, From, Verdict and Reputation `—`); a baseline row for a package that already has a row is refused: an
-update of a held package is read, never baselined (C-035). `python3 -I scripts/checks/dependency_review.py --baseline J-nnn`
+`baseline`, From, Verdict and Reputation `—`); a package the lockfile holds at two versions has a baseline row for each; a baseline row for a
+package that already has a reviewed row, or a second for one version, is refused: an update of a held package is read,
+never baselined (C-035). `python3 -I scripts/checks/dependency_review.py --baseline J-nnn`
 prints the baseline rows for the pins with none, for the adopting commit only; it writes nothing.
 """
 import json
@@ -55,17 +56,18 @@ def rows(table: str) -> list[list[str]]:
 def record_problems(text: str) -> list[str]:
     """Each row of the record with the wrong width, an unknown verdict or reputation, an UNSAFE taken, or a decision that is neither automatic nor Ghost's."""
     found: list[str] = []
-    seen: set[str] = set()
+    reviewed: set[str] = set()
+    baselined: set[tuple[str, str]] = set()
     for cells in rows(text):
         where = f"{cells[0]} {cells[1] if len(cells) > 1 else ''}".strip()
         if len(cells) != COLUMNS:
             found.append(f"row {where!r} has {len(cells)} cells, not {COLUMNS}")
             continue
         if cells[7] == BASELINE:
-            found += baseline_problems(cells, where, cells[1] in seen)
-            seen.add(cells[1])
+            found += baseline_problems(cells, where, cells[1] in reviewed or (cells[1], cells[3]) in baselined)
+            baselined.add((cells[1], cells[3]))
             continue
-        seen.add(cells[1])
+        reviewed.add(cells[1])
         if cells[5] not in VERDICTS:
             found.append(f"row {where!r} has verdict {cells[5]!r}")
         if cells[6] not in REPUTATIONS:
@@ -82,8 +84,8 @@ def record_problems(text: str) -> list[str]:
 
 
 def baseline_problems(cells: list[str], where: str, held: bool) -> list[str]:
-    """An "unreviewed baseline" row's own shape: Kind baseline, From, Verdict and Reputation "—", a journal entry, and a
-    package with no row above it (an update of a held package is read, never baselined)."""
+    """An "unreviewed baseline" row's own shape: Kind baseline, From, Verdict and Reputation "—", a journal entry, and
+    above it no reviewed row for its package and no baseline row for its version (`held`)."""
     found = [f"row {where!r} is a baseline row but its {name} is {cells[i]!r}, not {want!r}"
              for i, name, want in ((4, "Kind", "baseline"), (2, "From", NONE), (5, "Verdict", NONE), (6, "Reputation", NONE)) if cells[i] != want]
     if held:
@@ -131,10 +133,15 @@ def pins(root: Path) -> list[tuple[str, str, str]]:
 
 
 def unrecorded(root: Path) -> list[tuple[str, str, str]]:
-    """The pins with no row whose Package and To are their name and version."""
+    """The pins with no row whose Package and To are their name and version, each name and version once: a lockfile that
+    holds a 1.0.0 in two folders gives one ("package-lock.json", "a", "1.0.0")."""
     record = root / RECORD
     have = {(cells[1], cells[3]) for cells in rows(record.read_text())} if record.is_file() else set()
-    return [pin for pin in pins(root) if pin[1:] not in have]
+    missing: dict[tuple[str, str], tuple[str, str, str]] = {}
+    for pin in pins(root):
+        if pin[1:] not in have:
+            missing.setdefault(pin[1:], pin)
+    return list(missing.values())
 
 
 # Decision: C-035 (no version enters a lockfile or a vendored manifest unread; the baseline is how a pin held before is named)

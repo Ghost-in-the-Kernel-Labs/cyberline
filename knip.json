@@ -1,6 +1,19 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "entry": ["src/cli/main.ts", "scripts/*.mjs", "test/unit/**/*.test.ts"],
-  "project": ["src/**/*.ts", "test/**/*.ts", "scripts/*.mjs"],
-  "ignore": ["test/golden/**", "src/**/*.gen.ts"]
+  "entry": [
+    "src/cli/main.ts",
+    "scripts/*.mjs",
+    "test/unit/**/*.test.ts"
+  ],
+  "project": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "scripts/*.mjs"
+  ],
+  "ignore": [
+    "test/fixtures/**",
+    "test/golden/**",
+    "src/**/*.gen.ts"
+  ],
+  "stryker": false
 }

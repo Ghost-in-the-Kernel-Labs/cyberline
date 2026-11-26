@@ -52,3 +52,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | C-046 | A tool a gate step runs keeps its temporary files in its own sandbox | in force | stacks |
 | C-047 | A gate step starts its tool directly, never through a launcher | in force | stacks |
 | P-001 | Psiberline is stamped from Ghost-Core, on the typescript stack | in force | founding |
+| P-002 | The founding dependencies are the stack's four, pinned exactly; nothing at run time | in force | dependencies |
