@@ -751,3 +751,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** P-001, P-008
 - **subject:** verification
+
+### P-021: Psiberline is the compiler; the language is a second project; the handover is the typed tree
+- **Decision:** The work is two projects. The language project, in a repository of its own, owns everything up to an accepted requirement: the corpus, the catalogue, the ontology, the EARS grammar and its parser, the proofreader, the rewrite rules, the checks on a requirement's meaning, and triage. Psiberline is the compiler: it starts from an accepted requirement, parsed and approved, and composes test plans, and later application modules, from verified fixtures. The handover is JSON files in a format with a version; neither project imports the other, and Psiberline checks every tree it is given.
+- **Why:** Ghost, 2026-11-26: "this effort could actually be split between two projects. The first project devoted to the formalized language, and getting a corpus of examples via doing qa. The second project is devoted to the compiler"; then "The compiler repo is psiberline's repo. However, it needs to have the vision, for the second project", and "Approved" of that vision. The language half is worth having with no compiler behind it; the compiler is the speculative half and should not hold the other up; and what is learned from an adopter's tickets stays on the language side.
+- **Held by:** `VISION.md` (sections 1, 4), `docs/ROADMAP.md`.
+- **Source:** Ghost, 2026-11-26, in chat; the wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-005, P-006, P-007, P-012, P-013, P-014, P-015
+- **subject:** scope of the project
