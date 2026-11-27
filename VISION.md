@@ -120,6 +120,8 @@ This repository holds the compiler, its fixtures for synthetic applications, and
 - Development here uses trees written by hand, or produced by the language project from its synthetic corpus.
 - Fixtures for a real application are written in that application's own environment.
 
+**Only what is in this repository survives.** The tools reach the adopting organisation as this repository and nothing else. A plan, a decision, a draft or a finding that lives in a chat, a shared document or a session's container does not make the journey. Whatever is meant to last is written here before the work that depends on it.
+
 ## 11. Measurement
 
 For every run, measure:

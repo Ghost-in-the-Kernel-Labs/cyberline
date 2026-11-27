@@ -202,3 +202,29 @@ tree with its inputs taken out, and the language project counts them. On the syn
 - **Phase 6, product fixtures and the host.** A host that gives fixtures their common services, each built when a
   fixture first needs it; adapters for equipment; application modules composed as plans are. It waits on the
   application's developers.
+
+## 7. While no real ticket exists: the low-risk work, in order
+
+A draft, for Ghost's confirmation (J-017). No real ticket and no real code is available where this project is built, and
+none may enter this repository (C-033). The work below proves the machinery and does not depend on what real
+tickets say; the work under "Waits" is a guess until they exist, and is left alone. The further a project goes on
+invented material, the more of it is a guess: when the list below is done, the next step is the adopting
+organisation's environment, not more invented corpus.
+
+Only what is in this repository survives the journey there (P-024): each item below ends with its code, its checks,
+its decisions and its journal entry landed here.
+
+### Safe now
+
+1. Phase 0's open items: the contract's invariants (0.4), Ghost's word on the founding decisions (0.5), tune-up pass 0 (0.6).
+2. Phase 1 whole (1.1 to 1.12): the first slice proves the mechanism whatever the tickets later say.
+3. *Draft, not yet in the chain:* the joined check. Cyberline Language's handover files for the two requirements of the slice compile here unchanged, held by a test in each project against the same two files.
+4. From Phase 2, the library's mechanics: the index (2.1), the build order read from a synthetic shape report (2.2), one further fixture as an example (2.3) so that contracts between fixtures (2.6) have a pair to check, the gap report (2.7), fixture versions (2.8).
+5. From Phase 3: property tests (3.1), the batch compile (3.3), recompiling on a changed tree (3.4), the run that writes the measures (3.5).
+
+### Waits on real tickets or real code
+
+- **Fixtures beyond the examples (2.4, 2.5 and every later one).** A fixture is built for a shape the corpus has shown (P-023), and the corpus that counts is the real one.
+- **The solver (3.2).** A dependency, and so Ghost's to approve (C-034).
+- **Every measure's value.** Coverage rate on trees written to fit the fixtures says nothing. The run that prints it is built; the numbers are the adopter's.
+- **The runner for the adopter's test framework, fixtures for a real application, product fixtures and the host (Phases 5 and 6).**

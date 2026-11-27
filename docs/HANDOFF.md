@@ -15,6 +15,8 @@ Next in the chain: 0.4 the contract and the leaf module; 0.5 the founding decisi
 
 Renamed on 2026-11-27 (P-022, J-015): this project was Psiberline. Ghost renamed the repositories the same day: this one is `Ghost-in-the-Kernel-Labs/cyberline` (public) and the language's is `Ghost-in-the-Kernel-Labs/cyberline-language` (private); the old addresses redirect.
 
+Only what is in this repository survives the transfer to the adopting organisation (P-024): write what is meant to last here, never only in a chat or a shared document. What to build while no real ticket exists, and what to leave, is `docs/ROADMAP.md` section 7 (a draft, for Ghost).
+
 ## Starting a session cold
 
 Clone; `git config user.name Ghost` and the email in `CLAUDE.md`; a session branch before the first edit
