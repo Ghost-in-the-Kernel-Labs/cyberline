@@ -13,7 +13,7 @@ gated commit copied in (J-009).
 Next in the chain: 0.4 the contract and the leaf module; 0.5 the founding decisions, which are Ghost's to write
 (an agent drafts the questions); 0.6 Tune-up pass 0; then Phase 1, the first slice.
 
-Renamed on 2026-11-27 (P-022, J-015): this project was Psiberline. If `Ghost-in-the-Kernel-Labs/cyberline` does not answer, the repository has not been renamed yet and the address is `Ghost-in-the-Kernel-Labs/psiberline`.
+Renamed on 2026-11-27 (P-022, J-015): this project was Psiberline. Ghost renamed the repositories the same day: this one is `Ghost-in-the-Kernel-Labs/cyberline` (public) and the language's is `Ghost-in-the-Kernel-Labs/cyberline-language` (private); the old addresses redirect.
 
 ## Starting a session cold
 
