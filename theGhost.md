@@ -769,3 +769,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** P-001, P-021
 - **subject:** name
+
+### P-023: A fixture is built for a shape the corpus has shown, most frequent first
+- **Decision:** Fixtures are not designed ahead of the requirements. The language project counts the shapes of the requirements it has parsed (a shape is a typed tree with its inputs taken out), and this project builds a fixture for a shape once the corpus shows it recurs, the most frequent first. Until a real corpus exists the fixtures here are for the shapes of the synthetic corpus, as examples.
+- **Why:** A fixture for a kind of requirement nobody has written is an abstraction before its first use (C-002); the corpus says which kinds exist and how often, and the coverage rate rises fastest by the most frequent.
+- **Held by:** `docs/ROADMAP.md` (Phase 2, item 2.2), `docs/GLOSSARY.md` (shape). No check holds it until 2.2 is built.
+- **Source:** Ghost, 2026-11-27, in chat: "There will need to be a large corpus of jira tickets until general types of requirements can be found. Once types of requirements are found, then fixtures can be built on those types", and "Yes to both" of the agent's two changes (the report in the language project's triage phase; this project's fixture library taking its build order from it). The word shape and the wording are the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-021
+- **subject:** fixtures
