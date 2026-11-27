@@ -6,7 +6,7 @@ entry, in CLAUDE.md": the triggers stay on entry, the text moves here). This doc
 they are what they are, the detail behind them, and where this repository stands on each. `test/test_supply_chain.py` holds what can
 be held mechanically.
 
-**This document is about Psiberline** (https://github.com/Ghost-in-the-Kernel-Labs/psiberline).
+**This document is about Cyberline** (https://github.com/Ghost-in-the-Kernel-Labs/cyberline).
 A document distributed to a project's agent applies to that project only: an Opus agent assigned to
 Katana once started working on Suite Builder because a security document did not say whose
 repository it was about. A stamped project rewrites this line first.

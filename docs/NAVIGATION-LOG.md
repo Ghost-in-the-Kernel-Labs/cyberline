@@ -50,7 +50,7 @@ An entry is `### <date> · <task> · <model>` and these lines:
 - **Complaints**: none
 - **Suggestions**: none
 
-### 2026-11-26 · the split: Psiberline is the compiler · Fable
+### 2026-11-26 · the split: Cyberline is the compiler · Fable
 
 - **Task**: replace the vision with the compiler's, rename the ghost, record P-021.
 - **Opened**: `VISION.md`, `docs/GHOST-IN-THE-KERNEL.md`, `theGhost.md`, `CLAUDE.md`, `README.md`, `docs/LINEAGE.md`, `docs/HANDOFF.md`.

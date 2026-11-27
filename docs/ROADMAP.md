@@ -8,13 +8,13 @@ finished.
 
 ## 1. The product in three sentences
 
-Psiberline compiles an accepted solar software requirement, handed over as a typed and approved tree, into a test
+Cyberline compiles an accepted solar software requirement, handed over as a typed and approved tree, into a test
 plan composed from verified fixtures, each step traced back to the requirement. The thesis to hold: a requirement of
 a kind that has been tested before can be compiled, by a chain with no model in it, into the same bytes every time,
 with nothing written new. The thesis to refuse: that the compiler may guess; where no fixture exists it says so, and
 where the tree does not supply an input it stops.
 
-`VISION.md` is the long form: where Psiberline sits beside the language project, the compiler's seven stages, the
+`VISION.md` is the long form: where Cyberline sits beside the language project, the compiler's seven stages, the
 fixtures and the host, the verification ladder and the data boundary. This file is the plan that builds it.
 
 ## 2. Principles
@@ -61,14 +61,14 @@ The core's principles, copied from Ghost-Core when this project was stamped; thi
 
 | Id | Fact | Source | Implication |
 | --- | --- | --- | --- |
-| F-01 | Psiberline is the compiler; the language is a second project in its own repository. | Ghost, 2026-11-26; P-021 | Nothing here parses, proofreads, rewrites or triages English. |
+| F-01 | Cyberline is the compiler; the language is a second project in its own repository. | Ghost, 2026-11-26; P-021 | Nothing here parses, proofreads, rewrites or triages English. |
 | F-02 | The handover is JSON files in a format with a version. | P-021; `VISION.md` section 4 | Neither project imports the other; the format is written down and checked at intake. |
 | F-03 | A generated test is a plan in JSON, run by one TypeScript runner. | Ghost, 2026-11-26; P-011 | The plan is the golden; a runner for an adopter's framework comes later. |
 | F-04 | The stack is TypeScript, with four development dependencies and none at run time. | Ghost, 2026-11-26; P-002 | A new dependency is a decision of Ghost's (C-034). |
 | F-05 | The chain holds no model. | Ghost, 2026-11-26; P-008 | P-15; `docs/modules.json` forbids a model client's import. |
 | F-06 | No machine-checked proof. | Ghost, 2026-11-26; P-020 | The ladder ends at a generated plan. |
 | F-07 | A clause that says what code guarantees stays in a comment; a reason is a decision. | Ghost, 2026-11-26; Core C-042 | `scripts/checks/comments.py` holds the code here. |
-| F-08 | The language project, Psiberline Language, is founded and has built nothing yet; no real requirement is available here. | Ghost, 2026-11-26; J-014 | The first trees are written by hand; the format is held here until Ghost says where it lives (`docs/HANDOFF.md`; Phase 4). |
+| F-08 | The language project, Cyberline Language, is founded and has built nothing yet; no real requirement is available here. | Ghost, 2026-11-26; J-014 | The first trees are written by hand; the format is held here until Ghost says where it lives (`docs/HANDOFF.md`; Phase 4). |
 | F-09 | The first slice is "read 50 panels of type A", then "read 10 more of type B". | `VISION.md` section 15 | Phase 1's items. |
 
 ## 4. What is deliberately not built
@@ -188,7 +188,7 @@ The second and third kinds of fixture, and what it takes to keep many of them ho
 ### Phases 4 to 6 (outline; items are numbered when the phase before is built)
 
 - **Phase 4, the format shared with the language project.** The format's document moves to the language project,
-  and Psiberline pins a version of it; intake runs on trees that project emits from its synthetic corpus; a check
+  and Cyberline pins a version of it; intake runs on trees that project emits from its synthetic corpus; a check
   that the two repositories hold the same version; how a new version is taken up.
 - **Phase 5, the chain carried to its adopter.** A runner for the adopter's test framework; fixtures for a real
   application, written in that application's environment; the first compile of real accepted requirements as a

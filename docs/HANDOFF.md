@@ -6,12 +6,14 @@ Read `CLAUDE.md` first, then this. `TODO.md` is the chain in order; `docs/DONE.m
 
 Founded in one session, whose container no longer exists: everything it made is in this repository and
 Ghost-Core's. Done (`docs/DONE.md`): 0.1 this project's ghost, 0.2 the stack wired and the first ship, 0.3 the
-roadmap and Phase 1's chain. On the same day the work was split in two (P-021): Psiberline is the compiler, and the language is a second project whose repository does not exist yet. `VISION.md` is the compiler's approved long form; `docs/ROADMAP.md` is its plan. The full gate
+roadmap and Phase 1's chain. On the same day the work was split in two (P-021): Cyberline is the compiler, and the language is a second project whose repository does not exist yet. `VISION.md` is the compiler's approved long form; `docs/ROADMAP.md` is its plan. The full gate
 passes in about half a minute, mutation included. The core is taken up to Ghost-Core 56cb5ed, with one later fix to the
 gated commit copied in (J-009).
 
 Next in the chain: 0.4 the contract and the leaf module; 0.5 the founding decisions, which are Ghost's to write
 (an agent drafts the questions); 0.6 Tune-up pass 0; then Phase 1, the first slice.
+
+Renamed on 2026-11-27 (P-022, J-015): this project was Psiberline. If `Ghost-in-the-Kernel-Labs/cyberline` does not answer, the repository has not been renamed yet and the address is `Ghost-in-the-Kernel-Labs/psiberline`.
 
 ## Starting a session cold
 
@@ -23,7 +25,7 @@ nothing installed. The stack's gate needs npm 11 or newer and a session's contai
 
 ## For Ghost: waiting on you
 
-0. The split (P-021, J-012, J-014): Psiberline is the compiler; the language project is Psiberline Language, in the repository you made, `Ghost-in-the-Kernel-Labs/psiberline-language`, stamped from Ghost-Core cd69c5f with its vision, roadmap and founding decisions (its L-003 to L-016). Two things are yours: where the tree's format is written down (the agent's proposal, and the language project's vision: there, with Psiberline pinning the version it accepts; until you say, 1.1 here writes v0 and the language project's goldens conform to it); and which of the seven decisions about the language (P-005, P-006, P-007, P-012, P-013, P-014, P-015) are withdrawn here now that they are held there as L-004 to L-006 and L-009 to L-012.
+0. The split (P-021, J-012, J-014): Cyberline is the compiler; the language project is Cyberline Language, in the repository you made, `Ghost-in-the-Kernel-Labs/cyberline-language`, stamped from Ghost-Core cd69c5f with its vision, roadmap and founding decisions (its L-003 to L-016). Two things are yours: where the tree's format is written down (the agent's proposal, and the language project's vision: there, with Cyberline pinning the version it accepts; until you say, 1.1 here writes v0 and the language project's goldens conform to it); and which of the seven decisions about the language (P-005, P-006, P-007, P-012, P-013, P-014, P-015) are withdrawn here now that they are held there as L-004 to L-006 and L-009 to L-012.
 1. Confirm the wording of P-005 to P-020, the founding decisions (J-010, J-011): you took the options the agent set out; the words are the agent's.
 2. Confirm the wording of this project's ghost (`docs/GHOST-IN-THE-KERNEL.md`, J-002): drafted from `VISION.md`.
 3. Confirm P-002's versions (vitest 4.1.12, typescript 7.0.2, knip 6.46.1, @stryker-mutator/core 10.1.1), the agent's choice (J-003).

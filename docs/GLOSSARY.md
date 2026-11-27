@@ -62,7 +62,7 @@ removes is a decision in its own log.
 | **patch reviewer** | the agent that reads one dependency update's diff with Read, Grep and Glob and nothing else: read-only by construction (C-035) | security reviewer, approver (its SAFE approves nothing alone), auditor |
 | **reviewed version** | the last version of a package the project read in full, in `docs/REVIEWED-VERSIONS.md`; the next review's old side | last installed version (the diff is read from the reviewed one, not the installed one) |
 | **routine update** | a patch or minor of a package the project already has that passes every layer; taken without asking Ghost (C-035) | minor bump, auto-update |
-| **chain** | every stage from a requirements document to its output, each a rule set, a parser, a checker or a composer, with no model in it; the language project is its first half and Psiberline, the compiler, its second (P-021) | pipeline, engine |
+| **chain** | every stage from a requirements document to its output, each a rule set, a parser, a checker or a composer, with no model in it; the language project is its first half and Cyberline, the compiler, its second (P-021) | pipeline, engine |
 | **proofreader** | the tool that marks a sentence that is not EARS, a word the ontology lacks and a unit that does not resolve, naming the rule broken | `linter` (a stack's tool), spell checker, validator |
 | **rewrite rule** | one pattern of plain English and the EARS it becomes, with an id, a version and tests; the rule set is all of them | transform, heuristic |
 | **catalogue** | the requirements and what belongs to them (criteria, sources, decisions, constraints, dependencies, evidence, revisions) as JSON files under version control | database, backlog, requirements store |
