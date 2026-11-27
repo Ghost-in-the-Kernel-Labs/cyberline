@@ -20,3 +20,4 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-014 | The language project exists: Cyberline Language, founded in its own repository | direction | `J-000-099.md` |
 | J-015 | Renamed: Psiberline is Cyberline, in every file | direction | `J-000-099.md` |
 | J-016 | Fixtures follow the corpus: the library's build order comes from a count of shapes (P-023) | direction | `J-000-099.md` |
+| J-017 | What can be built before a real ticket exists, and the rule that only the repository survives (P-024) | direction | `J-000-099.md` |

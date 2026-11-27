@@ -76,3 +76,4 @@ Written by `scripts/decisions_index.py` from `theGhost.md`; do not edit here. Se
 | P-021 | Cyberline is the compiler; the language is a second project; the handover is the typed tree | in force | scope of the project |
 | P-022 | The project is named Cyberline; it was Psiberline | in force | name |
 | P-023 | A fixture is built for a shape the corpus has shown, most frequent first | in force | fixtures |
+| P-024 | Only what is in the repository survives | in force | data boundary |

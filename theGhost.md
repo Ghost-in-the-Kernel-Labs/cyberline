@@ -778,3 +778,12 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **Status:** in force
 - **See also:** P-021
 - **subject:** fixtures
+
+### P-024: Only what is in the repository survives
+- **Decision:** The tools are carried into the adopting organisation as this repository and nothing else. Every plan, decision, draft, finding and piece of work that is meant to last is written into this repository: a chat, a shared document and a session's container are views or scratch, and are gone at the transfer. A document that cannot enter the repository (one that names the adopting organisation, say) is not relied on by anything here.
+- **Why:** Ghost, 2026-11-27: "the only work that will survive should be work in the repository. Work not in the repository will not survive transfer to the org."
+- **Held by:** `VISION.md` (the data boundary), `docs/ROADMAP.md` (section 7), `docs/HANDOFF.md` (the cold start). No check holds it.
+- **Source:** Ghost, 2026-11-27, in chat. The wording is the agent's, for Ghost to confirm.
+- **Status:** in force
+- **See also:** P-021, P-006
+- **subject:** data boundary
