@@ -74,7 +74,7 @@ evidence when the implementation no longer agrees with its foundations.
 
 ## This project's ghost
 
-The loss Psiberline is built against is the test that has to be written again. A requirement of a
+The loss Cyberline is built against is the test that has to be written again. A requirement of a
 kind the application has met before is tested by hand once more, from the ticket, by whoever is
 there that week. The earlier test is somewhere in the suite, proving something like it; nothing
 says which requirement it proves, so nobody dares reuse it and nobody dares delete it. And when a

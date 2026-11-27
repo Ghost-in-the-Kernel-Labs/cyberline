@@ -4,8 +4,8 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 
 | Entry | Title | Class | File |
 | --- | --- | --- | --- |
-| J-001 | Psiberline stamped from Ghost-Core | direction | `J-000-099.md` |
-| J-002 | Psiberline's ghost named: the requirement behind the ticket (0.1) | decision | `J-000-099.md` |
+| J-001 | Cyberline stamped from Ghost-Core | direction | `J-000-099.md` |
+| J-002 | Cyberline's ghost named: the requirement behind the ticket (0.1) | decision | `J-000-099.md` |
 | J-003 | The stack wired: four pins, a founding lockfile, the gate green (0.2) | failure-caught | `J-000-099.md` |
 | J-004 | The roadmap written from the vision: Phases 1 to 4 numbered, 5 to 8 outlined (0.3) | direction | `J-000-099.md` |
 | J-005 | Core taken up to 6d13f63: C-048 adopted, the core's fixes to its own stamp copied in | decision | `J-000-099.md` |
@@ -15,6 +15,7 @@ Written from `docs/journal/` by `scripts/journal_index.py`; do not edit by hand.
 | J-009 | The handoff rewritten for a cold start; the core's fix to --docs-only with --ship taken | direction | `J-000-099.md` |
 | J-010 | The founding decisions written at Ghost's word: P-005 to P-019 | decision | `J-000-099.md` |
 | J-011 | Lean struck from the vision and the roadmap: P-020 | decision | `J-000-099.md` |
-| J-012 | Psiberline is the compiler: the vision replaced, the ghost renamed, P-021 | direction | `J-000-099.md` |
+| J-012 | Cyberline is the compiler: the vision replaced, the ghost renamed, P-021 | direction | `J-000-099.md` |
 | J-013 | The roadmap and the chain re-cut to the compiler | direction | `J-000-099.md` |
-| J-014 | The language project exists: Psiberline Language, founded in its own repository | direction | `J-000-099.md` |
+| J-014 | The language project exists: Cyberline Language, founded in its own repository | direction | `J-000-099.md` |
+| J-015 | Renamed: Psiberline is Cyberline, in every file | direction | `J-000-099.md` |

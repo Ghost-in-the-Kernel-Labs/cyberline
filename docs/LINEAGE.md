@@ -12,7 +12,7 @@ the evidence goes to the project that paid for it.
 | Katana | ghost-in-the-kernel/katana | Java 21 | R- | 89 | 2026-10-04 | COBOL-to-Java migration compiler proven byte-identical by an oracle; Intent IR and proof ledger |
 | Employee Evaluator | Ghost-in-the-Kernel-Labs/Employee-Evaluator | Java 21 (+ Python sandbox) | E- | 75 | 2026-10 | Ranks developers by the AI-assisted repository they built; seven metrics, every score traced to facts |
 | Neon Rain | ghost-in-the-kernel/Neon-Rain | Python 3.12 | R- (shared letter with Katana) | 23 | 2026-10-22 | Market-prediction research held to a backtesting harness frozen before the first model |
-| Psiberline | https://github.com/Ghost-in-the-Kernel-Labs/psiberline | TypeScript | P- | 1 | 2026-11-26 | A compiler that turns accepted solar software requirements, handed over as typed and approved trees, into test plans, and later application modules, composed from verified fixtures, with no AI in the chain; taken up to Ghost-Core 56cb5ed |
+| Cyberline | https://github.com/Ghost-in-the-Kernel-Labs/cyberline | TypeScript | P- | 1 | 2026-11-26 | A compiler that turns accepted solar software requirements, handed over as typed and approved trees, into test plans, and later application modules, composed from verified fixtures, with no AI in the chain; taken up to Ghost-Core 56cb5ed |
 | Ghost-Core | Ghost-in-the-Kernel-Labs/Ghost-Core | Python 3 stdlib (checks); any stack (projects) | C- | — | 2026-10-23 | This template |
 
 Surveyed read-only on 2026-10-23 at the commits then on `main` (SB fd349c7, EE 72268bc, Katana

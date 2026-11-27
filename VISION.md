@@ -1,9 +1,9 @@
-# Psiberline: Vision and Product Thesis
+# Cyberline: Vision and Product Thesis
 
 **Status:** Approved by Ghost, 2026-11-26 (P-021); aspirational, not a statement of implemented capability
 **Supersedes:** the revised vision of 2026-11-26, which covered the language and the compiler together
 **Implementation language:** TypeScript
-**Repository:** https://github.com/Ghost-in-the-Kernel-Labs/psiberline
+**Repository:** https://github.com/Ghost-in-the-Kernel-Labs/cyberline
 
 ---
 
@@ -12,9 +12,9 @@
 The work is now two projects, split where the typed tree is handed over.
 
 - **The language project** (its own repository) owns everything up to an accepted requirement: the corpus, the catalogue, the ontology, the EARS grammar and parser, the proofreader, the rewrite rules, the checks on a requirement's meaning, and triage. It is built first and pays for itself in clearer tickets and faster triage.
-- **Psiberline is the compiler.** It starts from an accepted requirement, already parsed and approved, and composes tests, and later application modules, from verified fixtures.
+- **Cyberline is the compiler.** It starts from an accepted requirement, already parsed and approved, and composes tests, and later application modules, from verified fixtures.
 
-Psiberline no longer reads English. It does not parse, proofread, rewrite or triage. Those sections of the last vision move to the language project.
+Cyberline no longer reads English. It does not parse, proofread, rewrite or triage. Those sections of the last vision move to the language project.
 
 ## 2. Purpose
 
@@ -24,9 +24,9 @@ Compile an accepted requirement into a test that proves it, by selecting and con
 
 The long-term purpose reaches further: application modules composed the same way, so a defect fixed once is fixed for every application built from the same parts.
 
-## 3. What Psiberline is and is not
+## 3. What Cyberline is and is not
 
-Psiberline is a compiler from typed requirement trees to test plans, and later to application modules.
+Cyberline is a compiler from typed requirement trees to test plans, and later to application modules.
 
 It is not:
 
@@ -36,19 +36,19 @@ It is not:
 - A judge of what a requirement meant. That was settled when a person approved the tree.
 - A way to restructure an application without its developers' agreement.
 
-## 4. Where Psiberline sits
+## 4. Where Cyberline sits
 
 ```
-requirement in English ──► language project ──► accepted typed tree ──► Psiberline ──► test plan ──► runner
+requirement in English ──► language project ──► accepted typed tree ──► Cyberline ──► test plan ──► runner
                            (parse, proofread,     (JSON, approved,       (classify,      (JSON)
                             check, approve)        versioned)             resolve, compose)
 ```
 
-**The handover is files, not code.** The language project writes each accepted requirement as JSON: its typed tree, its acceptance criteria, its provenance and the name of the person who approved it, with the version of the ontology and of the tree's format. Psiberline reads those files. Neither project imports the other.
+**The handover is files, not code.** The language project writes each accepted requirement as JSON: its typed tree, its acceptance criteria, its provenance and the name of the person who approved it, with the version of the ontology and of the tree's format. Cyberline reads those files. Neither project imports the other.
 
-**The format is a contract with a version.** Psiberline names the version it accepts and refuses any other. A change to the format is a change both projects make on purpose.
+**The format is a contract with a version.** Cyberline names the version it accepts and refuses any other. A change to the format is a change both projects make on purpose.
 
-**Psiberline never trusts its input.** It checks every tree against the format, refuses one that is not approved or not accepted, and refuses a word or a unit it does not know. A refusal names the requirement and the rule.
+**Cyberline never trusts its input.** It checks every tree against the format, refuses one that is not approved or not accepted, and refuses a word or a unit it does not know. A refusal names the requirement and the rule.
 
 ## 5. The compiler's stages
 
@@ -108,9 +108,9 @@ Generated, compiled, tested, verified and accepted are different words and are n
 
 ## 9. A deterministic chain, and where AI stands
 
-No stage of Psiberline is a model. A model may help write a fixture or a classification rule, which is then reviewed, tested and committed as ordinary code. The compiler runs to completion with no model available.
+No stage of Cyberline is a model. A model may help write a fixture or a classification rule, which is then reviewed, tested and committed as ordinary code. The compiler runs to completion with no model available.
 
-Trees and the documents behind them are data. Text inside them cannot change Psiberline's rules.
+Trees and the documents behind them are data. Text inside them cannot change Cyberline's rules.
 
 ## 10. The data boundary
 
@@ -135,7 +135,7 @@ The founding vision's one-hour target stands as an aspiration for requirements t
 
 ## 12. Reuse and governance
 
-Psiberline is a sibling of Suite Builder, which compiles website evidence into test suites. Its pipeline organisation, typed intermediate structures, byte-for-byte goldens and mutation testing are candidates for reuse, each inspected first and reused only where the abstraction is real.
+Cyberline is a sibling of Suite Builder, which compiles website evidence into test suites. Its pipeline organisation, typed intermediate structures, byte-for-byte goldens and mutation testing are candidates for reuse, each inspected first and reused only where the abstraction is real.
 
 Governance comes from Ghost-Core, from which this repository is stamped.
 
@@ -153,7 +153,7 @@ Governance comes from Ghost-Core, from which this repository is stamped.
 
 ## 14. Risks
 
-- **A tree designed without its consumer.** If the language project fixes the format alone, it may leave out what composition needs. Psiberline's first slice is built early, against a hand-written tree, so the format is tested from both sides.
+- **A tree designed without its consumer.** If the language project fixes the format alone, it may leave out what composition needs. Cyberline's first slice is built early, against a hand-written tree, so the format is tested from both sides.
 - **The format drifts.** Two repositories can change one contract out of step. The version check at intake is what catches it.
 - **Coverage may grow slowly.** If most requirements need a new fixture, the compiler adds little. Coverage rate is the number that says so.
 - **Synthetic trees are cleaner than real ones.** What compiles here may not survive real requirements.
@@ -168,10 +168,10 @@ Governance comes from Ghost-Core, from which this repository is stamped.
 **Open, for Ghost.**
 
 1. The language project's name and repository.
-2. Where the tree's format is written down: in the language project, with Psiberline pinning a version, or here until that repository exists.
-3. Which of Psiberline's founding decisions move to the language project (EARS, the corpus, the catalogue, the proofreader, rewrite rules, approval, units).
+2. Where the tree's format is written down: in the language project, with Cyberline pinning a version, or here until that repository exists.
+3. Which of Cyberline's founding decisions move to the language project (EARS, the corpus, the catalogue, the proofreader, rewrite rules, approval, units).
 4. Ownership after the carry-over, now a question for each project.
 
 ---
 
-**Psiberline's goal is to turn an accepted requirement into a test that proves it, by composing parts that are already verified, with nothing guessed and everything traced.**
+**Cyberline's goal is to turn an accepted requirement into a test that proves it, by composing parts that are already verified, with nothing guessed and everything traced.**

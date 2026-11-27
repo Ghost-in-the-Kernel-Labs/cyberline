@@ -1,4 +1,4 @@
-# theGhost.md: every decision Psiberline stands on
+# theGhost.md: every decision Cyberline stands on
 
 The layer beneath the comments. Each decision has a number (C-001), what was decided, why, what
 holds it (a test, a document, a file), who decided and when, a status, and the decisions it
@@ -554,11 +554,11 @@ how work is done, then how the repository is kept.
 
 ---
 
-## Psiberline's own decisions
+## Cyberline's own decisions
 
 The core decisions above are inherited (Core C-001 to C-047); this project's begin at P-001.
 
-### P-001: Psiberline is stamped from Ghost-Core, on the typescript stack
+### P-001: Cyberline is stamped from Ghost-Core, on the typescript stack
 - **Decision:** This project is built the Ghost in the Kernel way, inheriting Core C-001 to C-047 as its baseline, on the typescript stack (`stacks/typescript/README.md`). Its decision prefix is P-.
 - **Why:** The template holds what four projects converged on; a project refuses a core decision with one of its own that names it, never by editing the core entry.
 - **Held by:** `test/test_ghost.py`, `stacks/typescript/PRESENT`, `docs/LINEAGE.md`.
@@ -568,7 +568,7 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** founding
 
 ### P-002: The founding dependencies are the stack's four, pinned exactly; nothing at run time
-- **Decision:** Psiberline has four development dependencies and no other: `vitest` 4.1.12 (the unit tests and the fast loop), `typescript` 7.0.2 (the type check), `knip` 6.46.1 (no unused file, export or dependency) and `@stryker-mutator/core` 10.1.1 (mutation, by its command runner). Each is pinned to an exact version. The product has no dependency at run time. A version the founding lockfile would have brought in younger than seven days is held to the version before it by an override, listed in `docs/HANDOFF.md` until it is removed.
+- **Decision:** Cyberline has four development dependencies and no other: `vitest` 4.1.12 (the unit tests and the fast loop), `typescript` 7.0.2 (the type check), `knip` 6.46.1 (no unused file, export or dependency) and `@stryker-mutator/core` 10.1.1 (mutation, by its command runner). Each is pinned to an exact version. The product has no dependency at run time. A version the founding lockfile would have brought in younger than seven days is held to the version before it by an override, listed in `docs/HANDOFF.md` until it is removed.
 - **Why:** These are the four the TypeScript stack's rule table names (Core C-018), each proven in the parents. vitest stays on 4: the stack's scripts were proven against it, and 5 was three weeks old on the day. Nothing at run time, since the chain is a parser and its checks, and every package it does not have is one that cannot change its output or reach it through the supply chain (Core C-034).
 - **Held by:** `package.json`, `package-lock.json`, `docs/REVIEWED-VERSIONS.md` (a baseline row for each pin), `stacks/typescript/gate.sh` (the cooldown, the audit).
 - **Source:** Ghost, 2026-11-26, in chat ("First push to main should be done by you. During this push we will run the entire system"); the four are the ones the template names; the versions are the agent's choice, for Ghost to confirm.
@@ -577,8 +577,8 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** dependencies
 
 ### P-003: Core C-048 adopted: a tune-up commit falls due every twenty-fifth commit
-- **Decision:** Psiberline takes Core C-048: the tune-up's counter falls due at twenty-five commits on `main` since the last tune-up, and every phase still ends with its tune-up pass. The count is this project's own: Ghost moves it back toward ten when optimizing the agent's environment starts to matter more here.
-- **Why:** Ghost, 2026-11-26: "with a well laid foundation, refactoring work drops sharply in the initial phases of a project. However, the optimization component of a tuneup becomes more important later. When is individual to each project, and its a question of art, not science." Psiberline is in its founding phase, on a foundation stamped that day. A stamped project adopts or refuses each decision the core gains after its stamp (`docs/when/core-update.md`).
+- **Decision:** Cyberline takes Core C-048: the tune-up's counter falls due at twenty-five commits on `main` since the last tune-up, and every phase still ends with its tune-up pass. The count is this project's own: Ghost moves it back toward ten when optimizing the agent's environment starts to matter more here.
+- **Why:** Ghost, 2026-11-26: "with a well laid foundation, refactoring work drops sharply in the initial phases of a project. However, the optimization component of a tuneup becomes more important later. When is individual to each project, and its a question of art, not science." Cyberline is in its founding phase, on a foundation stamped that day. A stamped project adopts or refuses each decision the core gains after its stamp (`docs/when/core-update.md`).
 - **Held by:** `scripts/commit.sh` (`TUNE_UP_EVERY`), `test/test_gates.py`, `docs/when/tune-up.md`.
 - **Source:** Ghost, 2026-11-26, in chat.
 - **Status:** in force
@@ -586,7 +586,7 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** tune-up cadence
 
 ### P-004: Core C-049 adopted: a landing is made from a session branch, and `main` is never worked on
-- **Decision:** Psiberline takes Core C-049: no work is done on `main`; a session works and saves on its own branch, and `scripts/commit.sh -a -F <message> --ship`, run from that branch, lands the saved tree on `main`, ships it and saves the branch in one step. On `main` itself the gated commit refuses.
+- **Decision:** Cyberline takes Core C-049: no work is done on `main`; a session works and saves on its own branch, and `scripts/commit.sh -a -F <message> --ship`, run from that branch, lands the saved tree on `main`, ships it and saves the branch in one step. On `main` itself the gated commit refuses.
 - **Why:** Ghost, 2026-11-26: a hook re-prompts the agent to commit changed files while the gate runs, again and again, and the answer is to work on another branch and land after the gate has run. The core's reasons are in Core C-049. This session's agent had worked on this project's `main` after its first ship, with nothing to refuse it.
 - **Held by:** `scripts/commit.sh`, `scripts/ship.sh`, `test/test_landing.py`, `CLAUDE.md`.
 - **Source:** Ghost, 2026-11-26, in chat ("Yes, lets make the repos follow this").
@@ -645,7 +645,7 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 
 
 ### P-010: One domain, solar, until the chain works end to end
-- **Decision:** Psiberline's ontology, grammar and fixtures are for utility-scale solar software. A second domain is not started until the whole chain works on the first.
+- **Decision:** Cyberline's ontology, grammar and fixtures are for utility-scale solar software. A second domain is not started until the whole chain works on the first.
 - **Why:** An abstraction is extracted at its second use (Core C-002); a general requirements compiler was the founding vision's reach, and the revised vision narrowed it.
 - **Held by:** `VISION.md` (section 1), `docs/ROADMAP.md` (P-23).
 - **Source:** Ghost, 2026-11-26, in chat (settled earlier that day and confirmed with the founding decisions); the wording is the agent's, for Ghost to confirm.
@@ -734,7 +734,7 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** licence
 
 
-### P-019: Psiberline refuses no core decision at its founding
+### P-019: Cyberline refuses no core decision at its founding
 - **Decision:** Every core decision in this project's baseline, C-001 to C-049, applies here as written.
 - **Why:** Read against the vision, none conflicts with it: the comment rule, the supply-chain rules, the landing from a session branch and the tune-up's count all fit a project of this kind.
 - **Held by:** `theGhost.md` (the core's entries above this section).
@@ -744,7 +744,7 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **subject:** core decisions
 
 ### P-020: No machine-checked proof: the chain is verified without Lean
-- **Decision:** Psiberline builds no proofs in Lean or any other proof assistant. Its verification ladder is type and semantic checks on the typed tree, constraint solving, property-based tests and generated acceptance tests. Proof is taken up again only if those rungs cannot establish something the calculations need, and then by a new decision of Ghost's.
+- **Decision:** Cyberline builds no proofs in Lean or any other proof assistant. Its verification ladder is type and semantic checks on the typed tree, constraint solving, property-based tests and generated acceptance tests. Proof is taken up again only if those rungs cannot establish something the calculations need, and then by a new decision of Ghost's.
 - **Why:** Ghost, 2026-11-26: "Lets remove lean proofs from the roadmap. If we can do it without them, we will." Proving a property of real code in Lean needs the code modelled in Lean, which TypeScript is not; most of what the first plan gave to proof (unit compatibility, asset identity, range) is a type check, and a condition of the form "A equals B when C" is a solver's or a property test's.
 - **Held by:** `VISION.md` (section 9), `docs/ROADMAP.md` (section 4; no Phase 8).
 - **Source:** Ghost, 2026-11-26, in chat.
@@ -752,11 +752,20 @@ The core decisions above are inherited (Core C-001 to C-047); this project's beg
 - **See also:** P-001, P-008
 - **subject:** verification
 
-### P-021: Psiberline is the compiler; the language is a second project; the handover is the typed tree
-- **Decision:** The work is two projects. The language project, in a repository of its own, owns everything up to an accepted requirement: the corpus, the catalogue, the ontology, the EARS grammar and its parser, the proofreader, the rewrite rules, the checks on a requirement's meaning, and triage. Psiberline is the compiler: it starts from an accepted requirement, parsed and approved, and composes test plans, and later application modules, from verified fixtures. The handover is JSON files in a format with a version; neither project imports the other, and Psiberline checks every tree it is given.
+### P-021: Cyberline is the compiler; the language is a second project; the handover is the typed tree
+- **Decision:** The work is two projects. The language project, in a repository of its own, owns everything up to an accepted requirement: the corpus, the catalogue, the ontology, the EARS grammar and its parser, the proofreader, the rewrite rules, the checks on a requirement's meaning, and triage. Cyberline is the compiler: it starts from an accepted requirement, parsed and approved, and composes test plans, and later application modules, from verified fixtures. The handover is JSON files in a format with a version; neither project imports the other, and Cyberline checks every tree it is given.
 - **Why:** Ghost, 2026-11-26: "this effort could actually be split between two projects. The first project devoted to the formalized language, and getting a corpus of examples via doing qa. The second project is devoted to the compiler"; then "The compiler repo is psiberline's repo. However, it needs to have the vision, for the second project", and "Approved" of that vision. The language half is worth having with no compiler behind it; the compiler is the speculative half and should not hold the other up; and what is learned from an adopter's tickets stays on the language side.
 - **Held by:** `VISION.md` (sections 1, 4), `docs/ROADMAP.md`.
 - **Source:** Ghost, 2026-11-26, in chat; the wording is the agent's, for Ghost to confirm.
 - **Status:** in force
 - **See also:** P-005, P-006, P-007, P-012, P-013, P-014, P-015
 - **subject:** scope of the project
+
+### P-022: The project is named Cyberline; it was Psiberline
+- **Decision:** This project, the compiler, is Cyberline, and its sibling, the language, is Cyberline Language. Every file here says Cyberline, earlier journal entries and decisions included; the former name stands only in this decision, in the journal entry of the renaming, and inside words of Ghost's quoted as he said them. The decision prefix stays P-.
+- **Why:** Ghost's word, with no reason given; a reason is his to add.
+- **Held by:** `CLAUDE.md`, `README.md`, `package.json` (the name), `docs/SUPPLY-CHAIN.md` (the line that says whose repository this is). No check holds it.
+- **Source:** Ghost, 2026-11-27, in chat: "Lets rename both projects from psiberline to cyberline. I can rename the repo parts."
+- **Status:** in force
+- **See also:** P-001, P-021
+- **subject:** name

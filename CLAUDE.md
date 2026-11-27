@@ -1,4 +1,4 @@
-# Psiberline: for an agent working in this repository
+# Cyberline: for an agent working in this repository
 
 A compiler that turns accepted solar software requirements, handed over as typed and approved trees, into test plans, and later application modules, composed from verified fixtures, with no AI in the chain. Stamped from Ghost-Core 31a0aee; the checks are Python 3 standard library and run with nothing installed.
 
