@@ -159,21 +159,26 @@ allows.
 
 ### Phase 2: the fixture library
 
-The second and third kinds of fixture, and what it takes to keep many of them honest.
+Fixtures are built for the shapes the corpus shows, most frequent first (P-023): a shape is a requirement's typed
+tree with its inputs taken out, and the language project counts them. On the synthetic corpus the count is small;
+2.3 to 2.5 are the shapes expected there and stand as examples until a count says otherwise.
 
 - 2.1 The library's index: every fixture with the canonical requirement it satisfies, its inputs and their types,
   and the tests that verify it; a fixture not in the index cannot be selected.
-- 2.2 A measurement fixture: reads a quantity with its unit and asserts it within a range; a unit the fixture does
+- 2.2 The build order: the language project's shape report read as a file; each shape with its count and whether a
+  fixture proves it; the next fixture to build is the most frequent shape with none. A golden.
+- 2.3 A measurement fixture: reads a quantity with its unit and asserts it within a range; a unit the fixture does
   not take is refused at composition.
-- 2.3 An event fixture: for the event-driven shape ("when a trigger, the system shall respond"), asserts the
+- 2.4 An event fixture: for the event-driven shape ("when a trigger, the system shall respond"), asserts the
   response after the trigger.
-- 2.4 A threshold fixture: for an unwanted condition, asserts the alarm or the refusal.
-- 2.5 Contracts between fixtures: two fixtures composed into one plan declare what each needs and leaves, and a
+- 2.5 A threshold fixture: for an unwanted condition, asserts the alarm or the refusal.
+- 2.6 Contracts between fixtures: two fixtures composed into one plan declare what each needs and leaves, and a
   pair that cannot hold together is refused when composed.
-- 2.6 The gap report: every criterion no fixture could prove, by kind, as the library's backlog; a golden.
-- 2.7 A fixture's version: a plan names the version of each fixture it uses, and a changed fixture shows which
+- 2.7 The gap report: every criterion no fixture could prove, by kind and by shape, as the library's backlog; a
+  golden.
+- 2.8 A fixture's version: a plan names the version of each fixture it uses, and a changed fixture shows which
   plans' goldens move.
-- 2.8 Tune-up pass 2
+- 2.9 Tune-up pass 2
 
 ### Phase 3: the ladder's middle rungs, and many trees
 

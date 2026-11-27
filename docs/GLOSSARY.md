@@ -73,6 +73,7 @@ removes is a decision in its own log.
 | **corpus** | the synthetic requirements this repository is built and proven on, under `corpus/`; never an employer's or a customer's (C-033) | dataset, samples |
 | **conversion rate** | the share of a corpus's sentences the rule set rewrites to EARS with no person | hit rate, automation rate |
 | **coverage rate** | the share of requirements that compile from fixtures that already exist | reuse rate; test coverage (a test's lines) |
+| **shape** | a requirement's typed tree with its inputs taken out: two requirements of one shape differ only in which asset, how many, what unit, what limit (P-023) | requirement type |
 | **tree format** | what a handed-over requirement holds and how, with a version: the contract between the language project and the compiler (P-021) | schema, interface, API |
 | **test plan** | the compiler's output for an acceptance criterion: the fixture selected, its inputs, what is asserted and the trace, as JSON (P-011) | generated test, script, spec |
 | **gap** | a criterion no fixture can prove, or an input the tree does not supply: a named result of a compile | miss, failure, TODO |
